@@ -1,0 +1,13 @@
+<div class="modal-dialog-container">
+    <div class="header">
+        <span>{{ data.title }}</span>
+    </div>
+    <div class="confirm-box alert-dialog">
+        <img class="message alert-dialog" [src] = "data.imgSrc" /> 
+    </div>
+
+    <div class="footer">
+        <div class="primary-button" [ngClass]="'center'"
+            (click)="close()">Close</div>
+    </div>
+</div>

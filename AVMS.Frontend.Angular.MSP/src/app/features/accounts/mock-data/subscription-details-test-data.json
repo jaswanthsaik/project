@@ -1,0 +1,32 @@
+[
+    {
+        "instanceDescription": "Instance Name 1",
+        "provider": "Azure",
+        "size": 20000,
+        "label": "azure-1",
+        "savings": 0.2,
+        "recommendation": "YES",
+        "status": "Snoozed",
+        "scheduled": "Not Scheduled"
+    },
+    {
+        "instanceDescription": "Instance Name 1",
+        "provider": "Amazon",
+        "size": 900,
+        "label": "amazon-4",
+        "savings": -0.15,
+        "recommendation": "NO",
+        "status": "Running",
+        "scheduled": "LOCKED"
+    },
+    {
+        "instanceDescription": "Instance Name 1",
+        "provider": "AWS",
+        "size": 1280,
+        "label": "aws-1",
+        "savings": 0.2,
+        "recommendation": "YES",
+        "status": "Stopped",
+        "scheduled": "Dev | Mon-Fri | 9h00 to 17h00"
+    }
+]

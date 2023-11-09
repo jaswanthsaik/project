@@ -1,0 +1,33 @@
+div {
+    width: 500px;
+    height: 36px;
+    left: 66px;
+    top: 257px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #63FFFE;
+    background-color: transparent;
+    padding-left: 12px;
+
+    input {
+        width: 274px;
+        height: 100%;
+        background-color: rgb(196 199 201);
+        color: white;
+        border: 1px solid #FEFEFE;
+        border-radius: 8px;
+    }
+}
+
+::ng-deep {
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+        color: white;
+    }
+    ::-webkit-inner-spin-button { display: none; }
+    ::-webkit-clear-button {
+        color: red;
+    }
+}
+

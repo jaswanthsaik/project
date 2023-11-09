@@ -1,0 +1,142 @@
+.add-institution-branch-modal {
+    background-color: #FFFFFF;
+  
+    &__header {
+      display: flex;
+      background: #C8C8C84D;
+      height: 44px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #161F26;
+      justify-content: space-between;
+      align-items: center;
+    //   padding: 0 20px;
+    width: 522px;
+    margin-left: -23px;
+    margin-top: -24px;
+    }
+  
+    &__close {
+      cursor: pointer;
+      color: #A2ABAB;
+      margin-right: 15px;
+    }
+  
+    &__main {
+      padding: rem-calc(10);
+    }
+  }
+  
+  .branch-modal {
+    margin: 15px;
+    padding: 15px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #161F26;
+  }
+  
+  .section {
+    margin-bottom: 10px;
+  }
+  
+  .message {
+    display: flex;
+  
+    // &__company {
+    //   margin-left: 50px;
+    // }
+  
+    &__email {
+      width: 170px;
+        color: #334353;
+        background-color: #fff;
+        border-radius: 5px;
+        border: 1px solid #BABFD1;
+        padding: 0 6px;
+        font-size: 12px;
+        font-weight: 300;
+        height: 50px;
+    }
+  
+    &__firstName {
+        width: 170px;
+        color: #334353;
+        background-color: #fff;
+        border-radius: 5px;
+        border: 1px solid #BABFD1;
+        padding: 0 6px;
+        font-size: 12px;
+        font-weight: 300;
+        height: 30px;
+    }
+  
+    // &__lastName {
+    //   margin-left: 89px;
+    // }
+  
+    // &__password {
+    //   margin-left: 55px;
+    // }
+  }
+  
+  .filter {
+    margin-left: 45px;
+  }
+  
+  .global_buttons {
+    text-align: right;
+    grid-column: 1;
+    grid-row: 4;
+    display: flex;
+    margin-top: 75px;
+  }
+  
+  .buttons {
+    text-align: right;
+    grid-column: 1;
+    grid-row: 4;
+    display: flex;
+    margin-top: 50px;
+  }
+  
+  .submit {
+    margin-right: 10px;
+    background: #285DD9;
+    color: white;
+    border-radius: 5px;
+    height: 32px;
+    width: 72px;
+    border: none;
+  }
+  
+  .cancel {
+    border-radius: 5px;
+    height: 32px;
+    width: 95px;
+    border: 2px solid #285DD9;
+  }
+  
+  select {
+    width: 100%;
+    height: 25px;
+    margin-bottom: 12px;
+  }
+  .header {
+    margin-left: 25px;
+  }
+  .account {
+    width: 170px;
+    color: #334353;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #BABFD1;
+    padding: 0 6px;
+    font-size: 12px;
+    font-weight: 300;
+    height: 30px;
+  }
+
+  button.submit:disabled {
+    background-color: rgb(204, 204, 204);
+    cursor: not-allowed;
+  }

@@ -1,0 +1,30 @@
+
+<div #container class="add-institution-branch-modal">
+    <div class="add-institution-branch-modal__header">
+        <div>Terms and Conditions</div>
+      </div>
+      <span></span>
+  <div>
+    <div *ngIf="showWarning" class="warning">You must accept the Terms and Conditions before you can use this website.
+    </div>
+  </div>
+        <div id="print-section">
+            <div class="print-row" (click)="printElement('print-section')">
+                <div>You should print a copy of these Terms of Use for future reference.</div>
+                <img src="/assets/icons/printer-cyan.png" alt="print" class="print-icon"/>
+            </div>
+        </div>
+        <div class="institution-user-stats__main branch-modal">
+            <div class="tcDescription" [innerHTML]="tcText" #printSection></div>
+          </div>
+    <div class="agree">
+        <input type="checkbox" [(ngModel)]="tcAccepted" (ngModelChange)="changeAcceptedStatus()">
+        <span>I agree to the Terms & Conditions</span>
+    </div>
+      <div class="footer">
+    <button type="cancel" class="cancel" (click)="cancelDialog()">Decline</button>
+    <button type="submit" class="submit" (click)="primary()">Accept</button>
+    </div>
+</div>
+
+

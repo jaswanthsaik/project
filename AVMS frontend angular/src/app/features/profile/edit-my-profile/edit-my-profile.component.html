@@ -1,0 +1,64 @@
+<div class="profile-container">
+<div class="profile-header">
+  <div class="profile-breadcrumbs">
+    <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+  </div>
+</div>
+  <div class="dashboard">
+    <div class="dashboard__main">
+      <div class="dashboard__customerCountMain">
+        <!-- <div class="dashboard__customerTiltle text-icon">
+        </div> -->
+        <div class="myprofile-content">
+          <div class="image-section">
+            <img [src]="myProfile.avatar" alt="img" class="avatar-img">
+            <div class="image-section__icons">
+              <span>
+                <input id="upload-avatar" name="upload-avatar" type="file" class="display-none" accept="image/*"
+                  (change)="updateAvatar($event)">
+                <label class="image-section__change" for="upload-avatar">
+                  Change Photo
+                </label>
+              </span>
+              <div><button class="image-section__preview" (click)="previewAvatar()">Preview</button></div>
+              <div><button class="image-section__delete" (click)="removeAvatar()">Delete Photo</button></div>
+            </div>
+          </div>
+          <div class="message">
+            <div class="message-section-align">
+            <div class="section">
+                <div class="label">First Name</div>
+                <input type="text" [(ngModel)]="myProfile.first_name">
+              </div>
+              <div class="section">
+                <div class="label">Last Name</div>
+                <input type="text" [(ngModel)]="myProfile.last_name">
+              </div>
+              <div class="section">
+                <div class="label">Email</div>
+                <input type="text" [(ngModel)]="myProfile.email" [attr.disabled]=true >
+              </div>
+              <div class="section">
+                <div class="label">Company</div>
+                <input type="text" [(ngModel)]="myProfile.company_name" [attr.disabled]=true >
+              </div>
+              <div class="section">
+                <div class="label">Country</div>
+                <app-avms-dropdown-large class="dropdown-option" [lookup]="countryOptions" [selectedValue]="selectedCountry" (selectedValueChange)="countryChanged($event)"></app-avms-dropdown-large >
+              </div>
+              <div class="section">
+                <div class="label">Timezone</div>
+                <app-avms-dropdown-large class="dropdown-option" [lookup]="timezoneOptions" [selectedValue]="selectedTimezone" (selectedValueChange)="timezoneChanged($event)"></app-avms-dropdown-large>
+              </div>
+              <div class="buttons">
+                <button class="submit" (click)="saveProfile()">Save</button>
+                <button class="cancel" (click)="toggleToView()">Cancel</button>
+              </div>
+              </div>
+            </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

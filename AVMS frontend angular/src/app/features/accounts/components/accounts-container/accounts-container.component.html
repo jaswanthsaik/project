@@ -1,0 +1,316 @@
+<div class="container-fluid">
+  <div class="accounts-header">
+    <div>
+      <div class="accounts-breadcrumbs">
+        <app-avms-breadcrumbs
+          [breadcrumbs]="breadcrumbs"
+        ></app-avms-breadcrumbs>
+      </div>
+      <div class="pad-tp5">
+        <div class="accounts-dropdown">
+          <app-avms-dropdown-small
+            [lookup]="topAccountOptions"
+          ></app-avms-dropdown-small>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="text-icon">
+      <span></span>
+    </div> -->
+
+    <div class="text-icon">
+      <button (click)="addAccount()">
+        <!-- <mat-icon>add</mat-icon>Add Account -->
+        <img src="/assets/images/add.svg" alt="add" />
+        <div class="head-button-align">Add Account</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="accounts-dashboard">
+    <div class="main-section">
+      <div class="card">
+        <div class="middle-title">
+          <span>Accounts Savings (USD)</span>
+          <div class="controls">
+            <app-avms-button
+              [selected]="selectedMainGraphInterval === 1"
+              text="Annual"
+              (onClick)="getMainGraphData(1)"
+              [class.selected]="selectedMainGraphInterval === 1"
+            ></app-avms-button>
+            <app-avms-button
+              [selected]="selectedMainGraphInterval === 2"
+              text="6 Months"
+              (onClick)="getMainGraphData(2)"
+              [class.selected]="selectedMainGraphInterval === 2"
+            ></app-avms-button>
+            <app-avms-button
+              [selected]="selectedMainGraphInterval === 3"
+              text="3 Months"
+              (onClick)="getMainGraphData(3)"
+              [class.selected]="selectedMainGraphInterval === 3"
+            ></app-avms-button>
+            <app-avms-button
+              [selected]="selectedMainGraphInterval === 4"
+              text="1 Month"
+              (onClick)="getMainGraphData(4)"
+              [class.selected]="selectedMainGraphInterval === 4"
+            ></app-avms-button>
+            <app-avms-button
+              [selected]="selectedMainGraphInterval === 5"
+              text="14 days"
+              (onClick)="getMainGraphData(5)"
+              [class.selected]="selectedMainGraphInterval === 5"
+            ></app-avms-button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="middle-title1">
+          This view provides the total savings on instances scheduling on the
+          selected period
+        </div>
+      </div>
+      <div class="mini-card">
+        <app-savings-chart
+          [xAxisLegend]="xAxisLegend"
+          [seriesLabels]="seriesLabels"
+          [seriesData]="seriesData"
+          [fullWidth]="true"
+          [tooltipData]="tooltipData"
+        ></app-savings-chart>
+      </div>
+    </div>
+  </div>
+
+  <div class="accounts-table-host">
+    <div class="card1">
+      <span class="title1">Cloud Accounts</span>
+    </div>
+    <div class="accounts-table-controls__left">
+      <div class="accounts-table-filter">
+        <span class="search-container">
+          <!-- <input class="form-control mr-sm-2 fa fa-search search" type="search" placeholder="Search" aria-label="Search"
+            name="search"> -->
+          <app-avms-filter
+            (filterChange)="filterAccounts($event)"
+          ></app-avms-filter>
+        </span>
+      </div>
+      <div class="demo-paginator">
+        <span class="paginator1">
+          <span class="bold">{{ startRecord }}</span> to
+          <span class="bold">{{ endRecord }}</span> of
+          <span class="bold">{{ totalRecords }}</span>
+          <select
+            class="per-page-dropdown-container"
+            [(ngModel)]="recordsPerPage"
+            (ngModelChange)="changePageSize()"
+          >
+            <option *ngFor="let item of rowPerPageOptions" [value]="item">
+              <span class="page-text">View:</span>
+              {{ item }}
+            </option>
+          </select>
+          <!-- <select class="per-page-dropdown-container1" [(ngModel)]="recordsPerPage" (ngModelChange)="changePageSize()">
+            <option *ngFor="let item of rowPerPageOptions" [value]="item">
+              <span class="page-text">Sort by:</span>
+              fewest
+            </option>
+          </select> -->
+        </span>
+        <!-- <span class="paginator2">
+        </span>
+        <span class="paginator3">
+        </span> -->
+      </div>
+    </div>
+    <div class="table-align">
+      <div class="accounts-table table-container1">
+        <section class="account-container mat-elevation-z8" tabindex="0">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="Name">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              (click)="sortColumn('account_name')"
+            >
+              Name
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              [routerLink]="[element.account]"
+              style="color: #285dd9; font-weight: 500;"
+            >
+              <a>{{ element.account_name }}</a>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Provider">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Provider
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.provider_name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Date">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              (click)="sortColumn('created_in')"
+            >
+              Date
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.created_in | date }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Services">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Services
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span class="hilite-green" *ngIf="element.use_azure_lighthouse"
+                >Lighthouse</span
+              >
+              <span class="hilite-red" *ngIf="!element.use_azure_lighthouse"
+                >Lighthouse</span
+              >
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Tenants">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Tenants
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.total_tenant }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Instances">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Instances
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.total_instance }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Recommendation">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Recommendation
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <span
+                [routerLink]="['/recommendations']"
+                class="hilte-green recommend"
+                *ngIf="element.have_recommendation"
+                >Yes</span
+              >
+              <span
+                [routerLink]="['/recommendations']"
+                class="recommend"
+                *ngIf="!element.have_recommendation"
+                >No</span
+              >
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Scheduled">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Scheduled
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.total_instance_scheduled }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="...">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="action-buttons-align">
+                <div class="tooltip-host">
+                  <!-- <span class="table-icon" (click)="hardRefresh(element)"><mat-icon>autorenew</mat-icon></span> -->
+                  <button class="custom-action" (click)="hardRefresh(element)">
+                    <img src="/assets/images/refresh.svg" alt="refresh" />
+                  </button>
+                  <span class="tooltip-container refresh-popup-align">
+                    <app-tooltip
+                      [tooltipText]="'Refresh account'"
+                      tooltipPosition="top"
+                    ></app-tooltip>
+                  </span>
+                </div>
+                <div class="tooltip-host custom-buttons-align">
+                  <!-- <span class="table-icon" (click)="editAccount(element)"><img src="/assets/images/edit.svg" alt="edit" /></span> -->
+                  <button class="custom-action" (click)="editAccount(element)">
+                    <img src="/assets/images/edit.svg" alt="edit" />
+                  </button>
+                  <span class="tooltip-container">
+                    <app-tooltip
+                      [tooltipText]="'Edit account'"
+                      tooltipPosition="top"
+                    ></app-tooltip>
+                  </span>
+                </div>
+                <div class="tooltip-host custom-buttons-align">
+                  <!-- <span class="table-icon" (click)="removeAccount(element)"><img src="/assets/images/trash.svg" alt="delete" /></span> -->
+                  <button
+                    class="custom-action"
+                    (click)="removeAccount(element)"
+                  >
+                    <img src="/assets/images/trash.svg" alt="delete" />
+                  </button>
+                  <span class="tooltip-container delete-popup-align">
+                    <app-tooltip
+                      [tooltipText]="'Remove account'"
+                      tooltipPosition="top"
+                    ></app-tooltip>
+                  </span>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <tr class="table-header" mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td
+              class="mat-cell"
+              [attr.colspan]="displayedColumns.length"
+              class="no-data"
+            >
+              No data Found
+            </td>
+          </tr>
+        </table>
+      </section>
+      </div>
+    </div>
+    <div class="row accounts-table-navigation">
+      <app-table-navigation-controls
+        [paginationInfo]="paginationInfo"
+        (pageChange)="pageChange($event)"
+      >
+      </app-table-navigation-controls>
+    </div>
+  </div>
+</div>

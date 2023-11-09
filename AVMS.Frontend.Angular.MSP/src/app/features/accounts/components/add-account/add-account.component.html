@@ -1,0 +1,20 @@
+<div class="add-account-container">
+<div  *ngIf="!editing" class="card-header">
+        <span class="title1">Add Account</span>
+        <button type="button" class="close" data-dismiss="modal" (click)="dialogclose()">&times;</button>
+</div>
+<div  *ngIf="editing" class="card-header1">
+    <span class="title1">Edit Account</span>
+    <button type="button" class="close" data-dismiss="modal" (click)="dialogclose()">&times;</button>
+</div>
+    <div *ngIf="!editing" class="label sub-text">Please choose the cloud provider of the account you want to add, please.</div>
+    <div *ngIf="!editing" class="provider-selector">
+        <div class="provider">
+            <input type="radio" name="provider" id="azure" value="azure" (click)="selectProvider('azure')">
+            <img src="/assets/images/azure.svg"  alt="azure">
+        </div>
+    </div>
+    <div class="provider-specific">
+        <app-add-account-azure *ngIf="provider==='azure' || editing"></app-add-account-azure>
+    </div>
+</div>

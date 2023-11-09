@@ -1,0 +1,25 @@
+<div class="sw-container">
+  <div class="card">
+    <div class="title1">
+      <ng-content select=[title]></ng-content>
+    </div>
+  </div>
+
+  <div class="sw-content" [class.sw-scroll]="contentType==='recommendation'">
+    <div class="sw-content" [class.sw-scroll]="contentType==='recommendation'"></div>
+    <div *ngIf="contentType==='recommendation'">
+      <div *ngFor="let recommendation of recommendations" class="recommendation">
+        <div class="recommendation-text" (click)="clicked(recommendation)">{{ recommendation.text }}</div>
+        <div class="level" [ngClass]="'level-' + recommendation.level" (click)="clicked(recommendation)">{{
+          getLevelText(recommendation) }}</div>
+        <div class="divider"></div>
+      </div>
+    </div>
+
+    <ng-content>
+    </ng-content>
+
+    <!-- <button *ngIf="contentType==='graph'" [routerLink]="['/schedules']" class="check-button">check schedules</button> -->
+
+  </div>
+</div>

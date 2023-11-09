@@ -1,0 +1,165 @@
+.tc-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 20px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    background-color: #fff;
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  .content {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    gap: 20px;
+    margin: 20px;
+  }
+  
+  .print-row {
+    display: flex;
+    justify-content: flex-end;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18px;
+    margin: 20px 35px;
+    cursor: pointer;
+  }
+  
+  
+  .warning {
+    height: 32px;
+    background: #FFF0F0;
+    border: 1px solid #F41818;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    color: #FA0A0A;
+    padding: 15px;
+    text-justify: center;
+    text-align: center;
+    word-wrap: normal;
+  }
+  
+  .agree {
+    display: flex;
+    height: 45px;
+    // background-color: #828282;
+    padding: 0 20px;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid #DEE2E6;
+  
+    input {
+      margin-right: 10px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+  .add-institution-branch-modal {
+    background-color: white;
+    width: 600px;
+    min-height: 480px;
+  
+    &__header {
+      display: flex;
+      height: 55px;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 24px;
+      color: #000000;
+      background: rgba(200, 200, 200, 0.3);
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+  
+    &__close {
+      cursor: pointer;
+    }
+  
+    &__main {
+      padding: rem-calc(10);
+    }
+  }
+  
+  .branch-modal {
+    margin: 15px;
+    padding: 15px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #73879C;
+    background: whitesmoke;
+    border-top: 2px solid grey;
+    // max-height: 350px;
+  }
+  
+  .buttons {
+    text-align: right;
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+  
+  .cancel {
+    border-radius: 5px;
+    height: 32px;
+    width: 95px;
+    border: none;
+    background: #2A3F54;
+    color: white;
+    margin-right: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .tcDescription {
+    max-height: calc(100vh - 390px);
+    overflow-y: auto;
+  }
+  
+  .print {
+    padding: 2px;
+  }
+  .footer {
+    margin-top: 7px;
+    margin-left: 60px;
+  }
+  .submit {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 7px 16px;
+    /* gap: 10px; */
+    position: absolute;
+    width: 80px;
+    height: 35px;
+    margin-left: 450px;
+    background: #285DD9;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: 1px solid #285DD9;
+    cursor: pointer;
+  }
+  
+  .cancel {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 7px 16px;
+    gap: 10px;
+    position: absolute;
+    width: 80px;
+    height: 35px;
+    margin-left: 360px;
+    background: #BABFD1;
+    color: #FFFFFF;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid #BABFD1;
+  }
+  .print-icon {
+    color: #000000;
+    margin-left: 4px;
+  }

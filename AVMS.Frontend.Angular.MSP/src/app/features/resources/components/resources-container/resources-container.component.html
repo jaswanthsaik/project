@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="resources-header">
+        <div class="resources-breadcrumbs">
+          <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+        </div>
+      </div>
+
+      <div class="resources-table-host">
+        <div class="card1">
+          <div class="title1">Details</div>
+          <div class="demo-paginator">
+            <span class="filter">
+              <app-avms-filter (filterChange)="filterResource($event)"></app-avms-filter>
+            </span>
+          </div>
+
+          <!-- <div class="resources-table-controls">
+            <div class="resources-table-controls__left">
+            </div>
+            <div class="resources-table-controls__right">
+            </div>
+          </div> -->
+        </div>
+        <div class="table-align">
+        <div class="resources-table tables-container table-container2">
+          <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="Resource Name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('resource_name')">Resource Name</th>
+              <td mat-cell *matCellDef="let element">{{element.resource_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Account">
+              <th mat-header-cell *matHeaderCellDef>Account</th>
+              <td mat-cell *matCellDef="let element">{{element.account_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Subscription">
+              <th mat-header-cell *matHeaderCellDef>Subscription</th>
+              <td mat-cell *matCellDef="let element">{{element.subscription_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Provider">
+              <th mat-header-cell *matHeaderCellDef>Provider</th>
+              <td mat-cell *matCellDef="let element">{{element.provider_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Size">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('resource_size')">Size</th>
+              <td mat-cell *matCellDef="let element">{{element.resource_size}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Location">
+              <th mat-header-cell *matHeaderCellDef>Location</th>
+              <td mat-cell *matCellDef="let element">{{element.location_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="Resource Type">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('resource_type_name')">Resource Type</th>
+              <td mat-cell *matCellDef="let element">{{element.resource_type_name}}</td>
+            </ng-container>
+            <tr class="table-header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data">
+                No data Found
+              </td>
+            </tr>
+          </table>
+        </div>
+        </div>
+        <div class="resources-table-navigation">
+          <mat-paginator 
+          [pageSizeOptions]="rowPerPageOptions"
+          [pageSize]="recordsPerPage"
+          [length]="totalRecords"
+          [pageIndex]="currentPage - 1" 
+          (page)="pageChange($event)">
+  </mat-paginator>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>

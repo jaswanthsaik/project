@@ -1,0 +1,17 @@
+<div class="modal-dialog-container">
+    <div class="header">
+        <span>{{ data.title }}</span>
+    </div>
+    <div class="confirm-box alert-dialog">
+        <div class="title alert-dialog">
+            ERROR
+        </div>
+        <div class="message alert-dialog" [innerHtml]= "data.errorMessage"> 
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="primary-button" [ngClass]="'center'"
+            (click)="close()">{{ data.buttonText }}</div>
+    </div>
+</div>

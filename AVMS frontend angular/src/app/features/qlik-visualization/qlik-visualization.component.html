@@ -1,0 +1,19 @@
+<div class="qlik-breadcrumb">
+    <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+    </div>
+        <div class="container">
+  <mat-tab-group>
+    <mat-tab *ngFor="let tab of listofSheetId; let index = index" [label]="tab.sheet_title">
+        <ng-template mat-tab-label>
+            <div (click)="selectedChart(tab)">
+              {{ tab.sheet_title }}
+            </div>
+          </ng-template>
+          <ng-template matTabContent>
+            <p class="p-2 mt-1 ml-1">Graphical representation for {{ tab.sheet_name }}</p>
+            <br />
+          </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<iframe id="iframe" [src]="iframe_src" class="iframeStyle"></iframe>

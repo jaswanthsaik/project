@@ -1,0 +1,64 @@
+trigger:
+  - develop
+
+variables:
+  - name: buildAgentVmImageName
+    value: 'ubuntu-latest'
+  - name: dockerfilePath
+    value: '$(Build.SourcesDirectory)/Dockerfile.dev'
+  - name: acrRegistryServiceConnection
+    value: 'kalibr8crdev-Serviceconnection'
+  - name: acrImageRepository
+    value: 'appkalibr8dev'
+  - name: acrContainerRegistry
+    value: 'kalibr8crdev.azurecr.io'
+  - name: acrTag
+    value: '$(Build.BuildId)'
+  - name: acrImageUrl
+    value: $(acrContainerRegistry)/$(acrImageRepository):$(acrTag)
+  - name: azureServiceConnection
+    value: 'Kalibr8 - UAT - Releases'
+  - name: subscriptionId
+    value: '62fce1df-ce84-405c-bc3e-444707516472'
+  - name: resourceGroup
+    value: 'Kalibr8-Dev-Containerize'
+  - name: resourceGroupLocation
+    value: 'northeurope'
+  - name: armTemplate
+    value: '$(Build.SourcesDirectory)/armtemplates/dev.json'
+  - name: kalibr8crdevPassword
+    value: $[variables.kalibr8crdev]
+stages:
+  - stage: Build
+    pool:
+        vmImage: $(buildAgentVmImageName) 
+    jobs:
+    - job: Docker_Build
+      steps:
+      - task: Docker@2
+        inputs:
+          command: buildAndPush
+          repository: $(acrImageRepository)
+          dockerfile: $(dockerfilePath)
+          containerRegistry: $(acrRegistryServiceConnection)
+          tags: $(acrTag)
+
+
+  - stage: Deploy
+    pool:
+        vmImage: $(buildAgentVmImageName)  
+    jobs:
+    - job: Deploying_Arm
+      steps:
+      - task: AzureResourceManagerTemplateDeployment@3
+        inputs:
+          deploymentScope: 'Resource Group'
+          azureResourceManagerConnection: '$(azureServiceConnection)'
+          subscriptionId: '$(subscriptionId)'
+          action: 'Create Or Update Resource Group'
+          resourceGroupName: '$(resourceGroup)'
+          location: '$(resourceGroupLocation)'
+          templateLocation: 'Linked artifact'
+          csmFile: '$(armTemplate)'
+          overrideParameters: '-container_image $(acrImageUrl) -unique_revision $(Build.BuildId) -registry_password $(kalibr8crdevPassword)'
+          deploymentMode: 'Incremental'

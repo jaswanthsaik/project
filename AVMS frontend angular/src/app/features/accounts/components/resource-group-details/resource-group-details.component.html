@@ -1,0 +1,244 @@
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<div class="subscription-container">
+  <div class="subscription-header">
+      <div class="subscription-breadcrumbs">
+          <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+      </div>
+      <div class="text-icon">
+          <span></span>
+      </div>
+      <div class="text-icon">
+      </div>
+
+  </div>
+
+  <div class="subscription-dashboard">
+      <div class="main-section">
+          <div class="card">
+              <div class="middle-title">
+                  <span>Resource Group</span>
+                  <div class="controls">
+                      <div class="controls">
+                          <app-avms-button [selected]="selectedMainGraphInterval===1" text="ANNUAL"
+                              (onClick)="getMainGraphData(1)" [class.selected]="selectedMainGraphInterval===1">
+                          </app-avms-button>
+                          <app-avms-button [selected]="selectedMainGraphInterval===2" text="6 MONTHS"
+                              (onClick)="getMainGraphData(2)" [class.selected]="selectedMainGraphInterval===2">
+                          </app-avms-button>
+                          <app-avms-button [selected]="selectedMainGraphInterval===3" text="3 MONTHS"
+                              (onClick)="getMainGraphData(3)" [class.selected]="selectedMainGraphInterval===3">
+                          </app-avms-button>
+                          <app-avms-button [selected]="selectedMainGraphInterval===4" text="1 MONTH"
+                              (onClick)="getMainGraphData(4)" [class.selected]="selectedMainGraphInterval===4">
+                          </app-avms-button>
+                          <app-avms-button [selected]="selectedMainGraphInterval===5" text="14 days"
+                              (onClick)="getMainGraphData(5)" [class.selected]="selectedMainGraphInterval===5">
+                          </app-avms-button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div>
+              <div class="mini-card">
+                  <app-savings-chart [xAxisLegend]="xAxisLegend" [seriesLabels]="seriesLabels"
+                      [seriesData]="seriesData" [tooltipData]="tooltipData"></app-savings-chart>
+              </div>
+          </div>
+      </div>
+      <div class="side-widget-1 side-align">
+          <app-side-widget contentType="recommendation" [recommendations]="recommendations" class="side-widget-1">
+              <span title>
+                  <div class="pad10">
+                      RECOMMENDATIONS
+                  </div>
+              </span>
+          </app-side-widget>
+
+          <div class="mar-tp4">
+              <app-side-widget contentType="graph" class="side-widget-2">
+                  <span title>
+                      <div class="instance-align">
+                          <div>BEST INSTANCES</div>
+                          <div>
+                              <app-avms-dropdown class="days-dropdown"
+                                  [lookup]="bestInstancesPeriods"></app-avms-dropdown>
+                          </div>
+                      </div>
+                  </span>
+
+                  <div class="schedule-align">
+                      <app-half-doughnut-chart [data]="instanceGraphData"></app-half-doughnut-chart>
+                  </div>
+              </app-side-widget>
+          </div>
+      </div>
+  </div>
+
+  <div class="subscription-table-host">
+      <div class="card1">
+          <div class="title3">Instances</div>
+          <div class=" demo-paginator">
+              <div>
+                  <span class="bold">{{ startRecord }}</span> to <span class="bold">{{ endRecord }}</span> of
+                  <span class="bold text1"> {{ totalRecords }}</span>
+              </div>
+              <div>
+                  <select class="per-page-dropdown-container" [(ngModel)]="recordsPerPage"
+                      (ngModelChange)="getInstances()">
+                      <option *ngFor="let item of rowPerPageOptions" [value]="item">
+                          <span class="page-text">View:</span>
+                          {{ item }}
+                      </option>
+                  </select>
+              </div>
+              <div>
+                  <app-avms-filter (filterChange)="filterInstances($event)"></app-avms-filter>
+              </div>
+          </div>
+      </div>
+      <div class="subscription-table-align">
+              <div class="subscription-table">
+                <section class="tables-container mat-elevation-z8" tabindex="0">
+                <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="Instance">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('instance_name')">Instance</th>
+                    <td mat-cell *matCellDef="let element" [routerLink]="['/instance/'+element.instance]" style="color: #285dd9; font-weight: 500;">{{element.instanceDescription}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Provider">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('provider')">Provider</th>
+                    <td mat-cell *matCellDef="let element">{{element.provider}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Size">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('size_name')">Size</th>
+                    <td mat-cell *matCellDef="let element">
+                    <img *ngIf="element.schedule_scalling" src="/assets/icons/watch.png" alt="scaling-schedule"/>{{element.sizeName}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Label">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('label_name')">Label</th>
+                    <td mat-cell *matCellDef="let element">{{element.labelName}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="Savings">
+                    <th style="text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('schedule_saving')">Savings</th>
+                    <td style="text-align: center;" mat-cell *matCellDef="let element">
+                        <span *ngIf="element.savings>=0" class="trending-up item">
+                        <img src="/assets/icons/trending-up.png" alt="trending-up">
+                        <span class="saving">{{element.savings}}%</span>
+                        </span>
+                        <span *ngIf="element.savings<0" class="trending-down item">
+                        <img src="/assets/icons/trending-down.png" alt="trending-down">
+                        <span class="saving">{{element.savings}}%</span>
+                        </span>
+                    </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Recommendation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('recommendation')">Recommendation</th>
+                    <td mat-cell *matCellDef="let element">
+                    <span [class.recommendation-yes]="element.recommendation?'YES':'NO'" class="item">{{ element.recommendation }}</span></td>
+                    </ng-container>
+                    <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('status_name')">Status</th>
+                    <td mat-cell *matCellDef="let element">
+                    <span [ngClass]="element.status==1?'hilite-green':'hilite-red'">{{ element.statusName }}</span>
+                    </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Scheduled">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('schedule_name')">Scheduled</th>
+                    <td mat-cell *matCellDef="let element">
+                    <span [ngClass]="element.scheduleName==='LOCKED'?'hilite-red':element.scheduleName==='Not Scheduled'?'hilite-yellow':'hilite-green'">
+                        {{ element.scheduleName }}</span>
+                    </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Actions">
+                    <th class="new-text-align" mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let row">
+                    <div class="row-controls item nav">
+                        <div class="tooltip-host">
+                        <mat-icon class="refresh-icon" (click)="hardRefresh(row)">autorenew</mat-icon>
+                        <span class="tooltip-container refresh-popup-align">
+                        <app-tooltip [tooltipText]="'Refresh Instance'" tooltipPosition="top"></app-tooltip>
+                        </span>
+                        </div>
+                            <div class="tooltip-host">
+                                <img src="/assets/icons/security-gray.png" alt="security" (click)="secureAccount(row)">
+                                <span class="tooltip-container">
+                                    <app-tooltip [tooltipText]="'Do not schedule'" tooltipPosition="top"></app-tooltip>
+                                </span>
+                            </div>
+                            <div class="tooltip-host">
+                                <img src="/assets/icons/schedule-gray.png" alt="schedule"
+                                    (click)="scheduleInstance(row)">
+                                <span class="tooltip-container">
+                                    <app-tooltip [tooltipText]="'Apply schedule'" tooltipPosition="top"></app-tooltip>
+                                </span>
+                            </div>
+                        <div class="tooltip-host">
+                            <img src="/assets/icons/scaling-schedule-gray.png" alt="scaling-schedule"
+                            [routerLink]="['/instance/scaling-schedule', row.instance]">
+                            <span class="tooltip-container">
+                                <app-tooltip [tooltipText]="'Scaling Schedule'" tooltipPosition="top"></app-tooltip>
+                            </span>
+                        </div>
+                        <!-- <div *ngIf="row.status===2 || row.scheduleName==='LOCKED' || row.scheduleName==='Not Scheduled'"
+                            class="tooltip-host">
+                            <img src="/assets/icons/snooze-gray.png" alt="no-snooze">
+                        <span class="tooltip-container">
+                                <app-tooltip [tooltipText]="'Postpone shutdown'"
+                                    tooltipPosition="top"></app-tooltip>
+                            </span>
+                        </div>
+                        <div *ngIf="row.status!==2 && row.scheduleName!=='LOCKED' && row.scheduleName!=='Not Scheduled'"
+                            class="tooltip-host">
+                            <img src="/assets/icons/snooze.png" alt="snooze" (click)="postponeShutdown(row)">
+                            <span class="tooltip-container">
+                                <app-tooltip [tooltipText]="'Postpone shutdown'"
+                                    tooltipPosition="top"></app-tooltip>
+                            </span>
+                        </div> -->
+                        <div class="tooltip-host">
+                        <img src="/assets/icons/finetune.png" [ngClass]="{'disableFineTuningImg': row.scheduleName ==='LOCKED' || row.scheduleName==='Not Scheduled'}"
+                        (click)="navigateToInstance(row.instance, row.schedule)">
+                        <span class="tooltip-container">
+                            <app-tooltip [tooltipText]="'Weekly Fine Tuning'"
+                                tooltipPosition="top"></app-tooltip>
+                        </span>
+                        </div>
+                        <div class="tooltip-host">
+                            <img src="/assets/icons/aspect_ratio-gray.png" alt="size" (click)="scaleInstance(row)">
+                            <span class="tooltip-container">
+                                <app-tooltip [tooltipText]="'Resize instance'" tooltipPosition="top"></app-tooltip>
+                            </span>
+                        </div>
+                        <div class="tooltip-host" *ngIf="row.status===1">
+                            <img src="/assets/icons/stop_circle-gray.png" alt="stop"
+                                (click)="startStopInstance(row)">
+                            <span class="tooltip-container">
+                                <app-tooltip [tooltipText]="'Stop instance'" tooltipPosition="top"></app-tooltip>
+                            </span>
+                        </div>
+                        <div class="tooltip-host" *ngIf="row.status===2">
+                            <img src="/assets/icons/play-gray.png" alt="play" (click)="startStopInstance(row)">
+                            <span class="tooltip-container">
+                                <app-tooltip [tooltipText]="'Start instance'" tooltipPosition="top"></app-tooltip>
+                            </span>
+                        </div>
+                    </div>
+                </td>
+                </ng-container>
+                <tr class="table-header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data">
+                    No data Found
+                </td>
+                </tr>
+        </table>
+        </section>
+        </div>
+      </div>
+      <div class="subscription-table-navigation">
+          <app-table-navigation-controls [paginationInfo]="paginationInfo" (pageChange)="pageChange($event)">
+          </app-table-navigation-controls>
+      </div>
+  </div>
+
+</div>

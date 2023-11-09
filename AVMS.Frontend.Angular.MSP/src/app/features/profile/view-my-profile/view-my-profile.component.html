@@ -1,0 +1,104 @@
+<div class="my-profile-container">
+    <div class="my-profile-header">
+        <div class="profile-breadcrumbs">
+            <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+        </div>
+        <div class="title">My Profile</div>
+        <div class="text-icon" >
+            <button mat-raised-button (click)="toggleToEdit()">
+                <mat-icon>edit &nbsp;</mat-icon>Edit</button>
+        </div>
+    </div>
+
+    <div class="my-profile-host">
+        <!-- <span class="title1">Details</span> -->
+        <div class="my-profile-content">
+            <div class="my-profile-form">
+                <div class="profile">
+                    <div class="photo">
+                        <!-- <img src="/assets/profileimage.jpg" alt="profile photo"> -->
+                        <!-- <img src="/assets/images/profileimage.jpg" alt="profile" class="icon-profile"> -->
+                        <img src="data:image/jpeg;base64,{{myProfile.avatar}}" alt="profile" class="icon-profile">
+                        <div>
+                            <!-- <app-avms-button class="right-button" text="Preview"
+                            [backgroundColor]="'#F5F6FA'"
+                            [fontColor]="'#000000'"
+                            (click)="previewAvatar()"></app-avms-button> -->
+                            <button class="right-button" (click)="previewAvatar()">Preview</button>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <form class="example-form">
+                            <mat-form-field>
+                              <mat-label class="form-label">First Name</mat-label>
+                              <!-- <input matInput class="form-input" value="Chanikya"> -->
+                              <input matInput class="form-input" [(ngModel)]="myProfile.first_name" [value]="myProfile.first_name">
+                            </mat-form-field>
+                          
+                            <mat-form-field class="example-full-width">
+                                <mat-label class="form-label">Last Name</mat-label>
+                                <input matInput class="form-input" [(ngModel)]="myProfile.last_name" [value]="myProfile.last_name">
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                                <mat-label class="form-label">Email Address</mat-label>
+                                <input matInput class="form-input" [(ngModel)]="myProfile.email" [value]="myProfile.email">
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                                <mat-label class="form-label">Country</mat-label>
+                                <input matInput class="form-input" [(ngModel)]="myProfile.country_name" [value]="myProfile.country_name">
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                                <mat-label class="form-label">Timezone</mat-label>
+                                <input matInput class="form-input" [(ngModel)]="myProfile.timezone_name" [value]="myProfile.timezone_name">
+                            </mat-form-field>
+                          </form>
+                    <!-- <div class="property-section">
+                        <span class="field-tag">Last Name</span>
+                        <span class="field-value">{{myProfile.last_name}}</span>
+                    </div>
+                    <div class="property-section">
+                        <span class="field-tag">E-mail Address</span>
+                        <span class="field-value">{{myProfile.email}}</span>
+                    </div>
+                    <div class="property-section">
+                        <span class="field-tag">Company</span>
+                        <span class="field-value">{{myProfile.company_name}}</span>
+                    </div>
+                    <div class="property-section">
+                        <span class="field-tag">Country</span>
+                        <span class="field-value">{{myProfile.country_name}}</span>
+                    </div>
+                    <div class="property-section">
+                        <span class="field-tag">Timezone</span>
+                        <span class="field-value">{{myProfile.timezone_name}}</span>
+                    </div> -->
+                    <!-- <div class="property-section">
+                        <span class="field-tag">Role</span>
+                        <span class="field-value">{{myProfile.role_name}}</span>
+                    </div>
+                    <div class="property-section">
+                        <span class="field-tag">Teams</span>
+                        <span class="field-value">{{myProfile.teams}}</span>
+                    </div> -->
+                </div>
+                </div>
+                <!-- <div class="photo">
+                    <img src="data:image/jpeg;base64,{{myProfile.avatar}}" alt="profile photo" class="avatar-img">
+                    <div>
+                        <app-avms-button class="right-button" text="Preview"
+                        [backgroundColor]="'#63FFFE'"
+                        [fontColor]="'#000000'"
+                        (click)="previewAvatar()"></app-avms-button>
+                    </div>
+                </div> -->
+            </div>
+            
+            <!-- <div class="footer">
+                <app-avms-button class="right-button" text="Edit"
+                [backgroundColor]="'#63FFFE'"
+                [fontColor]="'#000000'"
+                (click)="toggleToEdit()"></app-avms-button>
+            </div> -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+
+.full-width {
+  width: 753px;
+  height: 300px;
+  margin-top: -15px;
+}
+
+.full-width-narrow {
+  width: 753px;
+  margin: 10px;
+  margin-top: -15px;
+  height: 300px;
+}
+
+.wide {
+    width: 600px;
+    margin-top: -15px;
+    height: 300px;
+}
+
+.narrow {
+    width: 775px;
+    margin-top: -15px;
+    height: 300px;
+}
+
+.demo-chart {
+  width: 98%;
+  height: 300px;
+}
+
+@media screen and (max-width: 480px) {
+  .demo-chart {
+    width: 150px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .demo-chart {
+    width: 98%;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .demo-chart {
+    width: 98%;
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1200px) {
+  .demo-chart {
+    width: 98%;
+  }
+}
+
+@media screen and (min-width: 1201px) and (max-width: 1800px) {
+  .demo-chart {
+    width: 98%;
+  }
+}
+
+@media screen and (min-width: 1801px) and (max-width: 3000px) {
+  .demo-chart {
+    width: 98%;
+  }
+}

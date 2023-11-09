@@ -1,0 +1,29 @@
+<div class="add-account-azure-container">
+    <div class="sub-text">
+        The information below is available at the Azure Portal, complete the fields to ADD your Account, please.
+    </div>
+<div class="form">
+    <div class="field">
+        <div class="label">Account Friendly Name <span>(*)</span></div>
+        <input type="text" placeholder="Input your desired name for the account" [(ngModel)]="account.name" (ngModelChange)="update()">
+    </div>
+    <div class="field">
+        <div class="label">Azure Tenant Domain<span>(*)</span></div>
+        <input type="text" placeholder="Input your <domain> .onmicrosoft.com" [(ngModel)]="account.tenant_domain" (ngModelChange)="update()">
+    </div>
+    <div class="field">
+        <div class="label">App Client ID <span>(*)</span></div>
+        <input type="text" placeholder="Input your Azure ID App Client ID" [(ngModel)]="account.client_id" (ngModelChange)="update()">
+    </div>
+    <div class="field">
+        <div class="label">App Client Key <span>(*)</span></div>
+        <input type="text" placeholder="Input your Azure ID App Client Key" [(ngModel)]="account.client_secret" (ngModelChange)="update()">
+        </div>
+</div>
+</div>
+<!-- <div class="divider"></div>
+<div class="footer">
+    <button type="submit" class="submit" (click)="dialogclose()" >Confirm</button>
+      <button type="cancel" class="cancel" (click)="dialogclose()" >Cancel</button>
+
+</div> -->

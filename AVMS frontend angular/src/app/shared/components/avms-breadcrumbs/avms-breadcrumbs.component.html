@@ -1,0 +1,11 @@
+<div class="breadcrumbs-container">
+    
+    <span *ngFor="let item of breadcrumbs; index as i">
+        <span *ngIf="i>0">
+            <span class="separator">&nbsp;/ </span>
+        </span>
+        <span *ngIf="item.url" class="link" [routerLink]="[item.url]">{{ item.label }}</span>
+        <span *ngIf="!item.url" class="active">{{ item.label }}</span>
+    </span>
+
+</div>

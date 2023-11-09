@@ -1,0 +1,52 @@
+trigger:
+  - develop
+
+variables:
+  - name: buildAgent
+    value: 'ubuntu-latest'
+  - name: dockerfilePath
+    value: '$(Build.SourcesDirectory)/Dockerfile.dev'
+  - name: acrRegistryServiceConnection
+    value: 'kalibr8cr'
+  - name: acrImageRepository
+    value: 'kalibr8mspdev'
+  - name: acrTag
+    value: '$(Build.BuildNumber)'
+
+stages:
+  - stage: Build
+    pool:
+        vmImage: $(buildAgent) 
+    jobs:
+    - job: Docker_Build
+      steps:
+      - checkout: self
+        persistCredentials: true
+      - task: Docker@2
+        inputs:
+          command: buildAndPush
+          repository: $(acrImageRepository)
+          dockerfile: $(dockerfilePath)
+          containerRegistry: $(acrRegistryServiceConnection)
+          tags: $(acrTag)
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            git config --global user.name "kalibr8"
+            git config --global user.email "build@kalibr8.io"
+            git tag -a $(Build.BuildNumber) -m pipelinetag
+            git push origin --tags
+      
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: '$(Build.SourcesDirectory)/'
+          Contents: '**'
+          TargetFolder: '$(build.artifactstagingdirectory)'
+      
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'

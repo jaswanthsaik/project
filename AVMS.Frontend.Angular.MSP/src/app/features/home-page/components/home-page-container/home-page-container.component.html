@@ -1,0 +1,236 @@
+<div class="home-container">
+  <div class="top-container group-card-align">
+    <div class="home-cards">
+      <div class="icon-container" icon>
+        <img src="/assets/images/home-vector.svg" alt="schedule" />
+      </div>
+      <div class="pad-lt15">
+        <p value class="home-cards-heading">{{ resume?.account_number }}</p>
+        <p text class="home-cards-subtext">Accounts</p>
+      </div>
+    </div>
+    <div class="home-cards">
+      <div class="icon-container" icon>
+        <img src="/assets/images/instance-vector.svg" alt="schedule" />
+      </div>
+      <div class="pad-lt15">
+        <p value class="home-cards-heading">{{ resume?.instance_number }}</p>
+        <p text class="home-cards-subtext">Instances</p>
+      </div>
+    </div>
+    <div class="home-cards">
+      <div class="icon-container" icon>
+        <img src="/assets/images/resource-vector.svg" alt="schedule" />
+      </div>
+      <div class="pad-lt15">
+        <p value class="home-cards-heading">{{ resume?.resource_number }}</p>
+        <p text class="home-cards-subtext">Resources</p>
+      </div>
+    </div>
+    <div class="home-cards">
+      <div class="icon-container" icon>
+        <img src="/assets/images/money-vector.svg" alt="schedule" />
+      </div>
+      <div class="pad-lt15">
+        <p value class="home-cards-heading">
+          {{ resume?.percent_saving_money }}%
+        </p>
+        <p text class="home-cards-subtext">Instances Saving Money</p>
+      </div>
+    </div>
+    <div class="home-cards">
+      <div class="icon-container" icon>
+        <img src="/assets/images/not-save.svg" alt="schedule" />
+      </div>
+      <div class="pad-lt15">
+        <p value class="home-cards-heading">
+          {{ resume?.total_instance_not_saving_money }}
+        </p>
+        <p text class="home-cards-subtext">Instances not Saving Money</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showGettingStarted" class="middle-container">
+    <div class="accounts-saving-align">
+      <div class="main-section">
+        <div class="card1">
+          <div class="middle-title">
+            <span>Accounts Savings (USD)</span>
+            <div class="controls">
+              <app-avms-button [selected]="selectedMainGraphInterval === 1" text="Annual"
+                (onClick)="getMainGraphData(1)" [class.selected]="selectedMainGraphInterval === 1"></app-avms-button>
+              <app-avms-button [selected]="selectedMainGraphInterval === 2" text="6 Months"
+                (onClick)="getMainGraphData(2)" [class.selected]="selectedMainGraphInterval === 2"></app-avms-button>
+              <app-avms-button [selected]="selectedMainGraphInterval === 3" text="3 Months"
+                (onClick)="getMainGraphData(3)" [class.selected]="selectedMainGraphInterval === 3"></app-avms-button>
+              <app-avms-button [selected]="selectedMainGraphInterval === 4" text="1 Month"
+                (onClick)="getMainGraphData(4)" [class.selected]="selectedMainGraphInterval === 4"></app-avms-button>
+              <app-avms-button [selected]="selectedMainGraphInterval === 5" text="14 days"
+                (onClick)="getMainGraphData(5)" [class.selected]="selectedMainGraphInterval === 5"></app-avms-button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="middle-title1">
+            This view provides the total savings on instances scheduling on the
+            selected period
+          </div>
+          <div class="mini-card">
+            <app-savings-chart [xAxisLegend]="xAxisLegend" [seriesLabels]="seriesLabels" [seriesData]="seriesData"
+              [tooltipData]="tooltipData"></app-savings-chart>
+          </div>
+        </div>
+      </div>
+      <div class="instance-section">
+        <div class="col">
+          <div class="mar-bt4 sideview-align">
+            <app-side-widget contentType="graph">
+              <span title>
+                <div class="best-instance">
+                  <div class="best-align">
+                    <div>
+                      <img src="/assets/images/feature1.svg" class="vector-image1" />
+                    </div>
+                    <div class="mar-lt-10">Best Instances</div>
+                  </div>
+                  <div>
+                    <app-avms-dropdown class="mar-rt-10" [lookup]="bestInstancesPeriods"
+                      (selectedValueChange)="getInstanceGraph(+$event)"></app-avms-dropdown>
+                  </div>
+                </div>
+              </span>
+
+              <div class="check-align">
+                <app-half-doughnut-chart [data]="instanceGraphData"
+                  (instanceClicked)="instanceClicked()"></app-half-doughnut-chart>
+                <a class="check-schedule" (click)="instanceClicked()">check schedules</a>
+                <app-search-instance class="search-instance" [class.hide]="!showSearchInstance"
+                  (close)="showSearchInstance = false"></app-search-instance>
+              </div>
+            </app-side-widget>
+          </div>
+
+          <div class="shadow-back">
+            <app-side-widget contentType="recommendation" [recommendations]="recommendations"
+              (recommendationClicked)="recommendationClicked($event)">
+              <span title>
+                <div class="recommend">
+                  <div>
+                    <img src="/assets/images/feature2.svg" class="vector-image1" />
+                  </div>
+                  <div class="mar-lt-10">Recommendations</div>
+                </div>
+              </span>
+            </app-side-widget>
+            <app-search-recommendation class="search-recommendation" [class.hide]="!showSearchRecommendation"
+              (close)="showSearchRecommendation = false"></app-search-recommendation>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showGettingStarted" class="bottom-container">
+  <div class="bottom-title">
+    <span class="summary">Summary</span>
+    <div class="controls">
+      <app-avms-button [selected]="selectedSummaryInterval === 1" text="Annual" (onClick)="getSummaryData(1)"
+        [class.selected]="selectedSummaryInterval === 1"></app-avms-button>
+      <app-avms-button [selected]="selectedSummaryInterval === 2" text="6 Months" (onClick)="getSummaryData(2)"
+        [class.selected]="selectedSummaryInterval === 2"></app-avms-button>
+      <app-avms-button [selected]="selectedSummaryInterval === 3" text="1 Month" (onClick)="getSummaryData(3)"
+        [class.selected]="selectedSummaryInterval === 3"></app-avms-button>
+    </div>
+  </div>
+  <div class="box-flex pad-bt-15">
+    <div class="box-size">
+      <div class="bottom-subtitle text-center">RESOURCES AND INSTANCES</div>
+      <div class="bottom-box-align box-size">
+        <div class="number-box">
+          <div class="bottom-gauge">
+            <app-avms-gauge [value]="summary.percent_used_resource" [triggerChange]="summary" text="of used Resources"
+              [color]="'rgba(46, 179, 173, 0.5)'"></app-avms-gauge>
+            <span class="bottom-subtext">Out of your {{ summary.total_account }} Accounts you are only
+              saving with <span>{{ summary.total_account_used }} </span> of them
+              which have scheduled instances</span>
+          </div>
+        </div>
+        <div class="number-box">
+          <div class="bottom-gauge">
+            <app-avms-gauge [value]="summary.percent_used_virtual_machine" [triggerChange]="summary"
+              text="of used Instances" [color]="'rgba(249, 99, 50, 0.8)'"></app-avms-gauge>
+            <span class="bottom-subtext">Out of your {{ summary.total_virtual_machine }} Instances you are
+              only saving with
+              <span>{{ summary.total_used_virtual_machine }} Instances</span>
+              that are scheduled</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box-size">
+      <div class="bottom-subtitle  text-center">SAVINGS</div>
+      <div class="bottom-box-align box-size">
+        <div class="number-box">
+          <div class="bottom-gauge">
+            <app-avms-gauge [value]="summary.percent_saving_virtual_machine" [triggerChange]="summary" text="total in %"
+              [color]="'rgba(48, 194, 71, 1)'"></app-avms-gauge>
+            <span class="bottom-subtext">Biggest saving was on<br /><span>
+                {{ summary.most_virtual_machine_saving }}</span><br /><br /></span>
+          </div>
+        </div>
+        <div class="number-box">
+          <div class="bottom-gauge">
+            <app-avms-gauge [value]="summary.total_percent_saving_virtual_machine" [triggerChange]="summary"
+              text="total in %" [color]="'rgba(48, 194, 71, 0.5)'"></app-avms-gauge>
+            <span class="bottom-subtext">You can save an additional<br /><span>{{
+                summary.total_percent_can_saving_virtual_machine }}%</span>
+              by scheduling more instances<br /><br /></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="conatiner"> -->
+
+<div class="card2">
+  <div class="header">
+    <h2>Instances<br>distribution</h2>
+    <div class="card1-1">
+      <div class="subscription" [style.backgroundColor]="isSubscriptionActive ? '#285DD9' : '#F5F5F5'"
+      [style.cursor]="'pointer'"
+        [style.color]="isSubscriptionActive ? '#ffffff' : '#525252'" (click)="onSubscriptionClick()">subscription</div>
+
+      <div class="Account" [style.backgroundColor]="isAccountActive ? '#285DD9' : '#F5F5F5'"
+      [style.cursor]="'pointer'"
+        [style.color]="isAccountActive ? '#ffffff' : '#525252'" (click)="onAccountClick()">Account</div>
+
+      <div class="Resource" [style.backgroundColor]="isResourceGroupActive ? '#285DD9' : '#F5F5F5'"
+      [style.cursor]="'pointer'"
+        [style.color]="isResourceGroupActive ? '#ffffff' : '#525252'" (click)="onResourceGroupClick()">Resource group
+      </div>
+    </div>
+  </div>
+  <div class="divider2"></div>
+  <div id="chartdiv2" style="height: 500px;"></div>
+</div>
+<div class="card">
+  <div class="header">
+    <h1>Optimization Status</h1>
+    <div class="card1">
+      <div class="Accounts" [style.backgroundColor]="isAccountsActive ? '#285DD9' : '#F5F5F5'"
+      [style.cursor]="'pointer'"
+        [style.color]="isAccountsActive ? '#ffffff' : '#525252'" (click)="onAccountsClick()">Accounts</div>
+
+      <div class="Region" [style.backgroundColor]="isRegionActive ? '#285DD9' : '#F5F5F5'"
+      [style.cursor]="'pointer'"
+        [style.color]="isRegionActive ? '#ffffff' : '#525252'" (click)="onRegionClick()">Region</div>
+
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div id="chartdiv" style="height: 500px;"></div>
+</div>
+<!-- </div> -->

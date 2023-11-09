@@ -1,0 +1,66 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - release
+
+pool: 
+  vmImage: 'windows-latest'
+
+stages:
+  - stage: build
+    jobs:
+      - job:
+        steps:
+          - task: Npm@1  
+            displayName: 'Angular CLI 13.2.5'  
+            inputs:  
+              command: custom  
+              verbose: false  
+              customCommand: 'install -g @angular/cli@13.2.5'
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '16.x'
+            displayName: 'Install Node.js'
+          - script: npm install
+          - script: npm run build
+          - publish: dist
+            artifact: dist
+
+
+  - stage: deploy_uat
+    displayName: Deploy to UAT
+    variables:
+      - group: AVMS - UAT Angular Environment
+    jobs:
+      - deployment: DeployWeb
+        environment: avms-fe-angular-uat
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: replacetokens@3
+                  inputs:
+                    targetFiles: '$(Pipeline.Workspace)\dist\**\main*.js'
+                    encoding: 'auto'
+                    writeBOM: true
+                    verbosity: 'detailed'
+                    actionOnMissing: 'warn'
+                    keepToken: false
+                    actionOnNoFiles: 'continue'
+                    enableTransforms: false
+                    tokenPrefix: '#{'
+                    tokenSuffix: '}#'
+                    enableRecursion: false
+                    useLegacyPattern: false
+                    enableTelemetry: true
+                - task: AzureRmWebAppDeployment@4
+                  inputs:
+                    ConnectionType: 'AzureRM'
+                    azureSubscription: 'AVMS - UAT - Releases (62fce1df-ce84-405c-bc3e-444707516472)'
+                    appType: 'webApp'
+                    WebAppName: 'appangularuat'
+                    packageForLinux: '$(Pipeline.Workspace)/dist/'
+                

@@ -1,0 +1,33 @@
+
+<div *ngIf="loginInProgress" class="loading-indicator">Loading...</div>
+
+<!-- <div *ngIf="!loginInProgress" class="container-fluid">
+  <div class="main-menu" *ngIf="dockMainMenu()">
+    <app-main-menu></app-main-menu>
+  </div>
+  <div class="title-bar">
+    <app-title-bar (onExpand)="expandSideNav($event)"></app-title-bar>
+  </div>
+  <div class="side-nav" *ngIf="!dockMainMenu()" #sideNav>
+    <app-side-nav (onExpand)="expandSideNav($event)"></app-side-nav>
+  </div>
+ 
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div> -->
+
+<div *ngIf="!loginInProgress">
+  <div class="temp-align">
+    <div class="new-menu-align">
+      <app-main-menu></app-main-menu>
+    </div>
+    <div class="main-content">
+      <div class="main-content-align">
+        <router-outlet></router-outlet>
+      </div>
+      <app-avms-footer></app-avms-footer>
+    </div>
+  </div>
+</div>
+<ngx-spinner type="ball-spin-clockwise"></ngx-spinner>

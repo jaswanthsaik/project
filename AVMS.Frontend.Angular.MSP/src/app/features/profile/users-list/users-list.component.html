@@ -1,0 +1,105 @@
+<div class="user-anagement-container">
+  <div class="user-anagement-header">
+    <div class="user-anagement-breadcrumbs">
+      <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+      <div class="text-icon">
+        <button (click)="addUser()">
+          <!-- <mat-icon>add</mat-icon>Add New User</button> -->
+          <img src="/assets/images/add.svg" alt="add" />
+          <div class="head-button-align">
+            Add New User
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="user-anagement-table-host">
+    <div class="card1">
+      <div class="title1">Details</div>
+      <div class="demo-paginator">
+        <span class="filter">
+          <app-avms-filter (filterChange)="filter($event)"></app-avms-filter>
+        </span>
+      </div>
+
+      <!-- <div class="resources-table-controls">
+        <div class="resources-table-controls__left">
+        </div>
+        <div class="resources-table-controls__right">
+        </div>
+      </div> -->
+    </div>
+    <div class="table-align">
+    <div class="user-anagement-table tables-container">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="First Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('first_name')">First Name</th>
+          <td mat-cell *matCellDef="let element">{{element.first_name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Last Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('last_name')">Last Name</th>
+          <td mat-cell *matCellDef="let element">{{element.last_name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Email Address">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('email')">Email Address</th>
+          <td mat-cell *matCellDef="let element">{{element.email}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Timezone">
+          <th mat-header-cell *matHeaderCellDef>Timezone</th>
+          <td mat-cell *matCellDef="let element">{{element.timezone_name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="...">
+          <th mat-header-cell *matHeaderCellDef>
+            <!-- <mat-icon>more_horiz</mat-icon> -->
+            <img src="/assets/images/action.svg" alt="action"/>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="action-group-align">
+            <div class="tooltip-host" *ngIf="!element.isMyUser">
+              <!-- <span class="table-icon" (click)="editUser(element)"><mat-icon>edit</mat-icon></span> -->
+              <button  (click)="editUser(element)" class="custom-action"><img src="/assets/images/edit.svg" alt="edit"/></button>
+              <span class="tooltip-container popup-align">
+                <app-tooltip [tooltipText]="'Edit user'" tooltipPosition="top"></app-tooltip>
+              </span>
+            </div>
+            <div class="tooltip-host action-button-align" *ngIf="!element.isMyUser">
+              <!-- <span class="table-icon" (click)="deleteUser(element)"><mat-icon>delete</mat-icon></span> -->
+              <button (click)="deleteUser(element)" class="custom-action"><img src="/assets/images/trash.svg" alt="delete"/></button>
+              <span class="tooltip-container">
+                <app-tooltip [tooltipText]="'Remove user'" tooltipPosition="top"></app-tooltip>
+              </span>
+            </div>
+            <div class="tooltip-host" *ngIf="element.isMyUser">
+              <span>&mdash;</span>
+            </div>
+            </div>
+            <!-- <span class="table-icon"  (click)="editUser(element)"><mat-icon>edit</mat-icon></span>
+                      <span class="table-icon" (click)="deleteUser(element)"><mat-icon>delete</mat-icon></span> -->
+          </td>
+
+        </ng-container>
+        <tr class="table-header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data">
+            No data Found
+          </td>
+        </tr>
+      </table>
+    </div>
+    </div>
+    <div class= "row user-anagement-table-navigation">
+      <mat-paginator 
+        [pageSizeOptions]="rowPerPageOptions"
+        [pageSize]="recordsPerPage"
+        [length]="totalRecords"
+        [pageIndex]="currentPage - 1" 
+        (page)="pageChange($event)">
+        (filterChange)="filter($event)"
+</mat-paginator>
+            </div>
+  </div>
+</div>

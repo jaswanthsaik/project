@@ -1,0 +1,66 @@
+trigger:
+  - qa
+
+variables:
+  - name: buildAgentVmImageName
+    value: 'ubuntu-latest'
+  - name: dockerfilePath
+    value: '$(Build.SourcesDirectory)/Dockerfile.qa'
+  - name: acrRegistryServiceConnection
+    value: 'kalibr8crqa-Serviceconnection'
+  - name: acrImageRepository
+    value: 'appkalibr8qa'
+  - name: acrContainerRegistry
+    value: 'kalibr8crqa.azurecr.io'
+  - name: acrTag
+    value: '$(Build.BuildId)'
+  - name: acrImageUrl
+    value: $(acrContainerRegistry)/$(acrImageRepository):$(acrTag)
+  - name: azureServiceConnection
+    value: 'Kalibr8 - UAT - Releases'
+  - name: subscriptionId
+    value: '62fce1df-ce84-405c-bc3e-444707516472'
+  - name: resourceGroup
+    value: 'Kalibr8-QA-Containerize'
+  - name: resourceGroupLocation
+    value: 'northeurope'
+  - name: armTemplate
+    value: '$(Build.SourcesDirectory)/armtemplates/qa.json'
+  - name: kalibr8crqaPassword
+    value: $[variables.kalibr8crqa]
+
+pool: 
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Build
+    pool:
+        vmImage: $(buildAgentVmImageName) 
+    jobs:
+    - job: Docker_Build
+      steps:
+      - task: Docker@2
+        inputs:
+          command: buildAndPush
+          repository: $(acrImageRepository)
+          dockerfile: $(dockerfilePath)
+          containerRegistry: $(acrRegistryServiceConnection)
+          tags: $(acrTag)
+  - stage: Deploy
+    pool:
+        vmImage: $(buildAgentVmImageName) 
+    jobs:
+    - job: Deploying_Arm
+      steps:
+      - task: AzureResourceManagerTemplateDeployment@3
+        inputs:
+          deploymentScope: 'Resource Group'
+          azureResourceManagerConnection: '$(azureServiceConnection)'
+          subscriptionId: '$(subscriptionId)'
+          action: 'Create Or Update Resource Group'
+          resourceGroupName: '$(resourceGroup)'
+          location: '$(resourceGroupLocation)'
+          templateLocation: 'Linked artifact'
+          csmFile: '$(armTemplate)'
+          overrideParameters: '-container_image $(acrImageUrl) -unique_revision $(Build.BuildId) -registry_password $(kalibr8crqaPassword)'
+          deploymentMode: 'Incremental'

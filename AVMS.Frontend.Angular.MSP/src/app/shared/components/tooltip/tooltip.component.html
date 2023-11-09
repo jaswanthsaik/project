@@ -1,0 +1,7 @@
+
+<div class="box" [ngClass]="{'showtooltip': showtooltipForPastTime}">
+    <img *ngIf="tooltipPosition==='right'" src="/assets/images/tooltip-arrow.png" class="arrow">
+    <img *ngIf="tooltipPosition==='top'" src="/assets/images/tooltip-arrow-down.png" class="arrow-bottom">
+    <img *ngIf="tooltipPosition==='bottom'" src="/assets/images/tooltip-arrow-up.png" class="arrow-up">
+    <span>{{ tooltipText }}</span>
+</div>

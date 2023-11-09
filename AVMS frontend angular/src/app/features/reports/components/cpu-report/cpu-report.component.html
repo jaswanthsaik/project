@@ -1,0 +1,201 @@
+<div class="reports-container">
+  <div class="reports-header">
+    <div class="reports-breadcrumbs">
+      <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+    </div>
+    <div class="text-icon">
+      <span></span>
+    </div>
+    <div class="text-icon">
+      <button mat-raised-button (click)="export(selectedMainGraphInterval)">
+        <img src="/assets/images/Download.svg" />
+        <div class="head-button-align">Download</div>
+      </button>
+    </div>
+  </div>
+  <div class="filters">
+    <div class="section1">
+      <div class="label">Account</div>
+      <select class="account" (change)="accountSelected($event)">
+        <option *ngFor="let data of accountsLookup" value="{{data.id}}" [selected]="selectedAccount === data.id" [disabled]="data.id === '0'">
+          {{ data.description }}
+        </option>
+      </select>
+    </div>
+    <div class="section2">
+      <div class="label">Tenant</div>
+      <select class="account" (change)="tenantSelected($event)">
+        <option *ngFor="let data of tenantsLookup" value="{{data.id}}" [selected]="selectedTenant === data.id" [disabled]="data.id === '0'">
+          {{ data.description }}
+        </option>
+      </select>
+    </div>
+    <div class="section3">
+      <div class="label">Subscription</div>
+      <select class="subscription" (change)="subscriptionSelected($event)">
+        <option *ngFor="let data of subscriptionsLookup" value="{{data.id}}" [selected]="selectedSubscription === data.id" [disabled]="data.id === '0'">
+          {{ data.description }}
+        </option>
+      </select>
+    </div>
+    <div class="section3">
+      <div class="label">Resource Group</div>
+      <select class="subscription" (change)="resourceGroupSelected($event)">
+        <option *ngFor="let data of resourceGroupLookup" value="{{data.id}}" [selected]="selectedResourceGroup === data.id" [disabled]="data.id === '0'">
+          {{ data.description }}
+        </option>
+      </select>
+    </div>
+    <div class="section4">
+      <div class="label">Instance</div>
+      <select class="account" (change)="instanceSelected($event)">
+        <option *ngFor="let data of instancesLookup" value="{{data.id}}" [selected]="selectedInstance === data.id" [disabled]="data.id === '0'">
+          {{ data.description }}
+        </option>
+      </select>
+    </div>
+    <div class="section5">
+      <mat-select disableRipple class="filter" placeholder="Filters"
+      (selectionChange)="selectSavedFilterHandler($event)" [(ngModel)]="selectedFilter">
+      <mat-option *ngFor="let data of filterLookUp" value="{{data.id}}">
+        {{ data.description }}
+        <i *ngIf="data.id === '0'" (click)="openSaveNewFilter()" class="fa fa-plus"></i>
+        <i *ngIf="data.id != '0'" (click)="deleteFilter(data.id)" class="fa fa-trash"></i>
+      </mat-option>
+    </mat-select>
+    </div>
+    <div class="tooltip-host">
+      <mat-icon class="filter-icon1" (click)="clearFilter()">autorenew</mat-icon>
+      <span class="tooltip-container refresh-popup-align">
+      <app-tooltip [tooltipText]="'Refresh Filter'" tooltipPosition="top"></app-tooltip>
+      </span>
+      </div>
+    <!-- <app-avms-dropdown-large [lookup]="accountsLookup" (selectedValueChange)="accountSelected($event)"></app-avms-dropdown-large>
+        <app-avms-dropdown-large [lookup]="tenantsLookup" (selectedValueChange)="tenantSelected($event)"></app-avms-dropdown-large>
+        <app-avms-dropdown-large [lookup]="subscriptionsLookup" (selectedValueChange)="subscriptionSelected($event)"></app-avms-dropdown-large>
+        <div></div>
+        <app-avms-dropdown-large [lookup]="providersLookup" (selectedValueChange)="providerSelected($event)"></app-avms-dropdown-large> -->
+  </div>
+
+  <div class="reports-dashboard">
+    <div class="reports-table-host">
+      <div class="card1">
+        <span class="title1">Breakdown</span>
+      </div>
+      <div class="table-container1">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <ng-container matColumnDef="Time range">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Time range</th>
+            <td mat-cell *matCellDef="let element">{{element.reference_date}}</td>
+          </ng-container>
+          <ng-container matColumnDef="CPU">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>CPU</th>
+            <td mat-cell *matCellDef="let element">
+              <img src="/assets/icons/trending-up.png" alt="trending-up">
+              {{element.usages}} %
+            </td>
+          </ng-container>
+          <tr class="table-header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data">
+              No data
+            </td>
+          </tr>
+        </table>
+      </div>
+
+
+      <!-- <table>
+        <thead>
+          <tr class="header">
+            <th>Time range</th>
+            <th>CPU</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of data">
+            <td>{{ row.reference_date }}</td>
+            <td>
+              <div class="trending-up item">
+                <img src="/assets/icons/trending-up.png" alt="trending-up">
+                <span>{{ row.usages }}</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+
+    </div>
+    <div class="main-section">
+      <div class="card">
+        <div class="middle-title">
+          <div *ngIf="today">
+            <div class="title2">CPU Utilization (%)</div>
+          </div>
+          <div *ngIf="lastweek">
+            <div class="title2">CPU Utilization (%)</div>
+          </div>
+          <div *ngIf="lastmonth">
+            <div class="title2">CPU Utilization (%)</div>
+          </div>
+          <div class="controls">
+            <app-avms-button [selected]="selectedMainGraphInterval===1" text="Today" (onClick)="getMainGraphData(1)"
+              [class.selected]="selectedMainGraphInterval===1"></app-avms-button>
+            <app-avms-button [selected]="selectedMainGraphInterval===2" text="Last week" (onClick)="getMainGraphData(2)"
+              [class.selected]="selectedMainGraphInterval===2"></app-avms-button>
+            <app-avms-button [selected]="selectedMainGraphInterval===3" text="Last month"
+              (onClick)="getMainGraphData(3)" [class.selected]="selectedMainGraphInterval===3"></app-avms-button>
+          </div>
+        </div>
+      </div>
+      <div class="mini-card">
+        <div *ngIf="today">
+          <div class="middle-title1">This view provides the average CPU utilization per hour for the last day.</div>
+        </div>
+        <div *ngIf="lastweek">
+          <div class="middle-title1">This view provides the average CPU utilization per hour for the last 07 days.</div>
+        </div>
+        <div *ngIf="lastmonth">
+          <div class="middle-title1">This view provides the average CPU utilization per hour for the last 30 days.</div>
+        </div>
+        <!-- <div class="mini-card"> -->
+        <app-savings-chart [xAxisLegend]="xAxisLegend" [seriesLabels]="seriesLabels" [seriesData]="seriesData"
+          [tooltipData]="tooltipData" [showLegendTooltip]="false" [fullWidth]="true"
+          class="savings-chart"></app-savings-chart>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="reports-table-host">
+    <div class="card1">
+    <span class="title1">Breakdown</span>
+</div>
+        <div class="reports-table">
+            <div class="header-column corner-top-left"></div>
+
+            <div class="header-column">
+                <span>{{ headers[0].description }}</span>
+            </div>
+            <div class="header-column">
+                <span>{{ headers[1].description }}</span>
+            </div>
+
+            <div class="header-column corner-top-right"></div>
+            <span class="divider"></span>
+
+            <ng-container *ngFor="let row of data">
+                <div></div>
+                <div class="item">{{ row.reference_date }}</div>
+                <div class="trending-up item">
+                    <img src="/assets/icons/trending-up.png" alt="trending-up">
+                    <span>{{ row.total_saving }}</span>
+                </div>
+                <div></div>
+
+                <span class="divider1"></span>
+            </ng-container>
+        </div>
+    </div> -->
+</div>

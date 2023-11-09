@@ -1,0 +1,174 @@
+.add-schedule-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content auto min-content;
+    gap: 30px;
+    background: #FFFFFF;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #000000;
+    // padding-top: 15px;
+    // padding-left: 43px;
+    // padding-top: 10px;
+    // padding-bottom: 10px;
+    margin: 30px;
+
+    .section { 
+        margin: 15px 0px 0px 0px;
+        font-size: 14px;
+        font-family: 'Poppins';
+        font-weight: 400;
+        i{
+            font-weight: 500;
+        }
+    }
+
+    h2 {
+        font-size: 16px;
+        font-weight: normal;
+        margin-bottom: 5px;
+    }
+
+    .label {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+
+    .purple {
+        color: #FD2AF4;
+    }
+
+    .warning {
+        height: 99px;
+        background: #FFF0F0;
+        border: 1px solid #F41818;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 36px;
+        color: #FA0A0A;
+        padding: 15px;
+        text-justify: center;
+        text-align: center;
+    }
+    
+    .final {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        padding: 12px 0px 12px 20px;
+        gap: 8px;
+        background: #D4EDDA;
+        border: 1px solid #C3E6CB;
+        border-radius: 4px;
+    
+        .title {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 29px;
+            color: #155724;
+        }
+    
+        .message {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #155724;
+        }
+    }
+    // .text-icon {
+    //     display: grid;
+    //     grid-template-columns: 1fr auto;
+    //     align-items: center;
+    //     padding-right: 10px;
+    //     justify-items: end;
+    //     gap: 10px;
+    //     cursor: pointer;
+    //     span {
+    //         font-style: normal;
+    //         font-weight: 600;
+    //         font-size: 16px;
+    //         line-height: 24px;
+    //         text-align: right;
+    //         letter-spacing: -0.01em;
+    //         color: #6DFAD8;
+    //     }
+    // }
+    .text-icon {
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+        // margin-left: 350px;
+        justify-content: end;
+        
+        button {
+            font-weight: 400;
+            font-size: 14px;
+            color: #FFFFFF;
+            background: #285DD9;
+            border-radius: 5px;
+            border: none;
+            width: 195px;
+            height: 35px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        span {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: right;
+            letter-spacing: -0.01em;
+            color: #6DFAD8;
+        }
+    }
+    .text-icon-center {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        justify-items:center;
+        padding-top: 50px;
+        gap: 10px;
+        span {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: right;
+            letter-spacing: -0.01em;
+            color: #6DFAD8;
+            cursor: pointer;
+        }
+    }
+}
+.dropdown-align{
+    margin-left: -30px !important;
+    margin-top: -15px !important;
+}
+input {
+    width: 500px;
+    height: 36px;
+    left: 66px;
+    top: 257px;
+    border: 1px solid #FEFEFE;
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 21px;
+    color: #63FFFE;
+    background-color: transparent;
+    padding-left: 12px;
+    &::placeholder {
+        color: #63FFFE;
+        font-size: 12px;
+      }
+}

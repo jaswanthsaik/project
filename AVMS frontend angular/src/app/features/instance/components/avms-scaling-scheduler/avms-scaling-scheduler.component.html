@@ -1,0 +1,125 @@
+
+<div *ngIf="!isWeeklyFineTuningModule" class="top-grid">
+      
+    <div class="title2">Common Times to Schedule</div>
+    <div class="preset-values">
+        <button class="button1" (click)="presetSchedule(0)" (mouseover)="presetSchedule(0, true)" (mouseout)="clearPreview()">08:00 - 17:00</button>
+        <button class="button2" (click)="presetSchedule(1)" (mouseover)="presetSchedule(1, true)" (mouseout)="clearPreview()">08:00 - 18:00</button>
+        <button class="button3" (click)="presetSchedule(2)" (mouseover)="presetSchedule(2, true)" (mouseout)="clearPreview()">08:00 - 17:00 | Mon - Fri</button>
+        <button class="button4" (click)="presetSchedule(3)" (mouseover)="presetSchedule(3, true)" (mouseout)="clearPreview()">08:00 - 18:00 | Mon - Fri</button>
+            <button class="button5" (click)="presetSchedule(4)" (mouseover)="presetSchedule(4, true)" (mouseout)="clearPreview()">09:00 - 18:00</button>
+        <button class="button6" (click)="presetSchedule(5)" (mouseover)="presetSchedule(5, true)" (mouseout)="clearPreview()">06:00 - 20:00</button>
+        <button class="button7" (click)="presetSchedule(6)" (mouseover)="presetSchedule(6, true)" (mouseout)="clearPreview()">09:00 - 18:00 | Mon - Fri</button>
+        <button class="button8" (click)="presetSchedule(7)" (mouseover)="presetSchedule(7, true)" (mouseout)="clearPreview()">06:00 - 20:00 | Mon - Fri</button>
+    </div>
+</div>
+<div *ngIf="!isWeeklyFineTuningModule" class="timezoneRow">
+    <div class="field">
+        <div class="timezone">Timezone <span>(*)</span></div>
+        <div *ngIf="!isEditing" class="schedule-dropdown drop-align">
+            <app-avms-dropdown-large [lookup]="timezoneOptions" [selectedValue]="selectedTimezone" (selectedValueChange)="timezoneChanged($event)"></app-avms-dropdown-large>
+        </div>
+        <div *ngIf="isEditing">{{ getTimezoneName(selectedTimezone) }}</div>
+    </div>
+</div>
+<div *ngIf="isWeeklyFineTuningModule" class="size-scale-align p-3">
+    <div class="name-header-align">
+        <div class="title">Instance Name:</div>
+        <div class="name-align">{{this.instance?.instance_name}}</div>
+    </div>
+    <div class="name-header-align">
+        <div class="title">Schedule Name:</div>
+        <p class="name-align">{{this.instance?.schedule_name}}</p>
+    </div>
+    <div class="name-header-align">
+        <div class="title">Timezone:</div>
+        <p class="name-align">{{this.timezone.name}}</p>
+    </div>
+</div>
+
+<div *ngIf="!isWeeklyFineTuningModule" class="size-row">
+    <div>Choose New Size for Scaling</div>
+    <div class="size-scale-align">
+    <div class="old-size">
+    <div class="title">Actual Size</div>
+    <div class="drop-align">
+      <app-avms-dropdown-large *ngIf="!isEditing" [lookup]="scaleOptions" [selectedValue]="oldSize" (selectedValueChange)="oldScaleChanged($event)"></app-avms-dropdown-large>
+    </div>
+    <div *ngIf="isEditing">{{ oldSize }}</div>
+    </div>
+    <div>
+    <div class="title">New Size</div>
+    <div class="drop-align">
+        <app-avms-dropdown-large *ngIf="!isEditing" [lookup]="scaleOptions" [selectedValue]="newSize" (selectedValueChange)="scaleChanged($event)"></app-avms-dropdown-large>
+      </div>
+    <div *ngIf="isEditing">{{ newSize }}</div>
+    </div>
+    </div>
+</div>
+
+<div *ngIf="!isWeeklyFineTuningModule" class="clear-control">
+    <div class="title3">Drag to select hours</div>
+    <div class="clear-link" (click)="clearSchedule()">Clear Schedule</div>
+</div>
+<div class="table-align">
+<div (mouseleave)="mouseLeave()" class="table">
+
+    <div class="day-hour">DAY/HOURS</div>
+
+    <ng-container *ngFor="let hour of hours; index as i">
+        <div class="cell header" [ngClass]="{'weekDays': !isWeeklyFineTuningModule}" (click)="selectCol(i)" [style]="getHeaderStyle(i)">
+            {{hour}}
+        </div>
+    </ng-container>
+    <div></div>
+
+    <div *ngFor="let day of workingTable; index as xIndex" class="day-row">
+        <ng-container *ngFor="let hour of day; index as yIndex">
+            <div class="cell tooltip-text" [ngClass]="{'weekDays': !isWeeklyFineTuningModule}" [style.background-color]="selectedTable[xIndex][yIndex]"
+                (mousedown)="mouseDown($event, xIndex, yIndex)" (mouseover)="mouseOver($event, xIndex, yIndex)"
+                (mouseup)="mouseUp($event, xIndex, yIndex)" (click)="cellClick(xIndex, yIndex)">
+                <span *ngIf="yIndex === 0">{{ hour }}</span>
+                <span *ngIf="isWeeklyFineTuningModule && showtooltipForPastTime" class="tooltip-container">
+                    <app-tooltip [tooltipText]="showTooltipText" [showtooltipForPastTime]="showtooltipForPastTime" tooltipPosition="top"></app-tooltip>
+                </span>
+            </div>
+        </ng-container>
+        <div *ngIf="isWeeklyFineTuningModule"></div>
+        <div *ngIf="!isWeeklyFineTuningModule" class="tooltip-host cell">
+            <div (click)="clearRow(xIndex)" class="clear-button">
+                <img src="/assets/icons/delete_schedule1.svg" class="clear-row-schedule"  alt="delete">
+            </div>
+            <span class="tooltip-container">
+                <app-tooltip [tooltipText]="'Clear row'" tooltipPosition="top"></app-tooltip>
+            </span>
+        </div>  
+    </div>
+
+            <ng-container *ngFor="let hour of hours; index as i">
+                <div *ngIf="!isWeeklyFineTuningModule" class="cell header" [style]="getHeaderStyle(i)">
+                    <div class="tooltip-host">
+                        <div class="clear-button">
+                            <img src="/assets/icons/delete_schedule1.svg" class="clear-row-schedule" alt="delete" (click)="clearCol(i)">
+                        </div>
+                        <span class="tooltip-container">
+                            <app-tooltip [tooltipText]="'Clear column'" tooltipPosition="top"></app-tooltip>
+                        </span>
+                </div>  
+                </div>
+            </ng-container>
+    </div>
+</div>
+
+<div class="footer"> 
+    <div>
+    <div class="cancel-button" [routerLink]="['/accounts/resourceGroup', resourceGroupId]">Cancel</div>
+    </div>
+    <div *ngIf="isWeeklyFineTuningModule" class="align-flex">
+        <div class="primary-button" (click)="saveFineTuningSchedule()">Save</div>
+        <div *ngIf= "enableDeleteBtn" class="primary-button" (click)="fineTuningConfirmDelete()">Delete</div>
+    </div>
+    <div *ngIf="!isWeeklyFineTuningModule" class="align-flex">
+        <div class="primary-button" (click)="confirmSave()">Save</div>
+        <div *ngIf="isEditing" class="primary-button" (click)="confirmDelete()">Delete</div>
+    </div>
+</div>

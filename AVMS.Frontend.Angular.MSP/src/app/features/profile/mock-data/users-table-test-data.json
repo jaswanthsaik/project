@@ -1,0 +1,13 @@
+[ {
+    "first_name": "AVMS",
+    "last_name": "MSP Demo",
+    "email": "avmsmspadmin@advancedvmsolutions.io",
+    "company_name": "AVMS MSP - Demo",
+    "country_index": "3",
+    "country_name": "Ireland",
+    "timezone_name": "(UTC-09:00) Coordinated Universal Time-09",
+    "timezone": 1,
+    "role_name": "Financial",
+    "teams": ["Team Name 1", "Team Name 2"],
+    "selected": false
+}]

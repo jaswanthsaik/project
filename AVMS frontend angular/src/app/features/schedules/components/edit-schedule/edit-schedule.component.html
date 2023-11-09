@@ -1,0 +1,21 @@
+<div class="schedules-container">
+    <div class="schedules-header">
+        <div>
+        <div class="schedules-breadcrumbs">
+            <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+        </div>
+        <!-- <div class="title">Manage Schedule</div> -->
+        </div>
+        <div class="text-icon" (click)="addSchedule()">
+            <button>
+                <img src="/assets/images/add.svg" alt="add" />
+                <div class="head-button-align">Add New Schedule</div>
+            </button>
+        </div>
+    </div>
+    <div class="schedules-table-host">
+        <div class="schedules-table-container">
+            <app-avms-scheduler [schedule]="schedule" [scheduleEvents]="scheduleEvents" (eventsScheduled)="eventsScheduled($event)"></app-avms-scheduler>
+        </div>
+    </div>
+</div>

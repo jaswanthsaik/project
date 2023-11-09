@@ -1,0 +1,26 @@
+
+<div class="sw-container">
+    <div class="title">
+        <div>INSTANCES</div>
+        <img src="/assets/icons/close-cyan.png" alt="close" (click)="closeClicked()">
+    </div>
+
+    <div>
+        <app-avms-search (filterChange)="filterInstances($event)"></app-avms-search>
+    </div>
+
+    <div class="sw-content sw-scroll">
+        <div *ngFor="let instance of instances" class="instance">
+            <div class="instance-text" (click)="clicked(instance)" [routerLink]="['/instance', instance.instance ]">{{ instance.instance_name }}</div>
+            <div class="level">{{ instance.schedule_saving }}%</div>
+            <div class="divider"></div>
+        </div>
+        
+        <ng-content>
+        </ng-content>
+
+    </div>
+
+    <div class="bottom-link" [routerLink]="['/resources']">Show All Instances / VMs</div>
+
+</div>

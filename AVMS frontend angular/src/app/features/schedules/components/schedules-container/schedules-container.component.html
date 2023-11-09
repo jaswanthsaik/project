@@ -1,0 +1,168 @@
+<div class="schedules-container">
+  <div class="schedules-header">
+    <div class="schedules-breadcrumbs">
+      <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+    </div>
+    <div class="text-icon">
+      <button (click)="addSchedule()">
+        <!-- <mat-icon>add</mat-icon>Add New Schedule -->
+        <img src="/assets/images/add.svg" />
+        <div class="head-button-align">Add New Schedule</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="schedules-table-host">
+    <div class="card1">
+      <div class="title1">Details</div>
+      <div class="demo-paginator">
+        <!-- <div class="paginator1"> -->
+          <span class="bold"> {{ startRecord }} </span>&nbsp; to &nbsp;<span class="bold"> {{ endRecord }} &nbsp;</span>
+          <span class="bold"> of {{ totalRecords }}&nbsp;</span>
+        <!-- </div> -->
+        <!-- <div class="paginator2"> -->
+           &nbsp;
+          <select class="per-page-dropdown-container" [(ngModel)]="recordsPerPage"
+            (ngModelChange)="changePageSize()">
+            <option *ngFor="let item of rowPerPageOptions" [value]="item">{{ item }}</option>
+          </select>
+        <!-- </div> -->
+        <span class="filter">
+          <app-avms-filter (filterChange)="filterSchedule($event)"></app-avms-filter>
+        </span>
+      </div>
+
+      <!-- <div class="resources-table-controls">
+        <div class="resources-table-controls__left">
+        </div>
+        <div class="resources-table-controls__right">
+        </div>
+      </div> -->
+    </div>
+    <!-- <div class="schedules-table-container"> -->
+    <!-- <div class="schedules-table-controls">
+                <div class="schedules-table-controls__left">
+                    <div>
+                        <app-avms-filter (filterChange)="filter($event)"></app-avms-filter>
+                    </div>
+                </div>
+                <div class="schedules-table-controls__right">
+                    <div>
+                        <span class="bold">{{ startRecord }}</span> to <span class="bold">{{ endRecord }}</span> of
+                        <span class="bold">{{ totalRecords }}</span>
+                    </div>
+                    <div>
+                        Show
+                        <select class="per-page-dropdown-container" [(ngModel)]="recordsPerPage"
+                        (ngModelChange)="changePageSize()">
+                            <option *ngFor="let item of rowPerPageOptions" [value]="item">{{ item }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div> -->
+    <div class="table-align">
+    <div class="schedules-table">
+     <section class="tables-container" tabindex="0">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 schedule-table-background">
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('schedule_name')">Name</th>
+          <td mat-cell *matCellDef="let element" [routerLink]="[element.schedule]" style="cursor: pointer; color: #285dd9; font-weight: 500;">
+            {{element.schedule_name}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('schedule_description')">Description</th>
+          <td mat-cell *matCellDef="let element">{{element.schedule_description}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Timezone">
+          <th mat-header-cell *matHeaderCellDef>Time Zone</th>
+          <td mat-cell *matCellDef="let element">{{element.timezone_name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="In Use">
+          <th mat-header-cell *matHeaderCellDef>In Use</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="hilite-green" *ngIf="element.schedule_used">Yes</span>
+            <span class="hilite-red" *ngIf="!element.schedule_used">No</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Savings">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('schedule_saving')">Savings</th>
+          <td mat-cell *matCellDef="let element">{{element.schedule_saving}}%</td>
+        </ng-container>
+        <ng-container matColumnDef="...">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <!-- <div class="tooltip-host">
+                        <span class="table-icon"><mat-icon>edit</mat-icon></span>
+                        <span class="tooltip-container">
+                            <app-tooltip [tooltipText]="'Edit schedule'" tooltipPosition="top"></app-tooltip>
+                        </span>
+                    </div> -->
+                    <div style="display: flex;">
+            <div class="tooltip-host">
+              <!-- <span class="table-icon" [routerLink]="[element.schedule]"><mat-icon>event</mat-icon></span> -->
+              <button [routerLink]="[element.schedule]" class="custom-action"><img src="/assets/images/calendar.svg" alt="calendar" /></button>
+              <span class="tooltip-container">
+                <app-tooltip [tooltipText]="'manage schedule'" tooltipPosition="top"></app-tooltip>
+              </span>
+            </div>
+            <div class="tooltip-host action-button-align">
+              <!-- <span class="table-icon" (click)="removeSchedule(element)"><mat-icon>delete</mat-icon></span> -->
+              <button (click)="removeSchedule(element)" class="custom-action"><img src="/assets/images/trash.svg" alt="delete"/></button>
+              <span class="tooltip-container">
+                <app-tooltip [tooltipText]="'Remove schedule'" tooltipPosition="top"></app-tooltip>
+              </span>
+            </div>
+            </div>
+            <!-- <span class="table-icon"><mat-icon>edit</mat-icon></span> -->
+            <!-- <span class="table-icon" [routerLink]="[element.schedule]"><mat-icon>event</mat-icon></span>
+                      <span class="table-icon" (click)="removeSchedule(element)"><mat-icon>delete</mat-icon></span> -->
+          </td>
+        </ng-container>
+        <tr class="table-header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data">
+            No data Found
+          </td>
+        </tr>
+      </table>
+    </section>
+      <!-- <ng-container *ngFor="let header of headers; index as i">
+                    <div class="header-column">
+                        <span>{{ header.description }}</span>
+                        <img *ngIf="header.sortable" src="/assets/icons/sort-asc.png" alt="sort-asc" (click)="sortTable(i)">
+                    </div>
+                </ng-container>
+                <span class="divider"></span>
+                <ng-container *ngFor="let row of data">
+                    <div class="table-row">
+                        <div class="item"><b>{{ row.resource_name }}</b></div>
+                        <div class="item">{{ row.subscription_name }}</div>
+                        <div class="item">{{ row.recommendation_category_name }}</div>
+                        <div class="item">
+                            <div [ngClass]="row.recommendation_impact_name==='Low'?'hilite-green':row.recommendation_impact_name==='Medium'?'hilite-red':'hilite-red-bold'">{{ row.recommendation_impact_name }}</div>
+                        </div>
+                        <div class="item">{{ row.action_type }}</div>
+                        <div class="item">{{ row.action }}</div>
+                        <div class="row-controls">
+                            <div class="tooltip-host">
+                                <img src="/assets/icons/info.png" alt="sync" (click)="openRecommendations(row)" style="cursor: pointer;">
+                                <span class="tooltip-container">
+                                    <app-tooltip [tooltipText]="'More information'" tooltipPosition="top"></app-tooltip>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="divider"></span>
+                </ng-container> -->
+
+    </div>
+    </div>
+    <div class="row schedules-table-navigation">
+            <app-table-navigation-controls [paginationInfo]="paginationInfo" (pageChange)="pageChange($event)">
+            </app-table-navigation-controls>
+        </div>
+    <!-- </div> -->
+  </div>
+</div>

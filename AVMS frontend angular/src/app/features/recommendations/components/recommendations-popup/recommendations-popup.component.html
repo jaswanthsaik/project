@@ -1,0 +1,76 @@
+<div class="add-user-container">
+    <div class="profile-form">
+        <div class="message">
+            <div class="section">
+                <div class="label">Resource Name:</div>
+            </div>
+            <div class="section">
+                <div class="caption">{{resource_name}}</div>
+            </div>
+            <!-- <br /> -->
+            <div class="section">
+                <div class="label">Subscription:</div>
+            </div>
+            <div class="section">
+                <div class="caption">{{subscription_name}}</div>
+            </div>
+            <div class="section">
+                <div class="label">Resource Group:</div>
+            </div>
+            <div class="section">
+                <div class="caption">{{resource_group_name}}</div>
+            </div>
+            <!-- <br /> -->
+            <div class="section">
+                <div class="label">Category:</div>
+            </div>
+            <div class="section">
+                <div class="caption">{{recommendation_category_name}}</div>
+            </div>
+            <!-- <br /> -->
+            <div class="section">
+                <div class="label">Impact:</div>
+            </div>
+            <div class="section">
+                <div [ngClass]="recommendation_impact_name==='Low'?'hilite-green':recommendation_impact_name==='Medium'?'hilite-red':'hilite-red-bold'">{{ recommendation_impact_name }}</div>
+            </div>
+            <!-- <br /> -->
+            <div class="section">
+                <div class="label">Problem:</div>
+            </div>
+            <div class="section">
+                <div class="caption">{{problem}}</div>
+            </div>
+            <!-- <br /> -->
+            <div class="section">
+                <div class="label">Solution:</div>
+            </div>
+            <div class="section">
+                <div class="caption">{{solution}}</div>
+            </div>
+            <!-- <br /> -->
+            <div class="section">
+                <div class="label">Suggested Action:</div>
+            </div>
+            <div class="section">
+                <div class="caption">{{action}}</div>
+            </div>
+            <!-- <br /> -->
+            <div class="section">
+                <div class="label">Action Details:</div>
+            </div>
+            <div class="section">
+                <div class="caption">{{action_detail}}</div>
+            </div>
+            <!-- <br /> -->
+            <div class="section">
+                <div class="label">Potential Benefits:</div>
+            </div>
+            <div class="section">
+                <div class="caption">{{potential_benefit}}</div>
+            </div>
+            <!-- <br /> -->
+        </div>
+    </div>
+</div>
+

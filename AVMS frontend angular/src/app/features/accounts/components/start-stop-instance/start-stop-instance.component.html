@@ -1,0 +1,21 @@
+<div class="start-stop-account-container">
+ 
+    <div *ngIf="showConfirmation" class="warning">
+        This action will cancel the active snooze option. Do you wish to continue?
+    </div>
+
+    <div>You can switch the Status of the {{instanceName}} below.</div>
+
+    <div class="decision-align">
+        <app-avms-toggle 
+        [toggleStatus]="started" 
+        offLabel="Stop"
+        onLabel="Play"
+        (toggleStatusChange)="statusChanged($event)">
+        </app-avms-toggle>
+
+    </div>
+
+    <div></div>
+
+</div>

@@ -1,0 +1,69 @@
+<div class="modal-dialog-align">
+    <div>
+  <div class="modal-dialog-container">
+    <div class="header">
+      <span class="title1">{{ data.title }}</span>
+      <button
+        type="button"
+        data-dismiss="modal"
+        (click)="close()"
+        class="close"
+      >
+        <img src="/assets/images/closecircle.svg" alt="close" />
+      </button>
+    </div>
+
+    <div class="dialog-main-content">
+      <ng-template [cdkPortalOutlet]="data.portal"></ng-template>
+    </div>
+
+    <div
+      *ngIf="data.confirmTitle || data.confirmMessage"
+      class="confirm-box"
+      [class.success-dialog]="dialogType === 'success'"
+      [class.alert-dialog]="dialogType === 'alert'"
+    >
+      <div
+        class="title"
+        [class.success-dialog]="dialogType === 'success'"
+        [class.alert-dialog]="dialogType === 'alert'"
+      >
+        {{ data.confirmTitle }}
+      </div>
+      <div
+        class="message"
+        [class.success-dialog]="dialogType === 'success'"
+        [class.alert-dialog]="dialogType === 'alert'"
+        [innerHtml]="data.confirmMessage"
+      ></div>
+    </div>
+
+    <div class="footer">
+      <div
+        *ngIf="data.secondaryButtonText"
+        class="secondary-button"
+        [ngClass]="secondaryButtonColumn === 1 ? 'left' : 'center'"
+        (click)="secondary()"
+      >
+        {{ data.secondaryButtonText }}
+      </div>
+      <div
+        *ngIf="data.primaryButtonText"
+        class="primary-button"
+        [ngClass]="primaryButtonColumn === 3 ? 'right' : 'center'"
+        (click)="primary()"
+      >
+        {{ data.primaryButtonText }}
+      </div>
+      <div
+        *ngIf="data.cancelButtonText"
+        class="cancel-button"
+        [ngClass]="cancelButtonColumn === 1 ? 'left' : 'center'"
+        (click)="close()"
+      >
+        {{ data.cancelButtonText }}
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

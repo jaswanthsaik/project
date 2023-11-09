@@ -1,0 +1,5 @@
+<select class="dropdown-container" [(ngModel)]="selectedValue" (ngModelChange)="select()">
+  <option *ngFor="let item of lookup" [value]="item.id">
+    {{ item.description }}
+  </option>
+</select>

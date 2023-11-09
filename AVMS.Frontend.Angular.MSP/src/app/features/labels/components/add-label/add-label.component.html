@@ -1,0 +1,99 @@
+<div class="add-label-container">
+    <!-- <div class="card-header">
+        <span class="title1">Add/remove instances from Label</span>
+        <button type="button" class="close" data-dismiss="modal" (click)="dialogclose()">&times;</button>
+</div> -->
+<div class="body">
+    <div class="form">
+        <div class="field">
+            <div *ngIf="!editing" class="label">New Label <span>(*)</span></div>
+             <div *ngIf="editing" class="label">Label Name</div>
+            <input type="text" [(ngModel)]="name">
+        </div>
+        <div class="field">
+            <div class="label">Select one account </div>
+            <app-avms-dropdown-large [lookup]="availableAccounts" (selectedValueChange)="accountChanged($event)" class="content1"></app-avms-dropdown-large>
+        </div>
+        <div class="field">
+            <div class="label">Select one Tenant </div>
+            <app-avms-dropdown-large [lookup]="availableTenants" (selectedValueChange)="tenantChanged($event)"></app-avms-dropdown-large>
+        </div>
+        <div class="field">
+            <div class="label">Select one subscription </div>
+            <app-avms-dropdown-large [lookup]="availableSubscriptions" (selectedValueChange)="subscriptionChanged($event)"></app-avms-dropdown-large>
+        </div>
+        <div class="field">
+            <div class="card1">
+                <div class="row">
+                    <div class="column1">
+                        <div class="label1">Available Instances</div>
+                    </div>
+                    <div class="column2">
+                        <div class="label1">Selected Instances </div>
+                    </div>
+                  </div>
+                  <div class="divider1"></div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <!-- <div class="divider"></div>
+    <div class="footer">
+        <button type="submit" class="submit" >Save</button>
+          <button type="cancel" class="cancel" (click)="dialogclose()">Cancel</button>
+
+    </div> -->
+        <!-- <div class="section">
+            <div class="label">New Label <span>(*)</span></div>
+        </div>
+        <div class="section">
+            <input type="text" placeholder="please input the label name" [(ngModel)]="name">
+        </div>
+
+        <div class="section">
+            <div class="label">Select one account</div>
+        </div>
+        <div class="section">
+            <app-avms-dropdown-large [lookup]="availableAccounts" (selectedValueChange)="accountChanged($event)"></app-avms-dropdown-large>
+        </div>
+      
+        <div class="section">
+            <div class="label">Select one tenant</div>
+        </div>
+        <div class="section">
+            <app-avms-dropdown-large [lookup]="availableTenants" (selectedValueChange)="tenantChanged($event)"></app-avms-dropdown-large>
+        </div>
+      
+        <div class="section">
+            <div class="label">Select one subscription</div>
+        </div>
+        <div class="section">
+            <app-avms-dropdown-large [lookup]="availableSubscriptions" (selectedValueChange)="subscriptionChanged($event)"></app-avms-dropdown-large>
+        </div>
+
+
+        <div class="select-container">
+
+            <div class="left">
+
+                <div class="section">
+                    <div class="label">Resources</div>
+                </div>
+
+                <div class="section">
+                    <app-avms-dropdown-large [lookup]="availableResources" (selectedValueChange)="resourceChanged($event)"></app-avms-dropdown-large>
+                </div>
+                
+            </div>
+
+            <div class="right">
+                <div class="section">
+                    <div class="label">Selected resources. Click to remove.</div>
+                </div>
+                <div class="section">
+                    <div *ngFor="let item of selectedResources" (click)="removeFromList(item.id)">{{ item.description }}</div>
+                </div>
+            </div>
+
+        </div> -->
+</div>

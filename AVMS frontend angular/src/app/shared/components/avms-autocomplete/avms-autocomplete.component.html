@@ -1,0 +1,10 @@
+<div class="input-wrapper">
+    <input type="text" class="form-control" placeholder="Search for a label" [(ngModel)]="label"
+        (keyup)="onKeyUp($event)">
+</div>
+
+<div *ngIf="selectedLabels.length>0" class="list-group">
+    <ng-container *ngFor="let label of selectedLabels" class="list-group-item">
+        <span (click)="onSelect(label)">{{ label }}</span>
+    </ng-container>
+</div>

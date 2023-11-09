@@ -1,0 +1,19 @@
+<div class="instance-container">
+    <div class="instance-header">
+        <div class="instance-breadcrumbs">
+            <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+        </div>
+        <div class="text-icon">
+            <span></span>
+            <!-- <img src="/assets/icons/download.png" alt="download"> -->
+        </div>
+    </div>
+
+    <div class="schedules-table-host">
+        <div class="title1">Details</div>
+    <div class="schedules-table-container">
+        <app-avms-scaling-scheduler *ngIf="dataReceived" [isWeeklyFineTuningModule]="true" [instance]="instance" [fineTuningScheduleEvents]="fineTuningScheduleEvents" [subscriptionId]="subscriptionId" [resourceGroupId]="resourceGroupId" (eventsScheduled)="eventsScheduled($event)" [timezone]="timezone"></app-avms-scaling-scheduler>
+    </div>
+    </div>
+
+</div>

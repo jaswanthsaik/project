@@ -1,0 +1,289 @@
+<div class="schedules-breadcrumbs">
+  <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+</div>
+
+<div class="summary-cards">
+  <div class="summary-card1" (click)="showUserData(1)" [class.selected]="selectedSummary === 1">Summary</div>
+  <div class="summary-card2" (click)="showUserData(2)" [class.selected]="selectedSummary === 2">Manage By Exceptions
+  </div>
+  <div class="summary-card3" (click)="showUserData(3)" [class.selected]="selectedSummary === 3">CPU uasge</div>
+  <div class="summary-card4" (click)="showUserData(4)" [class.selected]="selectedSummary === 4">Recommendations</div>
+  <div class="summary-card5" (click)="showUserData(5)" [class.selected]="selectedSummary === 5">Financial</div>
+</div>
+<div class="normal-line"></div>
+
+<div>
+  <h3 class="text">
+    Graphical representation for Approved - Dashboard V2
+  </h3>
+</div>
+
+<div class="background">
+  <div class="card">
+    <div class="upper-fields">
+      <div class="grid">
+        <div class="date-picker-container">
+          <div class="date-picker-header">Select Your Date range</div>
+          <mat-form-field class="date-picker-field">
+            <mat-label>Add Date Field</mat-label>
+            <input matInput [matDatepicker]="picker" class="date-input">
+            <mat-datepicker-toggle matSuffix [for]="picker" class="date-toggle"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="fields-container1">
+          <div class="fields-header1">SUMMARY</div>
+        </div>
+        <div class="fields-container2">
+          <div class="fields-header2">MANAGE BY EXCEPTIONS</div>
+        </div>
+        <div class="fields-container3">
+          <div class="fields-header3">CPU USAGE</div>
+        </div>
+        <div class="fields-container4">
+          <div class="fields-header4">RECOMMENDATIONS</div>
+        </div>
+        <div class="fields-container5">
+          <div class="fields-header5">FINANCIAL</div>
+        </div>
+        <div class="fields-container6" (click)="toggleFilterForm6()">
+          <div class="fields-header6">filter by Account</div>
+          <div class="filter-dropdown6" *ngIf="showFilterForm6">
+            <div class="filter-form6">
+              <div class="filter-title6">
+                <h1 (click)="$event.stopPropagation()">filter by acco...</h1>
+                <span class="dots6" (click)="toggleSelectAllAccounts(); $event.stopPropagation()">⋯</span>
+                <span class="close6" (click)="deselectAllAccountsAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon6" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery6"
+                placeholder="Search in Listbox">
+              <ul class="account-list6">
+                <li class="account-list-item6" *ngFor="let account of filteredAccounts">
+                  <button class="account-button6" [ngClass]="{'selected': account.isSelected}"
+                    (click)="toggleAccountSelection(account); $event.stopPropagation();">
+                    {{ account.AccountName }} {{ account.isSelected ? '✓ ' : '' }}
+                  </button>
+
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="fields-container7" (click)="toggleFilterForm7()">
+          <div class="fields-header7">filter by Tenant</div>
+          <div class="filter-dropdown7" *ngIf="showFilterForm7">
+            <div class="filter-form7">
+              <div class="filter-title7">
+                <h1 (click)="$event.stopPropagation()">filter by tent...</h1>
+                <span class="dots7" (click)="toggleSelectAllTenants(); $event.stopPropagation()">⋯</span>
+                <span class="close7" (click)="deselectAllTenantsAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon7" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery7"
+                placeholder="Search in Listbox">
+              <ul class="tenant-list7">
+                <li class="tenant-list-item7" *ngFor="let tenant of filteredTenants">
+                  <button class="tenant-button7" [ngClass]="{'selected': tenant.isSelected}"
+                    (click)="toggleTenantSelection(tenant); $event.stopPropagation();">
+                    {{ tenant.TenantName }} {{ tenant.isSelected ? '✓ ' : '' }}
+                  </button>
+
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="fields-container8" (click)="toggleFilterForm8()">
+          <div class="fields-header8">filter by Subscription</div>
+          <div class="filter-dropdown8" *ngIf="showFilterForm8">
+            <div class="filter-form8">
+              <div class="filter-title8">
+                <h1 (click)="$event.stopPropagation()">filter by Subs...</h1>
+                <span class="dots8" (click)="toggleSelectAllSubscriptions(); $event.stopPropagation()">⋯</span>
+                <span class="close8" (click)="deselectAllSubscriptionsAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon8" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery8"
+                placeholder="Search in Listbox">
+              <ul class="subscription-list8">
+                <li class="subscription-list-item8" *ngFor="let subscription of filteredSubscriptions">
+                  <button class="subscription-button8" [ngClass]="{'selected': subscription.isSelected}"
+                    (click)="toggleSubscriptionSelection(subscription); $event.stopPropagation();">
+                    {{ subscription.SubscriptionName }} {{ subscription.isSelected ? '✓ ' : '' }}
+                  </button>
+
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="fields-container9" (click)="toggleFilterForm9()">
+          <div class="fields-header9">filter by Resource Group</div>
+          <div class="filter-dropdown9" *ngIf="showFilterForm9">
+            <div class="filter-form9">
+              <div class="filter-title9">
+                <h1 (click)="$event.stopPropagation()">filter by insta...</h1>
+                <span class="dots9" (click)="toggleSelectAllResources(); $event.stopPropagation()">⋯</span>
+                <span class="close9" (click)="deselectAllResourcesAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon9" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery"
+                (ngModelChange)="filterResources()" placeholder="Search in Listbox">
+              <ul class="resource-list9">
+                <li class="resource-list-item9" *ngFor="let resource of filteredResources">
+                  <button class="resource-button9" [ngClass]="{'selected': resource.isSelected}"
+                    (click)="toggleResourceSelection(resource); $event.stopPropagation();">
+                    {{ resource.ResourceName }} {{ resource.isSelected ? '✓ ' : '' }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="fields-container10" (click)="toggleFilterForm()">
+          <div class="fields-header10">filter by Instances</div>
+          <div class="filter-dropdown" *ngIf="showFilterForm">
+            <div class="filter-form">
+              <div class="filter-title">
+                <h1 (click)="$event.stopPropagation()">filter by insta...</h1>
+                <span class="dots" (click)="toggleSelectAllInstances(); $event.stopPropagation()">⋯</span>
+                <span class="close" (click)="deselectAllInstancesAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery"
+                (ngModelChange)="filterInstances()" placeholder="Search in Listbox">
+              <ul class="instance-list">
+                <li class="instance-list-item" *ngFor="let instance of filteredInstances">
+                  <button class="instance-button" [ngClass]="{'selected': instance.isSelected}"
+                    (click)="toggleInstanceSelection(instance); $event.stopPropagation();">
+                    {{ instance.InstanceName }} {{ instance.isSelected ? '✓ ' : '' }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="fields-container11">
+        <div class="fields-header11">Accounts</div>
+        <div *ngIf="isLoading" class="loading-indicator">
+          <div class="spinner"></div>
+      </div>
+        <div *ngIf="!isLoading" class="fields-header12 bold-blue1">{{ selectedAccountCount }}</div>
+      </div>
+      <div class="fields-container12">
+        <div class="fields-header12">Subsciptions</div>
+        <div *ngIf="isLoading" class="loading-indicator">
+          <div class="spinner"></div>
+      </div>
+        <div *ngIf="!isLoading" class="fields-header12 bold-blue2">{{ selectedSubscriptionCount }}</div>
+      </div>
+      <div class="fields-container12">
+        <div class="fields-header12-1">Resource Group</div>
+        <div *ngIf="isLoading" class="loading-indicator">
+          <div class="spinner"></div>
+        </div>
+        <div *ngIf="!isLoading" class="fields-header12 bold-blue3">{{ resourceGroupCount }}</div>
+    </div>
+    <div class="fields-container12">
+        <div class="fields-header12-2">Instances</div>
+        <div *ngIf="isLoading" class="loading-indicator">
+          <div class="spinner"></div>
+        </div>
+        <div *ngIf="!isLoading" class="fields-header12 bold-blue4">{{ selectedInstanceCount }}</div>
+    </div>
+    
+    <div class="fields-container12">
+      <div class="fields-header12-3">Schedule Instances</div>
+      <div *ngIf="isLoading" class="loading-indicator">
+          <div class="spinner"></div>
+      </div>
+      <div *ngIf="!isLoading" class="fields-header12 bold-green">{{ scheduleInstanceCount }}</div>
+  </div>
+  <div class="fields-container12">
+      <div class="fields-header12-4">Scaled Instances</div>
+      <div *ngIf="isLoading" class="loading-indicator">
+          <div class="spinner"></div>
+      </div>
+      <div *ngIf="!isLoading" class="fields-header12 bold-green1">{{ scaledInstanceCount }}</div>
+  </div>
+  
+      <div class="fields-container13">
+        <div class="fields-header13">based on filter selection</div>
+        <div *ngIf="isLoading" class="loading-indicator1">
+          <div class="spinner"></div>
+        </div>
+        <div *ngIf="!isLoading" class="fields-header17">Scheduled Last 30 days</div>
+        <div *ngIf="!isLoading" class="fields-header13 bold-skyblue">75.00%</div>
+      </div>
+      <div class="fields-container14">
+        <div class="fields-header14">based on filter selection</div>
+        <div *ngIf="isLoading" class="loading-indicator1">
+          <div class="spinner"></div>
+      </div>
+        <div *ngIf="!isLoading" class="fields-header16"> .</div>
+        <div *ngIf="!isLoading" class="fields-header13 bold-blue">75.00%</div>
+      </div>
+      <div class="fields-container14">
+        <div class="fields-header14">based on filter selection</div>
+        <div *ngIf="isLoading" class="loading-indicator1">
+          <div class="spinner"></div>
+      </div>
+        <div *ngIf="!isLoading" class="fields-header17">Peak> 75%</div>
+        <div *ngIf="!isLoading" class="fields-header13 bold-red">{{ peakUsageResourceCount }}%<sup class="sup">8</sup><sub class="sub">instances</sub></div>
+      </div>
+      <div class="fields-container14">
+        <div class="fields-header14">based on filter selection</div>
+        <div *ngIf="isLoading" class="loading-indicator1">
+         <div class="spinner"></div>
+     </div>
+        <div *ngIf="!isLoading" class="fields-header17">Idle< 20%</div>
+            <div *ngIf="!isLoading" class="fields-header13 bold-orange">{{ IdleUsageResourceCount }}%<sup class="sup">8</sup><sub class="sub">instances</sub>
+            </div>
+        </div>
+        <div class="fields-container14">
+          <div class="fields-header14">based on filter selection</div>
+          <div *ngIf="isLoading" class="loading-indicator1">
+            <div class="spinner"></div>
+        </div>
+          <div *ngIf="!isLoading" class="fields-header17">Scheduled Instances</div>
+          <div *ngIf="!isLoading" class="fields-header13 bold-green">{{ scheduledInstanceInDaysCount }}%</div>
+        </div>
+        <div class="fields-container14">
+          <div class="fields-header14">based on filter selection</div>
+          <div *ngIf="isLoading" class="loading-indicator1">
+            <div class="spinner"></div>
+        </div>
+          <div *ngIf="!isLoading" class="fields-header17">Scaled Instances</div>
+          <div *ngIf="!isLoading" class="fields-header13 bold-green">{{ scaledInstanceInDaysCount }}%</div>
+        </div>
+
+        <div class="main-container">
+          <div class="card1">
+            <div class="chart-container1">
+              <div class="chart-left">
+                <h2>Instances count</h2>
+                <div id="chartdiv1" style=" height: 380px;"></div>
+              </div>
+            </div>
+            <div class="count2">Instances count
+            </div>
+          </div>
+          <div class="card2">
+            <div class="chart-container2">
+              <div class="chart-right">
+                <h2>Your Optimization Satus</h2>
+                <div id="chartdiv" style=" height: 380px;"></div>
+              </div>
+            </div>
+            <div class="dropdown-container">Per Region
+              <option></option>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

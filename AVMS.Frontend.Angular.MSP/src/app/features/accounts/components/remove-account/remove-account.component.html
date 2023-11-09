@@ -1,0 +1,20 @@
+<div class="remove-account-container">
+
+    <div *ngIf="step==='first'||step==='final'" class="label">Are you sure you want to REMOVE  the ACCOUNT below?</div>
+
+    <div *ngIf="step==='second'" class="warning">
+        All data will be removed and you will not be able to recover it. Are you sure?
+    </div>
+
+    <!--<div *ngIf="step==='final'" class="final">
+        <div class="title">The 5 ACCOUNTS were removed successfully</div>
+        <div class="message">All selected accounts were removed from the portal.</div>
+    </div>-->
+
+    <div class="account-list">
+        <ul class="account-item">
+            <li>{{ data.account_name }}</li>
+        </ul>
+    </div>
+
+</div>

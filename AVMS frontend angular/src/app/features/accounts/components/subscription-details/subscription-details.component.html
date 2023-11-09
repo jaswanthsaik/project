@@ -1,0 +1,207 @@
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<div class="subscription-container">
+  <div class="subscription-header">
+    <div class="subscription-breadcrumbs">
+      <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+    </div>
+    <div class="text-icon">
+      <span></span>
+      <!-- <img src="/assets/icons/download.png" alt="download"> -->
+    </div>
+    <!-- <div class="title">{{ subscription?.subscription_name }}</div> -->
+    <div class="text-icon">
+    </div>
+    <!-- <div class="subscription-dropdown temp-hidden">
+            <app-avms-dropdown-large [lookup]="topAccountOptions"></app-avms-dropdown-large>
+        </div> -->
+  </div>
+
+  <div class="subscription-dashboard">
+    <div class="main-section">
+      <div class="card">
+        <div class="middle-title">
+          <span>Subscription Performance</span>
+          <div class="controls">
+            <div class="controls">
+              <app-avms-button [selected]="selectedMainGraphInterval===1" text="ANNUAL" (onClick)="getMainGraphData(1)"
+                [class.selected]="selectedMainGraphInterval===1">
+              </app-avms-button>
+              <app-avms-button [selected]="selectedMainGraphInterval===2" text="6 MONTHS"
+                (onClick)="getMainGraphData(2)" [class.selected]="selectedMainGraphInterval===2">
+              </app-avms-button>
+              <app-avms-button [selected]="selectedMainGraphInterval===3" text="3 MONTHS"
+                (onClick)="getMainGraphData(3)" [class.selected]="selectedMainGraphInterval===3">
+              </app-avms-button>
+              <app-avms-button [selected]="selectedMainGraphInterval===4" text="1 MONTH" (onClick)="getMainGraphData(4)"
+                [class.selected]="selectedMainGraphInterval===4">
+              </app-avms-button>
+              <app-avms-button [selected]="selectedMainGraphInterval===5" text="14 days" (onClick)="getMainGraphData(5)"
+                [class.selected]="selectedMainGraphInterval===5">
+              </app-avms-button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mini-card">
+          <app-savings-chart [xAxisLegend]="xAxisLegend" [seriesLabels]="seriesLabels" [seriesData]="seriesData"
+            [tooltipData]="tooltipData"></app-savings-chart>
+        </div>
+      </div>
+    </div>
+    <div class="side-widget-1 side-align">
+      <app-side-widget contentType="recommendation" [recommendations]="recommendations" class="side-widget-1">
+        <span title>
+          <div class="pad10">
+            RECOMMENDATIONS
+          </div>
+        </span>
+      </app-side-widget>
+
+      <div class="mar-tp4">
+        <app-side-widget contentType="graph" class="side-widget-2">
+          <span title>
+            <div class="instance-align">
+              <div>BEST INSTANCES</div>
+              <div>
+                <app-avms-dropdown class="days-dropdown" [lookup]="bestInstancesPeriods"></app-avms-dropdown>
+              </div>
+            </div>
+          </span>
+
+          <div class="schedule-align">
+            <app-half-doughnut-chart [data]="instanceGraphData"></app-half-doughnut-chart>
+          </div>
+        </app-side-widget>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="subscription-info-container">
+        <app-usage-info-widget>
+            <div class="icon-container" style="border-color: #FAFD7B;" icon>
+                <img src="/assets/icons/vm.png" alt="schedule">
+            </div>
+            <span value>12</span>
+            <span text>NUMBER OF INSTANCES</span>
+        </app-usage-info-widget>
+        <app-usage-info-widget>
+            <div class="icon-container" style="border-color: #35DA45;" icon>
+                <img src="/assets/icons/money.png" alt="schedule">
+            </div>
+            <span value>100%</span>
+            <span text>INSTANCES SAVING MONEY</span>
+        </app-usage-info-widget>
+        <app-usage-info-widget>
+            <div class="icon-container" style="border-color: #30B1AD;" icon>
+                <img src="/assets/icons/account.png" alt="schedule">
+            </div>
+            <span value>5</span>
+            <span text>SCHEDULED INSTANCES</span>
+        </app-usage-info-widget>
+        <app-usage-info-widget>
+            <div class="icon-container" style="border-color: #F96332;" icon>
+                <img src="/assets/icons/resource.png" alt="schedule">
+            </div>
+            <span value>11</span>
+            <span text>NUMBER OF RESOURCES</span>
+        </app-usage-info-widget>
+        <app-usage-info-widget>
+            <div class="icon-container" style="border-color: #FD2AF4;" icon>
+                <img src="/assets/icons/not-saving.png" alt="schedule">
+            </div>
+            <span value>1</span>
+            <span text>INSTANCES SAVING MONEY</span>
+        </app-usage-info-widget>
+    </div>-->
+  <div class="subscription-table-host">
+    <div class="card1">
+      <div class="title3">Resource Groups</div>
+      <div class=" demo-paginator">
+        <div>
+          <span class="bold">{{ startRecord }}</span> to <span class="bold">{{ endRecord }}</span> of
+          <span class="bold text1"> {{ totalRecords }}</span>
+        </div>
+        <div>
+          <select class="per-page-dropdown-container" [(ngModel)]="recordsPerPage" (ngModelChange)="getInstances()">
+            <option *ngFor="let item of rowPerPageOptions" [value]="item">
+              <span class="page-text">View:</span>
+              {{ item }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <app-avms-filter (filterChange)="filterInstances($event)"></app-avms-filter>
+        </div>
+      </div>
+    </div>
+    <div class="subscription-table-align">
+      <div class="subscription-table">
+        <section class="tables-container mat-elevation-z8" tabindex="0">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortColumn('resource_group_name')">Name</th>
+            <td mat-cell *matCellDef="let element"><span style="cursor: pointer; color: #285dd9; font-weight: 500;" (click)="navigateToResourceGroup(element)">{{element.resource_group_name}}</span></td>
+          </ng-container>
+          <ng-container matColumnDef="Instances">
+            <th style="text-align: center;" mat-header-cell *matHeaderCellDef>Instances</th>
+            <td style="text-align: center;" mat-cell *matCellDef="let element">{{element.total_instances}}</td>
+          </ng-container>
+          <ng-container matColumnDef="Savings">
+            <th style="text-align: center;" mat-header-cell *matHeaderCellDef>Savings</th>
+            <td style="text-align: center;" mat-cell *matCellDef="let element">
+              <span *ngIf="element.schedule_saving>=0" class="trending-up">
+                <img src="/assets/icons/trending-up.png" alt="trending-up">
+                <span class="saving">{{element.schedule_saving}}</span>
+              </span>
+              <span *ngIf="element.schedule_saving<0" class="trending-down">
+                <img src="/assets/icons/trending-down.png" alt="trending-down">
+                <span class="saving">{{element.schedule_saving}}</span>
+              </span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Scheduled">
+            <th style="text-align: center;" mat-header-cell *matHeaderCellDef>Schedule by Resource Group</th>
+            <td style="text-align: center;" mat-cell *matCellDef="let element"><span [ngClass]="element.scheduled?'hilite-green':'hilite-red'">{{element.schedule_name}}</span></td>
+          </ng-container>
+          <ng-container matColumnDef="...">
+            <th class="new-text-align" mat-header-cell *matHeaderCellDef>Actions</th>
+            <td class="new-text-align" mat-cell *matCellDef="let element">
+              <div style="display: flex; justify-content: center;">
+                <div class="tooltip-host">
+                  <img src="/assets/icons/schedule-gray.png" alt="schedule" (click)="scheduleResourceGroup(element)"
+                    style="cursor: pointer;">
+                  <span class="tooltip-container">
+                    <app-tooltip [tooltipText]="'Apply schedule'" tooltipPosition="top"></app-tooltip>
+                  </span>
+                </div>
+                <div class="tooltip-host1">
+                  <mat-icon [ngClass]="element.total_instances? 'refresh-icon' : 'refresh-icon-disable'" (click)="element.total_instances? hardRefresh(element) : ''" style="cursor: pointer;">autorenew</mat-icon>
+                  <span class="tooltip-container1 refresh-popup-align">
+                  <app-tooltip [tooltipText]="'Refresh Resource Group'" tooltipPosition="top"></app-tooltip>
+                  </span>
+                </div>
+              </div>
+            </td>
+            <!-- <span class="table-icon"  ><mat-icon>edit</mat-icon></span>
+                      <span class="table-icon" ><mat-icon>delete</mat-icon></span></td> -->
+          </ng-container>
+          <tr class="table-header" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length" class="no-data">
+              No data Found
+            </td>
+          </tr>
+        </table>
+        </section>
+      </div>
+    </div>
+    <div class="subscription-table-navigation">
+      <app-table-navigation-controls [paginationInfo]="paginationInfo" (pageChange)="pageChange($event)">
+      </app-table-navigation-controls>
+    </div>
+    <!-- </div> -->
+  </div>
+
+</div>

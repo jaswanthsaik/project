@@ -1,0 +1,431 @@
+<div class="dual-menu-button-align">
+  <button mat-mini-fab (click)="toggleMenu()" class="dual-menu-button">
+  <span *ngIf="!isToggle"><img src="/assets/images/collapse.svg" alt="" class="menu-icons"></span>
+    <span *ngIf="isToggle"><img src="/assets/images/collapse-back.svg" alt="" class="menu-icons"></span></button>
+   <div *ngIf="!isToggle" class="menu-container" [class.menu-overlay]="sideNavService.isOverlay" (mouseleave)="mouseLeave()">
+    <div class="menu-logo">
+    <img src="/assets/images/kalibr8-logo-white.png" alt="logo" class="logo" [routerLink]="['/']">
+  </div>
+  <div class="sidebar-submenu">
+  <div class="nav-item mar7" [routerLink]="['home']">
+    <button mat-mini-fab>
+      <img src="/assets/images/home.svg" alt="cloud" class="new-icons">
+    </button>
+    <span class="main-item-text">Home</span>
+  </div>
+  <div class="nav-item mar7" [routerLink]="['active-intelligence']">
+    <button mat-mini-fab>
+      <img src="/assets/icons/server.png" alt="cloud" class="new-icons">
+    </button>
+    <span class="mini-item-text" style="margin-left: 14px;">Active Intelligence</span>
+  </div>
+  <div class="nav-item mar7" (click)="openMenu('cloud')">
+    <button mat-mini-fab>
+      <img src="/assets/images/cloud.svg" alt="cloud" class="new-icons">
+    </button>
+    <span class="main-item-text">
+      Cloud & Resources
+      <i *ngIf="!sideNavService.isCloudExpanded" class="fa fa-caret-down arrow"></i>
+      <i *ngIf="sideNavService.isCloudExpanded" class="fa fa-caret-up arrow"></i>
+    </span>
+  </div>
+
+  <ng-container *ngIf="sideNavService.isCloudExpanded">
+
+    <div class="nav-sub-item" [routerLink]="['accounts']">
+      <span class="sub-item-text">Accounts Manager</span>
+    </div>
+
+    <div class="nav-sub-item" [routerLink]="['resources']">
+      <span class="sub-item-text">Resources</span>
+    </div>
+
+  </ng-container>
+
+  <!-- <div class="nav-item mar7" (click)="openMenu('recommendations')" (click)="navigateTo('recommendations')">
+    <button mat-mini-fab routerLinkActive="active">
+      <img src="/assets/images/thumb-up.svg" alt="cloud" class="new-icons">
+
+    </button>
+    <span class="main-item-text">Recommendations</span>
+  </div> -->
+
+  <div class="nav-item mar7" (click)="openMenu('labels')" (click)="navigateTo('labels')">
+    <button mat-mini-fab>
+      <img src="/assets/images/label.svg" alt="cloud" class="new-icons">
+    </button>
+    <span class="main-item-text">Labels Manager</span>
+  </div>
+
+
+  <div class="nav-item mar7" (click)="openMenu('schedules')" (click)="navigateTo('schedules')">
+    <button mat-mini-fab>
+      <img src="/assets/images/schedule.svg" alt="cloud" class="new-icons">
+    </button>
+    <span class="main-item-text">Schedules Manager</span>
+  </div>
+
+  <!-- <div class="nav-item mar7" (click)="openMenu('reports')">
+    <button mat-mini-fab>
+      <img src="/assets/images/report.svg" alt="cloud" class="new-icons">
+    </button>
+    <span class="main-item-text">
+      Reports
+      <i *ngIf="!sideNavService.isReportsExpanded" class="fa fa-caret-down arrow"></i>
+      <i *ngIf="sideNavService.isReportsExpanded" class="fa fa-caret-up arrow"></i>
+    </span>
+  </div>
+
+  <ng-container *ngIf="sideNavService.isReportsExpanded">
+
+    <div class="nav-sub-item" [routerLink]="['reports/savings']">
+      <span class="sub-item-text">Savings</span>
+    </div>
+
+    <div class="nav-sub-item" [routerLink]="['reports/costs']">
+      <span class="sub-item-text">Costs</span>
+    </div>
+
+    <div class="nav-sub-item" [routerLink]="['reports/cpu-usage']">
+      <span class="sub-item-text">CPU Utilization</span>
+    </div>
+
+  </ng-container> -->
+  <!-- <div class="nav-item mar7" [routerLink]="['active-intelligence']">
+    <button mat-mini-fab>
+      <img src="/assets/icons/qlik_icon.ico" alt="cloud" class="new-icons">
+    </button>
+    <span class="mini-item-text" style="margin-left: 14px;">Active Intelligence</span>
+  </div> -->
+
+  <div class="nav-item mar7" [routerLink]="['profile/userslist']">
+    <button mat-mini-fab>
+      <img src="/assets/images/user-management.svg" alt="cloud" class="new-icons">
+    </button>
+    <span class="main-item-text">User Management</span>
+  </div>
+  <div class="nav-item mar7" [routerLink]="['getting-started']">
+    <button mat-mini-fab>
+      <img src="/assets/images/getting-started.svg" alt="cloud" class="new-icons">
+    </button>
+    <span class="main-item-text">Getting Started</span>
+  </div>
+
+  <div>
+    <div class="nav-item mar7">
+      <button mat-mini-fab>
+        <a href="mailto:support@kalibr8.io">
+          <img src="/assets/images/support.svg" alt="cloud" class="new-icons">
+        </a>
+      </button>
+      <a href="mailto:support@kalibr8.io" class="new-item">
+        <span class="main-item-text">Support</span>
+      </a>
+    </div>
+    <div class="nav-item mar7 profile-align" (click)="openUserMenu()">
+      <button mat-mini-fab>
+        <img class="icon-profile" [src]="myProfile.avatar" alt="">
+      </button>
+      <div class="main-item-text1">
+        {{myProfile.first_name}} {{myProfile.last_name}}
+      </div>
+      <span class="icons">
+        <i *ngIf="!showUserMenu" class="fa fa-caret-down arrow"></i>
+        <i *ngIf="showUserMenu" class="fa fa-caret-up arrow"></i>
+      </span>
+      <div class="profile-name"> 
+        <div class="profile-dec"> {{myProfile.first_name}} {{myProfile.last_name}}</div>
+        </div>
+    </div>
+    <app-dropdown-menu *ngIf="showUserMenu" [showUserMenu]="showUserMenu"></app-dropdown-menu>
+    <div class="nav-item centered">
+      <div class="icon centered-item">
+          {{ appVersion }}
+      </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <div *ngIf="isToggle" class="mini-menu-container mini-menu">
+    <div class="mini-menu-expand">
+    <div class="mini-logo-align">
+      <img src="/assets/images/kalibr-mini-logo.png" alt="logo" class="mini-kalibr-logo mini-menu-small-logo" [routerLink]="['/']"/>
+      <img src="/assets/images/kalibr8-logo-white.png" alt="logo" class="logo mini-menu-large-logo" [routerLink]="['/']"/>
+    </div>
+    <div class="mini-side-menu-height">
+      <div class="nav-item mar7" [routerLink]="['home']">
+        <button mat-mini-fab class="mini-icon-button">
+          <img src="/assets/images/home.svg" alt="cloud" class="new-icons">
+        </button>
+        <span class="mini-item-text mini-sub-text">Home</span>
+      </div>
+      <div class="nav-item mar7" [routerLink]="['active-intelligence']">
+        <button mat-mini-fab class="mini-icon-button">
+          <img src="/assets/icons/server.png" alt="cloud" class="new-icons">
+        </button>
+        <span class="mini-item-text mini-sub-text" style="margin-left: 14px;">Active Intelligence</span>
+      </div>  
+      <div class="nav-item mar7" (click)="openMenu('cloud')">
+        <button mat-mini-fab class="mini-icon-button">
+          <img src="/assets/images/cloud.svg" alt="cloud" class="new-icons">
+        </button>
+        <span class="mini-item-text mini-sub-text">
+          Cloud & Resources
+          <i *ngIf="!sideNavService.isCloudExpanded" class="fa fa-caret-down arrow"></i>
+          <i *ngIf="sideNavService.isCloudExpanded" class="fa fa-caret-up arrow"></i>
+        </span>
+      </div>
+    
+      <ng-container *ngIf="sideNavService.isCloudExpanded">
+    
+        <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['accounts']">
+          <span class="sub-item-text">Accounts Manager</span>
+        </div>
+    
+        <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['resources']">
+          <span class="sub-item-text">Resources</span>
+        </div>
+    
+      </ng-container>
+    
+      <!-- <div class="nav-item mar7" (click)="openMenu('recommendations')" (click)="navigateTo('recommendations')">
+        <button mat-mini-fab routerLinkActive="active" class="mini-icon-button">
+          <img src="/assets/images/thumb-up.svg" alt="cloud" class="new-icons">
+    
+        </button>
+        <span class="mini-item-text mini-sub-text">Recommendations</span>
+      </div> -->
+    
+      <div class="nav-item mar7" (click)="openMenu('labels')" (click)="navigateTo('labels')">
+        <button mat-mini-fab class="mini-icon-button">
+          <img src="/assets/images/label.svg" alt="cloud" class="new-icons">
+        </button>
+        <span class="mini-item-text mini-sub-text">Labels Manager</span>
+      </div>
+    
+    
+      <div class="nav-item mar7" (click)="openMenu('schedules')" (click)="navigateTo('schedules')">
+        <button mat-mini-fab class="mini-icon-button">
+          <img src="/assets/images/schedule.svg" alt="cloud" class="new-icons">
+        </button>
+        <span class="mini-item-text mini-sub-text">Schedules Manager</span>
+      </div>
+    
+      <!-- <div class="nav-item mar7" (click)="openMenu('reports')">
+        <button mat-mini-fab class="mini-icon-button">
+          <img src="/assets/images/report.svg" alt="cloud" class="new-icons">
+        </button>
+        <span class="mini-item-text mini-sub-text">
+          Reports
+          <i *ngIf="!sideNavService.isReportsExpanded" class="fa fa-caret-down arrow"></i>
+          <i *ngIf="sideNavService.isReportsExpanded" class="fa fa-caret-up arrow"></i>
+        </span>
+      </div>
+    
+      <ng-container *ngIf="sideNavService.isReportsExpanded">
+    
+        <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['reports/savings']">
+          <span class="sub-item-text">Savings</span>
+        </div>
+    
+        <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['reports/costs']">
+          <span class="sub-item-text">Costs</span>
+        </div>
+    
+        <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['reports/cpu-usage']">
+          <span class="sub-item-text">CPU Utilization</span>
+        </div>
+    
+      </ng-container> -->
+      <div class="nav-item mar7" [routerLink]="['profile/userslist']">
+        <button mat-mini-fab class="mini-icon-button">
+          <img src="/assets/images/user-management.svg" alt="cloud" class="new-icons">
+        </button>
+        <span class="mini-item-text mini-sub-text">User Management</span>
+      </div>
+      <div class="nav-item mar7" [routerLink]="['getting-started']">
+        <button mat-mini-fab class="mini-icon-button">
+          <img src="/assets/images/getting-started.svg" alt="cloud" class="new-icons">
+        </button>
+        <span class="mini-item-text mini-sub-text">Getting Started</span>
+      </div>
+      <div>
+        <div class="nav-item mar7">
+          <button mat-mini-fab class="mini-icon-button">
+            <a href="mailto:support@kalibr8.io">
+              <img src="/assets/images/support.svg" alt="cloud" class="new-icons">
+            </a>
+          </button>
+          <a href="mailto:support@kalibr8.io" class="new-item">
+            <span class="main-item-text support-item-text mini-sub-text">Support</span>
+          </a>
+        </div>
+        <div class="nav-item mar7 profile-align" (click)="openUserMenu()">
+          <button mat-mini-fab class="mini-icon-button">
+            <img class="icon-profile" [src]="myProfile.avatar" alt="">
+          </button>
+          <div class="main-item-text1 profile-item-text mini-sub-text">
+            {{myProfile.first_name}} {{myProfile.last_name}}
+          </div>
+          <span class="icons mini-sub-text">
+            <i *ngIf="!showUserMenu" class="fa fa-caret-down arrow"></i>
+            <i *ngIf="showUserMenu" class="fa fa-caret-up arrow"></i>
+          </span>
+          <div class="profile-name"> 
+            <div class="profile-dec"> {{myProfile.first_name}} {{myProfile.last_name}}</div>
+            </div>
+        </div>
+        <div class="nav-mini-sub-item">
+        <app-dropdown-menu *ngIf="showUserMenu" [showUserMenu]="showUserMenu"></app-dropdown-menu>
+        </div>
+      <div class="nav-item">
+        <div class="icon mini-side-menu-version">
+            {{ appVersion }}
+        </div>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isToggle" class="mini-menu-container mini-container">
+  <div class="mini-menu-expand">
+  <div class="mini-logo-align">
+    <img src="/assets/images/kalibr-mini-logo.png" alt="logo" class="mini-kalibr-logo mini-menu-small-logo" [routerLink]="['/']"/>
+    <img src="/assets/images/kalibr8-logo-white.png" alt="logo" class="logo mini-menu-large-logo" [routerLink]="['/']"/>
+  </div>
+  <div class="mini-side-menu-height">
+    <div class="nav-item mar7" [routerLink]="['home']" (click)="navigationMenu('home')">
+      <button mat-mini-fab class="mini-icon-button">
+        <img src="/assets/images/home.svg" alt="cloud" class="new-icons">
+      </button>
+      <span class="mini-item-text mini-sub-text">Home</span>
+    </div>
+    <div class="nav-item mar7" [routerLink]="['active-intelligence']" (click)="navigationMenu('active-intelligence')">
+      <button mat-mini-fab class="mini-icon-button">
+        <img src="/assets/icons/server.png" alt="cloud" class="new-icons">
+      </button>
+      <span class="mini-item-text mini-sub-text" style="margin-left: 14px;">Active Intelligence</span>
+    </div>  
+    <div class="nav-item mar7" (click)="openMenu('cloud'); navigationMenu('accounts')" [routerLink]="['accounts']">
+      <button mat-mini-fab class="mini-icon-button">
+        <img src="/assets/images/cloud.svg" alt="cloud" class="new-icons">
+      </button>
+      <span class="mini-item-text mini-sub-text">
+        Cloud & Resources
+        <i *ngIf="!sideNavService.isCloudExpanded" class="fa fa-caret-down arrow"></i>
+        <i *ngIf="sideNavService.isCloudExpanded" class="fa fa-caret-up arrow"></i>
+      </span>
+    </div>
+  
+    <ng-container *ngIf="sideNavService.isCloudExpanded">
+  
+      <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['accounts']">
+        <span class="sub-item-text">Accounts Manager</span>
+      </div>
+  
+      <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['resources']">
+        <span class="sub-item-text">Resources</span>
+      </div>
+  
+    </ng-container>
+  
+    <!-- <div class="nav-item mar7" (click)="openMenu('recommendations')" (click)="navigateTo('recommendations')">
+      <button mat-mini-fab routerLinkActive="active" class="mini-icon-button">
+        <img src="/assets/images/thumb-up.svg" alt="cloud" class="new-icons">
+  
+      </button>
+      <span class="mini-item-text mini-sub-text">Recommendations</span>
+    </div> -->
+  
+    <div class="nav-item mar7" (click)="openMenu('labels')" (click)="navigationMenu('labels')">
+      <button mat-mini-fab class="mini-icon-button">
+        <img src="/assets/images/label.svg" alt="cloud" class="new-icons">
+      </button>
+      <span class="mini-item-text mini-sub-text">Labels Manager</span>
+    </div>
+  
+  
+    <div class="nav-item mar7" (click)="openMenu('schedules')" (click)="navigationMenu('schedules')">
+      <button mat-mini-fab class="mini-icon-button">
+        <img src="/assets/images/schedule.svg" alt="cloud" class="new-icons">
+      </button>
+      <span class="mini-item-text mini-sub-text">Schedules Manager</span>
+    </div>
+  
+    <!-- <div class="nav-item mar7" (click)="openMenu('reports')">
+      <button mat-mini-fab class="mini-icon-button">
+        <img src="/assets/images/report.svg" alt="cloud" class="new-icons">
+      </button>
+      <span class="mini-item-text mini-sub-text">
+        Reports
+        <i *ngIf="!sideNavService.isReportsExpanded" class="fa fa-caret-down arrow"></i>
+        <i *ngIf="sideNavService.isReportsExpanded" class="fa fa-caret-up arrow"></i>
+      </span>
+    </div>
+  
+    <ng-container *ngIf="sideNavService.isReportsExpanded">
+  
+      <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['reports/savings']">
+        <span class="sub-item-text">Savings</span>
+      </div>
+  
+      <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['reports/costs']">
+        <span class="sub-item-text">Costs</span>
+      </div>
+  
+      <div class="nav-sub-item nav-mini-sub-item" [routerLink]="['reports/cpu-usage']">
+        <span class="sub-item-text">CPU Utilization</span>
+      </div>
+  
+    </ng-container> -->
+    <div class="nav-item mar7" [routerLink]="['profile/userslist']" (click)="navigationMenu('profile/userslist')">
+      <button mat-mini-fab class="mini-icon-button">
+        <img src="/assets/images/user-management.svg" alt="cloud" class="new-icons">
+      </button>
+      <span class="mini-item-text mini-sub-text">User Management</span>
+    </div>
+    <div class="nav-item mar7" [routerLink]="['getting-started']" (click)="navigationMenu('getting-started')">
+      <button mat-mini-fab class="mini-icon-button">
+        <img src="/assets/images/getting-started.svg" alt="cloud" class="new-icons">
+      </button>
+      <span class="mini-item-text mini-sub-text">Getting Started</span>
+    </div>
+    <div>
+      <div class="nav-item mar7">
+        <button mat-mini-fab class="mini-icon-button">
+          <a href="mailto:support@kalibr8.io">
+            <img src="/assets/images/support.svg" alt="cloud" class="new-icons">
+          </a>
+        </button>
+        <a href="mailto:support@kalibr8.io" class="new-item">
+          <span class="main-item-text support-item-text mini-sub-text">Support</span>
+        </a>
+      </div>
+      <div class="nav-item mar7 profile-align" (click)="openUserMenu(); navigationMenu('/profile/edit')">
+        <button mat-mini-fab class="mini-icon-button">
+          <img class="icon-profile" [src]="myProfile.avatar" alt="">
+        </button>
+        <div class="main-item-text1 profile-item-text mini-sub-text">
+          {{myProfile.first_name}} {{myProfile.last_name}}
+        </div>
+        <span class="icons mini-sub-text">
+          <i *ngIf="!showUserMenu" class="fa fa-caret-down arrow"></i>
+          <i *ngIf="showUserMenu" class="fa fa-caret-up arrow"></i>
+        </span>
+        <div class="profile-name"> 
+          <div class="profile-dec"> {{myProfile.first_name}} {{myProfile.last_name}}</div>
+          </div>
+      </div>
+      <div class="nav-mini-sub-item">
+      <app-dropdown-menu *ngIf="showUserMenu" [showUserMenu]="showUserMenu"></app-dropdown-menu>
+      </div>
+    <div class="nav-item">
+      <div class="icon mini-side-menu-version">
+          {{ appVersion }}
+      </div>
+  </div>
+  </div>
+  </div>
+</div>
+</div>

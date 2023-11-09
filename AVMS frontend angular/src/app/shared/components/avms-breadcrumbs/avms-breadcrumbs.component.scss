@@ -1,0 +1,26 @@
+.breadcrumbs-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    margin-left: 9px;
+    color: #000000;
+    cursor: pointer;
+    .separator {
+        color: #000000;
+        cursor: default;
+    }
+    .link {
+        color: #285dd9;
+    }
+    .active {
+        color: #000000;
+        cursor: default;
+    }
+}

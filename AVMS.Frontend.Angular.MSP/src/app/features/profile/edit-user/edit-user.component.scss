@@ -1,0 +1,187 @@
+.edit-user-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content auto;
+    background: #FFFFFF;
+    color: #000000;
+    border-radius: 5px;
+}
+.sub-text {
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 23px;
+    margin-top: 10px;
+}
+.card-header {
+    width: 615px;
+    height: 40px;
+    background: rgba(200, 200, 200, 0.3);
+    padding-top: 13px;
+    .title1 {
+        grid-column: 1;
+        grid-row: 2;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 24px;
+        color: #000000;
+        padding-left: 25px;
+    }
+}
+
+
+.form {
+    display: flex;
+    justify-content: space-between;
+    padding: 35px 35px 20px 35px;
+    .second-row {
+        // margin-left: 300px;
+        // margin-top: -228px;
+        .field {
+            display: grid;
+            grid-template-columns: 1fr;
+            // padding: 5px;
+
+            .label {
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 21px;
+                color: #595959;
+                padding-left: 8px;
+                margin-left: 20px;
+    
+                span {
+                    color: #595959;
+                }
+            }
+            input {
+                width: 308px;
+                height: 35px;
+                left: 66px;
+                top: 257px;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 21px;
+                background: #FFFFFF;
+                color: #9A9A9A;
+                border: 1px solid #D9D9D9;
+                border-radius: 5px;
+                padding-left: 12px;
+                margin-left: 25px;
+                margin-top: 5px;
+            }
+    }
+}
+
+    .field {
+        display: grid;
+        grid-template-columns: 1fr;
+        margin-bottom: 15px;
+
+        .label {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: #595959;
+            span {
+                color: #595959;
+            }
+        }
+
+        input {
+            width: 308px;
+            height: 35px;
+            left: 66px;
+            top: 257px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 21px;
+            background: #FFFFFF;
+            color: #9A9A9A;
+            border: 1px solid #D9D9D9;
+            border-radius: 5px;
+            padding-left: 12px;
+            margin-top: 4px;
+        }
+        .small-text {
+            font-size: 10px;
+            margin-top: 2px;
+        }
+        
+        .card1 {
+            width: 571px;
+            height: 104px;
+            margin-left: 14px;
+            background: rgba(238, 238, 238, 0.3);
+            border: 1px solid rgba(200, 200, 200, 0.3);
+            border-radius: 5px;
+            .column {
+                float: left;
+                width: 50%;
+                padding: 10px;
+                height: 300px; /* Should be removed. Only for demonstration */
+              }
+        }
+    }
+}
+.dropdown-option {
+    margin-left: 25px;
+    height: 39px;
+}
+::ng-deep .field .dropdown-option .mat-form-field-infix {
+    width: 289px;
+}
+ .submit {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 7px 16px;
+    /* gap: 10px; */
+    position: absolute;
+    width: 101px;
+    height: 35px;
+    margin-left: 45px;
+    background: #285DD9;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: 1px solid #285DD9;
+    cursor: pointer;
+  }
+  
+  .cancel {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 7px 16px;
+    gap: 10px;
+    position: absolute;
+    width: 95px;
+    height: 35px;
+    margin-left: 165px;
+    background: #BABFD1;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: 1px solid #BABFD1;
+    cursor: pointer;
+  }
+  .footer {
+    margin-top: -25px;
+    margin-left: -20px;
+  }
+  .divider {
+    height: 0px;
+    border: 0.1px solid rgba(200, 200, 200, 0.5);
+    margin-top: -15px;
+}
+.close {
+    margin-left: 400px;
+    border: 1.5px solid #A2ABAB;
+    border-radius: 13px;
+    width: 25px;
+    height: 25px;
+    color: #A2ABAB;
+    cursor: pointer;
+}

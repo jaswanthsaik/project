@@ -1,0 +1,19 @@
+.dropdown-container {
+  background: #FFFEFE;
+  color: #000000;
+  border: 1px solid #CCCCCC;
+  border-radius: 3px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 2px;
+}
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent;
+}
+
+@media only screen and (max-width: 1220px) and (min-width: 1024px){
+  .dropdown-container {
+    width: 70px;
+  }
+}

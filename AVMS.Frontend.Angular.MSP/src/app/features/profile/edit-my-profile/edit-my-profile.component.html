@@ -1,0 +1,77 @@
+<div class="profile-container">
+<div class="profile-header">
+  <div class="profile-breadcrumbs">
+    <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+  </div>
+</div>
+  <div class="dashboard">
+    <div class="dashboard__main">
+      <div class="dashboard__customerCountMain">
+        <!-- <div class="dashboard__customerTiltle text-icon">
+        </div> -->
+        <div class="myprofile-content">
+          <!-- <div class="image-section">
+            <img [src]="myProfile.avatar" alt="img" class="avatar-img">
+            <div class="image-section__icons">
+              <span>
+                <input id="upload-avatar" name="upload-avatar" type="file" class="display-none" accept="image/*"
+                  (change)="updateAvatar($event)">
+                <label class="image-section__change" for="upload-avatar">
+                  Change Photo
+                </label>
+              </span>
+              <div><button class="image-section__preview" (click)="previewAvatar()">Preview</button></div>
+              <div><button class="image-section__delete" (click)="removeAvatar()">Delete Photo</button></div>
+            </div>
+          </div> -->
+          <div class="message">
+            <div class="message-section-align">
+              <div class="form-field-container">
+                <mat-form-field class="section">
+                  <mat-label class="label">First Name</mat-label>
+                  <input type="text"  matInput [(ngModel)]="myProfile.first_name">
+                </mat-form-field>
+              </div>
+              <div class="form-field-container">
+                <mat-form-field class="section">
+                  <mat-label class="label">Last Name</mat-label>
+                  <input type="text" matInput [(ngModel)]="myProfile.last_name">
+                </mat-form-field>
+              </div>
+              <div class="form-field-container">
+                <mat-form-field class="section">
+                <mat-label class="label">Email</mat-label>
+                <input type="text" matInput [(ngModel)]="myProfile.email" [attr.disabled]=true >
+              </mat-form-field>
+              </div>
+              <div class="form-field-container">
+                <mat-form-field class="section">
+                  <mat-label class="label">Company</mat-label>
+                <input type="text" matInput [(ngModel)]="myProfile.company_name" [attr.disabled]=true >
+              </mat-form-field>
+              </div>
+              <div class="form-field-container">
+                <div class="section">
+                  <mat-label class="label">Country</mat-label><br>
+                  <app-avms-dropdown-large class="dropdown-option" [lookup]="countryOptions" [selectedValue]="selectedCountry" (selectedValueChange)="countryChanged($event)"></app-avms-dropdown-large>
+                </div>
+              </div>
+          
+              <div class="form-field-container">
+                <div class="section">
+                  <mat-label class="label">Timezone</mat-label><br>
+                  <app-avms-dropdown-large class="dropdown-option" [lookup]="timezoneOptions" [selectedValue]="selectedTimezone" (selectedValueChange)="timezoneChanged($event)"></app-avms-dropdown-large>
+                </div>
+              </div>
+              <div class="buttons">
+                <button class="submit" (click)="saveProfile()">Save</button>
+                <button class="cancel" (click)="toggleToView()">Cancel</button>
+              </div>
+              </div>
+            </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+<div class="instance-container">
+    <div class="instance-header">
+        <div class="instance-breadcrumbs">
+            <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+        </div>
+        <div class="text-icon">
+            <span></span>
+            <!-- <img src="/assets/icons/download.png" alt="download"> -->
+        </div>
+        <div class="title">
+            <img class="link" src="/assets/icons/arrow-left.svg" alt="back" [routerLink]="breadcrumbs[5].url">
+            <div>{{ instance?.instance_name }}</div>
+        </div>
+        <div class="text-icon">
+        </div>
+    </div>
+
+    <div class="instance-dashboard">
+
+        <div class="main-section">
+            <div class="middle-title">
+                <img src="/assets/icons/calendar.svg">
+                <span>Schedules</span>
+            </div>
+            <div class="divider1"></div>
+            <div *ngIf="instance" [ngClass]="instance.schedule>0?'':'main-text hilite-orange'">{{ instance.schedule_name }}</div>
+        </div>
+        <div class="main-section">
+            <div class="middle-title">
+                <img src="/assets/icons/clock.svg">
+                <span>Postpone Shutdown</span>
+            </div>
+            <div class="divider1"></div>
+            <div class="main-text hilite-orange">{{ instance?.postpone_status }}</div>
+        </div>
+
+        <div class="main-section">
+            <div class="middle-title">
+                <img src="/assets/icons/archivebox.svg">
+                <span>Size</span>
+            </div>
+            <div class="divider1"></div>
+            <div class="main-text hilite-black">{{ instance?.size_information?.name }}</div>
+        </div>
+        <div class="main-section">
+            <div class="middle-title">
+                <img src="/assets/icons/notification-status.svg">
+                <span>Status</span>
+            </div>
+            <div class="divider1"></div>
+            <div [ngClass]="instance?.status===2?'hilite-red':'main-text hilite-green'">{{ instance?.status_name }}</div>
+        </div>
+
+        <div class="main-section provider-tags">
+            <div class="middle-title">
+                <img src="/assets/icons/provider-tag.svg">
+                <span>Provider TAGS</span>
+            </div>
+            <div class="divider1"></div>
+            <div *ngIf="instance">{{ formatTags(instance.tags) }}</div>
+        </div>
+
+        <div class="main-section">
+            <div class="middle-title">
+                <img src="/assets/icons/calendar.svg">
+                <span>Provider</span>
+            </div>
+            <div class="divider1"></div>
+            <div class="main-text hilite-black">{{ instance?.provider_name }}</div>
+        </div>
+
+        <div class="main-section">
+            <div class="middle-title">
+                <img src="/assets/icons/label-tag.svg">
+                <span>Labels</span>
+            </div>
+            <div class="divider1"></div>
+            <div class="main-text hilite-black">{{ instance?.label_name }}</div>
+        </div>
+
+    </div>
+
+    <div class="instance-table-host">
+        <div class="card">
+            <div class="title">Events</div>
+           <div class="demo-paginator">
+            <div>
+                    <span class="bold">{{ startRecord }}</span> to <span class="bold">{{ endRecord }}</span> of
+                    <span class="bold text1"> {{ totalRecords }}</span>
+                </div>
+                <div>
+                    <select class="per-page-dropdown-container" [(ngModel)]="recordsPerPage" (ngModelChange)="getLogs()">
+                        <option *ngFor="let item of rowPerPageOptions" [value]="item">
+                            <span class="page-text">View:</span>
+                            {{ item }}</option>
+                    </select>
+                </div>
+                <div>
+                    <app-avms-filter (filterChange)="filterLog($event)"></app-avms-filter>
+                </div> 
+            </div>
+        </div>
+        <!-- <div class="instance-table-container"> -->
+            <div class="instance-table tables-container">
+                <div class="header-column corner-top-left"></div>
+
+                <div class="header-column table-header">
+                    <span>{{ headers[0].description }}</span>
+                    <img src="/assets/images/sort-icon.svg" alt="sort-asc" (click)="sortTable(0)" class="sort-icon">
+                </div>
+                <div class="header-column table-header">
+                    <span>{{ headers[1].description }}</span>
+                    <img src="/assets/images/sort-icon.svg" alt="sort-asc" (click)="sortTable(1)" class="sort-icon">
+                </div>
+
+                <div class="header-column corner-top-right"></div>
+                <span class="divider"></span>
+
+                <ng-container *ngFor="let row of data">
+                    <div></div>
+                    <div class="item">{{ row.utc_executed_date_time | date: "dd-MM-yyyy HH:mm" }}</div>
+                    <div class="log-item" [ngClass]="row.action==='deallocate' || row.action==='upscalling-error' || row.action==='downscalling-error' || row.action==='scalling-error'?'hilite-red':'hilite-green'">{{ row.action }}</div>
+                    <div></div>
+
+                    <span class="divider"></span>
+                </ng-container>
+            </div>
+        <!-- </div> -->
+    </div>
+</div>

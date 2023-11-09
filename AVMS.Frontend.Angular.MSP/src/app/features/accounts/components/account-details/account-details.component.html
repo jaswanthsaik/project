@@ -1,0 +1,234 @@
+<div class="accounts-container">
+  <div class="accounts-header">
+    <div class="accounts-breadcrumbs">
+      <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+    </div>
+    <div class="text-icon">
+      <span></span>
+      <!-- <img src="/assets/icons/download.png" alt="download"> -->
+    </div>
+    <!-- <div class="title">{{ account?.account_name }}</div> -->
+    <div class="text-icon">
+    </div>
+    <!-- <div class="accounts-dropdown temp-hidden">
+            <app-avms-dropdown-large [lookup]="topAccountOptions"></app-avms-dropdown-large>
+        </div> -->
+  </div>
+
+  <div class="accounts-dashboard">
+    <div class="main-section">
+      <div class="card">
+        <div class="middle-title">
+          <span>TOTAL SAVINGS</span>
+          <div class="controls">
+            <app-avms-button [selected]="selectedMainGraphInterval===1" text="ANNUAL" (onClick)="getMainGraphData(1)"
+              [class.selected]="selectedMainGraphInterval===1"></app-avms-button>
+            <app-avms-button [selected]="selectedMainGraphInterval===2" text="6 MONTHS" (onClick)="getMainGraphData(2)"
+              [class.selected]="selectedMainGraphInterval===2"></app-avms-button>
+            <app-avms-button [selected]="selectedMainGraphInterval===3" text="3 MONTHS" (onClick)="getMainGraphData(3)"
+              [class.selected]="selectedMainGraphInterval===3"></app-avms-button>
+            <app-avms-button [selected]="selectedMainGraphInterval===4" text="1 MONTH" (onClick)="getMainGraphData(4)"
+              [class.selected]="selectedMainGraphInterval===4"></app-avms-button>
+            <app-avms-button [selected]="selectedMainGraphInterval===5" text="14 days" (onClick)="getMainGraphData(5)"
+              [class.selected]="selectedMainGraphInterval===5"></app-avms-button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mini-card">
+          <app-savings-chart [xAxisLegend]="xAxisLegend" [seriesLabels]="seriesLabels" [seriesData]="seriesData"
+            [tooltipData]="tooltipData"></app-savings-chart>
+        </div>
+
+      </div>
+    </div>
+    <div class="side-widget-1 side-align">
+      <app-side-widget contentType="recommendation" [recommendations]="recommendations" class="side-widget-1">
+        <span title class="card-alignment">
+          <div>
+            <img src="/assets/images/feature2.svg" class="vector-image1">
+          </div>
+          <div class="pad-lt10">
+            RECOMMENDATIONS
+          </div>
+        </span>
+      </app-side-widget>
+      <div class="mar-tp4">
+        <app-side-widget contentType="graph" class="side-widget-2">
+
+          <span title class="card-alignment">
+            <div>
+              <img src="/assets/images/feature1.svg" class="vector-image">
+            </div>
+            <div class="pad-lt10 new-insta-align">
+              Best Instances
+            </div>
+            <div>
+              <app-avms-dropdown class="days-dropdown" [lookup]="bestInstancesPeriods"
+                (selectedValueChange)="getInstanceGraph(+$event)"></app-avms-dropdown>
+            </div>
+          </span>
+
+          <div class="instance-align">
+            <app-half-doughnut-chart [data]="instanceGraphData"
+              (instanceClicked)="instanceClicked()"></app-half-doughnut-chart>
+            <a class="check-schedule" (click)="instanceClicked()">check schedules</a>
+            <app-search-instance class="search-instance" [class.hide]="!showSearchInstance"
+              (close)="showSearchInstance=false"></app-search-instance>
+          </div>
+        </app-side-widget>
+      </div>
+    </div>
+
+  </div>
+  <div class="accounts-info-container">
+    <div class="group-cards">
+      <div class="icon-container mar-rt10" icon>
+        <img src="/assets/images/home-vector.svg" alt="schedule">
+      </div>
+      <div>
+        <div value class="group-card-head">{{ account?.total_tenant }}</div>
+        <div text class="group-card-text">Tenants</div>
+      </div>
+    </div>
+    <div class="group-cards">
+      <div class="icon-container mar-rt10" icon>
+        <img src="/assets/images/not-save.svg" alt="schedule">
+      </div>
+      <div>
+        <div value class="group-card-head">{{ account?.total_subscription }}</div>
+        <div text class="group-card-text">Subscriptions</div>
+      </div>
+    </div>
+    <div class="group-cards">
+      <div class="icon-container mar-rt10" icon>
+        <img src="/assets/images/resource-vector.svg" alt="schedule">
+      </div>
+      <div>
+        <div value class="group-card-head">{{ account?.total_resource_groups }}</div>
+        <div text class="group-card-text">Resource Groups</div>
+      </div>
+    </div>
+    <div class="group-cards">
+      <div class="icon-container mar-rt10" icon>
+        <img src="/assets/images/instance-vector.svg" alt="schedule">
+      </div>
+      <div>
+        <div value class="group-card-head">{{ account?.total_instance }}</div>
+        <div text class="group-card-text">Instances</div>
+      </div>
+    </div>
+    <div class="group-cards">
+      <div class="icon-container mar-rt10" icon>
+        <img src="/assets/images/money-vector.svg" alt="schedule" >
+      </div>
+      <div>
+        <div value class="group-card-head">{{ account?.total_instance_scheduled }}</div>
+        <div text class="group-card-text">Instances Saving Money</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accounts-table-host">
+    <div class="card1">
+      <span class="title3">Account Tenants</span>
+
+      <div class=" demo-paginator">
+        <div>
+          <app-avms-filter (filterChange)="filterTenants($event)"></app-avms-filter>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="accounts-table-container"> -->
+    <div class="table-layout">
+      <div class="account-table-align">
+        <section class="tables-container" tabindex="0">
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay;index as j">
+            <th mat-header-cell *matHeaderCellDef class="table-head-align">
+              <span mat-sort-header (click)="sortColumn('tenant_name')" *ngIf="column==='name'" style="text-align: center;" ><div>Tenant Name</div></span>
+              <span (click)="sortColumn('total_subscriptions')" *ngIf="column==='subscriptions'" style="text-align: center;"><div>Subscriptions</div></span>
+              <span (click)="sortColumn('total_resource_groups')" *ngIf="column==='resource_groups'" style="text-align: center;"><div>Resource Groups</div></span>
+              <span (click)="sortColumn('total_instances')" *ngIf="column==='instances'" style="text-align: center;"><div>Instances</div></span>
+              <span *ngIf="column==='...'" style="text-align: center;"><div>...</div></span>
+            <td mat-cell *matCellDef="let element" style="text-align: center;">
+              <span *ngIf="column!=='...'&& column!=='name'"><div>{{element[column]}}</div></span>
+              <span (click)="toggleRow(element)" *ngIf="column==='name'" class="hand" style="color: #285dd9; font-weight: 500;">{{element[column]}}</span>
+              <button *ngIf="column==='...'"  (click)="toggleRow(element)" style="border:none; background:none;"><span *ngIf="column==='...' && !isToggle"><i class="fa fa-caret-down" style="font-size:20px;" aria-hidden="true"></i></span>
+                <span *ngIf="column==='...' && isToggle"><i class="fa fa-caret-up" style="font-size:20px;" aria-hidden="true"></i></span></button>
+              
+            </td>
+          </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+              <div class="example-element-detail" [@detailExpand]="element.expanded ? 'expanded' : 'collapsed'">
+                <div class="detail-table-align">
+                <div class="detail-table-modified">
+                <section class="tables-container1" tabindex="0">
+                <table class="detail-table" matSort>
+                  <tr class="table-header">
+                    <th mat-sort-header (click)="sortColumn('subscription_name')"><div class="mar-tp15 table-bottom15">Subscription Name</div></th>
+                    <th (click)="sortColumn('total_resource_groups')" style="text-align: center;"><div class="mar-tp15 table-bottom15">Resource Groups</div></th>
+                    <th (click)="sortColumn('total_instances')" style="text-align: center;"><div class="mar-tp15 table-bottom15">Instances</div></th>
+                    <th (click)="sortColumn('schedule_saving')" style="text-align: center;"><div class="mar-tp15 table-bottom15">Savings</div></th>
+                    <th (click)="sortColumn('recommendation')" style="text-align: center;"><div class="mar-tp15 table-bottom15">Recommendations</div></th>
+                    <th (click)="sortColumn('schedule_name')" style="text-align: center;"><div class="mar-tp15 table-bottom15">Schedule by Subscription</div></th>
+                    <th><div class="mar-tp15 table-bottom15" style="text-align: center;">...</div></th>
+                  </tr>
+                  <tr *ngFor="let element of dataSource1.data">
+                    <td (click)="navigateToSubscription(element)"><div class=" hand" style="color: #285dd9; font-weight: 500;">{{element.name}}</div></td>
+                    <td style="text-align: center;">{{element.resource_groups}}</td>
+                    <td style="text-align: center;">{{element.instances}}</td>
+                    <td style="text-align: center;" *ngIf="element.savings>=0" class="trending-up">
+                      <img src="/assets/icons/trending-up.png" alt="trending-up">
+                      <span class="saving">{{element.savings}}</span>
+                    </td>
+                    <td style="text-align: center;" *ngIf="element.savings<0" class="trending-down">
+                      <img src="/assets/icons/trending-down.png" alt="trending-down">
+                      <span>{{element.savings}}</span>
+                    </td>
+                    <td style="text-align: center;" [class.recommendation-yes]="element.recommendation==='YES'">{{element.recommendation}}</td>
+                    <td style="text-align: center;"><div style="margin-bottom: 15px;"><div [ngClass]="element.scheduled?'hilite-green':'hilite-red'">{{element.scheduleName}}</div></div></td>
+                    <td style="text-align: center;">
+                      <div class="tooltip-host" style="display: flex;  justify-content: center;">
+                        <img src="/assets/icons/schedule-gray.png" alt="schedule" (click)="schedule(element)"
+                          style="cursor: pointer;">
+                        <span class="tooltip-container">
+                          <app-tooltip [tooltipText]="'Apply schedule'" tooltipPosition="top"></app-tooltip>
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                </section>
+                </div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr class="table-header" mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+            [class.example-expanded-row]="element.expanded" >
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        </section>
+      </div>
+    </div>
+    <div class="accounts-table-navigation">
+      <mat-paginator 
+      [pageSizeOptions]="rowPerPageOptions"
+      [pageSize]="recordsPerPage"
+      [length]="totalRecords"
+      [pageIndex]="currentPage - 1" 
+      (page)="pageChange($event)">
+      (filterChange)="filter($event)"
+</mat-paginator>
+    </div>
+    <!-- </div> -->
+  </div>
+  <!-- </div> -->
+</div>

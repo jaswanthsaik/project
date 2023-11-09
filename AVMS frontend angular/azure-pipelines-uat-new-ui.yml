@@ -1,0 +1,80 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+variables:
+  - name: BuildAgentVmImageName
+    value: 'ubuntu-latest'
+  - name: dockerfilePath
+    value: '$(Build.SourcesDirectory)/Dockerfile'
+  - name: ACRRegistryServiceConnection
+    value: 'acr_advancedvmsolutions'
+  - name: ACRImageRepository
+    value: 'avms_new_fe_uat'
+  - name: ACRContainerRegistry
+    value: 'advancedvmsolutions.azurecr.io'
+  - name: ACRtag
+    value: '$(Build.BuildId)'
+  - name: ACRImageName
+    value: $(ACRContainerRegistry)/$(ACRImageRepository):$(ACRtag)
+  - name: azure.prod.subscription
+    value: 'AVMS - UAT - Releases (62fce1df-ce84-405c-bc3e-444707516472)'
+  - name: azure.prod.webappname
+    value: 'appvmcsuat'
+
+pool: 
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Build_FE
+    displayName: Build FrontEnd Ang
+    jobs:
+    - job: Build_FE
+      pool:
+        vmImage: $(BuildAgentVmImageName)
+      steps:
+      - task: Docker@2
+        displayName: Build and push an image to container registry
+        inputs:
+          command: buildAndPush
+          repository: $(ACRImageRepository)
+          dockerfile: $(dockerfilePath)
+          containerRegistry: $(ACRRegistryServiceConnection)
+          tags: |
+            $(ACRtag)
+  - stage: deploy_enviroment
+    displayName: Deploy to Enviroment
+    variables:
+      - group: AVMS - UAT Angular Environment
+    jobs:
+      - deployment: DeployWeb
+        environment: avms-fe-angular-uat
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: replacetokens@3
+                  inputs:
+                    targetFiles: '$(Pipeline.Workspace)/**/main*.js'
+                    encoding: 'auto'
+                    writeBOM: true
+                    verbosity: 'detailed'
+                    actionOnMissing: 'warn'
+                    keepToken: false
+                    actionOnNoFiles: 'continue'
+                    enableTransforms: false
+                    tokenPrefix: '#{'
+                    tokenSuffix: '}#'
+                    enableRecursion: false
+                    useLegacyPattern: false
+                    enableTelemetry: true
+                - task: AzureRmWebAppDeployment@4
+                  inputs:
+                    ConnectionType: 'AzureRM'
+                    azureSubscription: '$(azure.prod.subscription)'
+                    appType: 'webAppContainer'
+                    WebAppName: '$(azure.prod.webappname)'
+                    DockerNamespace: '$(ACRContainerRegistry)'
+                    DockerRepository: '$(ACRImageRepository)'
+                    DockerImageTag: '$(Build.BuildId)'                

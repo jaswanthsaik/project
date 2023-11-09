@@ -1,0 +1,81 @@
+trigger:
+  - prod
+
+variables:
+  - name: buildAgentVmImageName
+    value: 'ubuntu-latest'
+  - name: dockerfilePath
+    value: '$(Build.SourcesDirectory)/Dockerfile'
+  - name: acrRegistryServiceConnection
+    value: 'kalibr8crprod-Serviceconnection'
+  - name: acrImageRepository
+    value: 'appkalibr8prod'
+  - name: acrContainerRegistry
+    value: 'kalibr8crprod.azurecr.io'
+  - name: acrTag
+    value: '$(Build.BuildId)'
+  - name: acrImageUrl
+    value: $(acrContainerRegistry)/$(acrImageRepository):$(acrTag)
+  - name: azureServiceConnection
+    value: 'Kalibr8 - Prod - Releases'
+  - name: subscriptionId
+    value: 'da9b15a1-0c71-4821-b13b-c160c737a4a9'
+  - name: resourceGroup
+    value: 'Kalibr8-Prod-Containerize'
+  - name: resourceGroupLocation
+    value: 'northeurope'
+  - name: armTemplate
+    value: '$(Build.SourcesDirectory)/armtemplates/prod.json'
+  - group: kalibr8cr
+  - name: kalibr8crprodPassword
+    value: $[variables.kalibr8crprod]
+
+stages:
+  - stage: Build
+    pool:
+        vmImage: $(buildAgentVmImageName) 
+    jobs:
+    - job: Docker_Build
+      steps:
+      - task: Docker@2
+        inputs:
+          command: buildAndPush
+          repository: $(acrImageRepository)
+          dockerfile: $(dockerfilePath)
+          containerRegistry: $(acrRegistryServiceConnection)
+          tags: $(acrTag)
+
+
+  - stage: Deploy
+    pool:
+        vmImage: $(buildAgentVmImageName)  
+    jobs:
+    - job: Deploying_Arm
+      steps:
+      - task: AzureResourceManagerTemplateDeployment@3
+        inputs:
+          deploymentScope: 'Resource Group'
+          azureResourceManagerConnection: '$(azureServiceConnection)'
+          subscriptionId: '$(subscriptionId)'
+          action: 'Create Or Update Resource Group'
+          resourceGroupName: '$(resourceGroup)'
+          location: '$(resourceGroupLocation)'
+          templateLocation: 'Linked artifact'
+          csmFile: '$(armTemplate)'
+          overrideParameters: '-container_image $(acrImageUrl) -unique_revision $(Build.BuildId) -registry_password $(kalibr8crprodPassword)'
+          deploymentMode: 'Incremental'
+    - job: SSL_Binding
+      dependsOn: Deploying_Arm
+      condition: succeeded()
+      steps:
+        - task: AzureCLI@2
+          inputs:
+            azureSubscription: '$(azureServiceConnection)'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              az config set extension.use_dynamic_install=yes_without_prompt
+              
+              az containerapp hostname bind -n appkalibr8prod -g $(resourceGroup) --hostname app.kalibr8.io --certificate prodcertificates --environment Kalibr8PROD-Environment
+
+              az containerapp hostname bind -n appkalibr8prod -g $(resourceGroup) --hostname portal.kalibr8.io --certificate prodcertificates --environment Kalibr8PROD-Environment

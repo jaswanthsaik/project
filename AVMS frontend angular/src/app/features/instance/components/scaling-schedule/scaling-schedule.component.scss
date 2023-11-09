@@ -1,0 +1,96 @@
+.instance-container {
+    // display: grid;
+    // grid-template-columns: 1fr;
+    // grid-template-rows: repeat(7, auto);
+    padding: 0px 15px;
+}
+
+.instance-header {
+    // grid-column: 1 / -1;
+    // display: grid;
+    // grid-template-columns: 1fr auto;
+    // align-items: center;
+    grid-gap: 10px;
+    margin:10px 0px;
+
+    .title {
+        grid-column: 1;
+        grid-row: 2;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 24px;
+        color: #000000;
+        // margin-bottom: 20px;
+    }
+
+    .text-icon {
+        // display: grid;
+        // grid-template-columns: auto auto;
+        // align-items: center;
+        // justify-items: end;
+        // gap: 10px;
+        margin:10px 0px;
+        span {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: right;
+            letter-spacing: -0.01em;
+            color: #000000;
+        }
+    }
+
+    .right {
+        grid-column: 2;
+    }
+
+    .warning {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        gap: 17px;
+        padding: 8px 20px;
+        background: rgba(253, 42, 244, 0.5);
+        border-radius: 10px;
+        height: 44px;    
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        height:auto;
+        margin-top: 5px;
+    }
+}
+
+
+.schedules-table-host {
+    background-color: #FFFFFF;
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid rgba(200, 200, 200, 0.3);
+    border-radius: 5px;
+
+    .title1 {
+        font-weight: 600;
+        font-size: 14px;
+        // line-height: 29px;
+        padding-bottom: 12px;
+        color: #285DD9;
+    }
+}
+
+.schedules-table-container {
+    background-color: #FFFFFF;
+    // margin-top: 30px;
+    border-radius: 12px;
+}
+
+
+.link {
+    cursor: pointer;
+    color: #000000;
+}

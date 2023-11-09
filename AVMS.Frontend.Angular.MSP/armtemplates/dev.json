@@ -1,0 +1,167 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerappName": {
+      "defaultValue": "appkalibr8dev",
+      "type": "String"
+    },
+    "location": {
+      "defaultValue": "northeurope",
+      "type": "String"
+    },
+    "environment_name": {
+      "defaultValue": "Kalibr8DEV-Environment",
+      "type": "String"
+    },
+    "container_image": {
+      "type": "string",
+      "defaultValue": "kalibr8cr.azurecr.io/kalibr8mspdev:"
+    },
+    "container_registry_server": {
+      "type": "string",
+      "defaultValue": "kalibr8cr.azurecr.io"
+    },
+    "registry_username": {
+      "type": "string",
+      "defaultValue": "kalibr8cr"
+    },
+    "registry_password": {
+      "type": "string",
+      "Value": null
+    },
+    "unique_revision": {
+      "type": "string",
+      "Value": null
+    },
+    "docker_tag": {
+      "type": "string",
+      "Value": null
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2022-03-01",
+      "type": "Microsoft.App/containerApps",
+      "name": "[parameters('containerappName')]",
+      "location": "[parameters('location')]",
+      "identity": {
+        "type": "None"
+      },
+      "properties": {
+        "managedEnvironmentId": "[resourceId('Microsoft.App/managedEnvironments', parameters('environment_name'))]",
+        "configuration": {
+          "secrets": [
+            {
+              "name": "myregistrypassword",
+              "value": "[parameters('registry_password')]"
+            }
+          ],
+          "ingress": {
+            "external": true,
+            "targetPort": 80,
+            "allowInsecure": false,
+            "traffic": [
+              {
+                "latestRevision": true,
+                "weight": 100
+              }
+            ]
+          },
+          "registries": [
+            {
+              "server": "[parameters('container_registry_server')]",
+              "username": "[parameters('registry_username')]",
+              "passwordSecretRef": "myregistrypassword"
+            }
+          ],
+          "dapr": {
+            "appId": "[parameters('containerappName')]",
+            "appPort": 80,
+            "appProtocol": "http",
+            "enabled": true
+          }
+        },
+        "template": {
+          "revisionSuffix": "[concat('myrevision',parameters('unique_revision'))]",
+          "containers": [
+            {
+              "name": "main",
+              "image": "[concat(parameters('container_image'),parameters('docker_tag'))]",
+              "env": [
+                {
+                  "name": "HTTP_PORT",
+                  "value": "80"
+                },
+
+                {
+                  "name": "ApiAccountUrl",
+                  "value": "https://kalibr8devwebapiaccount.yellowflower-cfc63e78.northeurope.azurecontainerapps.io/"
+                },
+                {
+                  "name": "ApiLoginUrl",
+                  "value": "https://kalibr8devwebapilogin.yellowflower-cfc63e78.northeurope.azurecontainerapps.io/"
+                },
+                {
+                  "name": "ApiReportUrl",
+                  "value": "https://kalibr8devwebapireport.yellowflower-cfc63e78.northeurope.azurecontainerapps.io/"
+                },
+                {
+                  "name": "ApiResourceUrl",
+                  "value": "https://kalibr8devwebapiresource.yellowflower-cfc63e78.northeurope.azurecontainerapps.io/"
+                },
+                {
+                  "name": "apiURI",
+                  "value": "$(fe-backendURI)"
+                },
+                {
+                  "name": "b2cClientId",
+                  "value": "e355408f-cefb-4609-aca8-a6f351e66d95"
+                },
+                {
+                  "name": "b2cClientSecret",
+                  "value": "J4f8Q~IhjUrsIDkcoUfDB~TzIE.ltMDxbx61KaOa"
+                },
+                {
+                  "name": "b2cPolicy",
+                  "value": "B2C_1_SignIn"
+                },
+                {
+                  "name": "b2cRedirectUri",
+                  "value": "https://appkalibr8dev.yellowflower-cfc63e78.northeurope.azurecontainerapps.io/"
+                },
+                {
+                  "name": "b2cTenantDomain",
+                  "value": "Kalibr8Dev.onmicrosoft.com"
+
+                },
+                {
+                  "name": "WEBSITE_LOCAL_CACHE_SIZEINMB",
+                  "value": "300"
+                }
+              ],
+              "resources": {
+                "cpu": 0.5,
+                "memory": "1Gi"
+              },
+              "probes": [
+                
+              ],
+              "volumeMounts": [
+                
+              ]
+            }
+          ],
+          "scale": {
+            "minReplicas": 1,
+            "maxReplicas": 3
+          },
+          "volumes": [
+            
+          ]
+        }
+      }
+    }
+  ]
+}

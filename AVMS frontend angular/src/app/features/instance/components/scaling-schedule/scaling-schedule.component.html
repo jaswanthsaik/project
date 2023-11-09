@@ -1,0 +1,28 @@
+<div class="instance-container">
+    <div class="instance-header">
+        <div class="instance-breadcrumbs">
+            <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+        </div>
+        <div class="text-icon">
+            <span></span>
+            <!-- <img src="/assets/icons/download.png" alt="download"> -->
+        </div>
+        <div class="title">
+            <img class="link" src="/assets/icons/arrow-left.svg" alt="back" [routerLink]="breadcrumbs[5].url">
+            <div>Instance Scaling Schedule</div>
+        </div>
+        
+        <div class="warning">
+            <img class="link" src="/assets/icons/exclamation-white.png" alt="warning">
+            <span>If the instance is currently running, changing its size will cause it to be restarted. Stopping the instance may reveal additional sizes.</span>
+        </div>
+    </div>
+
+    <div class="schedules-table-host">
+            <div class="title1">Details</div>
+        <div class="schedules-table-container">
+            <app-avms-scaling-scheduler [instance]="instance" [subscriptionId]="subscriptionId" [resourceGroupId]="resourceGroupId"></app-avms-scaling-scheduler>
+        </div>
+    </div>
+
+</div>

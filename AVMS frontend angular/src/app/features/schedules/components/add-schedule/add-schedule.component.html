@@ -1,0 +1,37 @@
+<div class="add-schedule-container">
+    <!-- <div class="card-header">
+        <span class="title1">Add  a New Schedule</span>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div> -->
+    <div class="body">
+    <div class="body sub-text">To Add  a New Schedule, please complete the following fields below:</div>
+    <div class="form">
+        <div class="field">
+            <div class="label">Schedule Name <span>(*)</span></div>
+            <input type="text" placeholder="input the schedule name" [(ngModel)]="scheduleName" (ngModelChange)="inputChanged()">
+        </div>
+        <div class="field">
+            <div class="label">Schedule Description </div>
+            <input type="text" placeholder="input the schedule description" [(ngModel)]="scheduleDescription" (ngModelChange)="inputChanged()">
+        </div>
+        <div class="field">
+            <div class="label">Timezone <span>(*)</span></div>
+            <div class="time-zone-align">
+            <app-avms-dropdown-large [lookup]="timezoneOptions" [selectedValue]="selectedTimezone" (selectedValueChange)="timezoneChanged($event)"></app-avms-dropdown-large>
+            </div>
+                <div class="label small-text">Please choose a timezone for the schedule</div>
+        </div>
+        <!-- <div class="field">
+            <div class="label">Please choose a timezone for the schedule</div>
+        </div> -->
+    </div>
+    </div>
+    <!-- <div class="divider"></div>
+    <div class="footer">
+        <button type="submit" class="submit" >Save Schedule</button>
+          <button type="cancel" class="cancel" >Cancel</button>
+
+    </div> -->
+    
+
+</div>

@@ -1,0 +1,186 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerappName": {
+      "defaultValue": "appkalibr8qa",
+      "type": "String"
+    },
+    "location": {
+      "defaultValue": "northeurope",
+      "type": "String"
+    },
+    "environment_name": {
+      "defaultValue": "Kalibr8QA-Environment",
+      "type": "String"
+    },
+    "container_image": {
+      "type": "string",
+      "defaultValue": "kalibr8cr.azurecr.io/kalibr8mspqa:"
+    },
+    "container_registry_server": {
+      "type": "string",
+      "defaultValue": "kalibr8cr.azurecr.io"
+    },
+    "registry_username": {
+      "type": "string",
+      "defaultValue": "kalibr8cr"
+    },
+    "registry_password": {
+      "type": "string",
+      "Value": null
+    },
+    "unique_revision": {
+      "type": "string",
+      "Value": null
+    },
+    "docker_tag": {
+      "type": "string",
+      "Value": null
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "apiVersion": "2022-03-01",
+      "type": "Microsoft.App/containerApps",
+      "name": "[parameters('containerappName')]",
+      "location": "[parameters('location')]",
+      "identity": {
+        "type": "None"
+      },
+      "properties": {
+        "managedEnvironmentId": "[resourceId('Microsoft.App/managedEnvironments', parameters('environment_name'))]",
+        "configuration": {
+          "secrets": [
+            {
+              "name": "myregistrypassword",
+              "value": "[parameters('registry_password')]"
+            }
+          ],
+          "ingress": {
+            "external": true,
+            "targetPort": 80,
+            "allowInsecure": false,
+            "traffic": [
+              {
+                "latestRevision": true,
+                "weight": 100
+              }
+            ]
+          },
+          "registries": [
+            {
+              "server": "[parameters('container_registry_server')]",
+              "username": "[parameters('registry_username')]",
+              "passwordSecretRef": "myregistrypassword"
+            }
+          ],
+          "dapr": {
+            "appId": "[parameters('containerappName')]",
+            "appPort": 80,
+            "appProtocol": "http",
+            "enabled": true
+          }
+        },
+        "template": {
+          "revisionSuffix": "[concat('myrevision',parameters('unique_revision'))]",
+          "containers": [
+            {
+              "name": "main",
+              "image": "[concat(parameters('container_image'),parameters('docker_tag'))]",
+              "env": [
+                {
+                  "name": "HTTP_PORT",
+                  "value": "80"
+                },
+                {
+                  "name": "ApiAccountUrl",
+                  "value": "https://kalibr8qawebapiaccount.redhill-97f608cf.northeurope.azurecontainerapps.io/",
+                  "slotSetting": false
+                },
+                {
+                  "name": "ApiLoginUrl",
+                  "value": "https://kalibr8qawebapilogin.redhill-97f608cf.northeurope.azurecontainerapps.io/",
+                  "slotSetting": false
+                },
+                {
+                  "name": "ApiReportUrl",
+                  "value": "https://kalibr8qawebapireport.redhill-97f608cf.northeurope.azurecontainerapps.io/",
+                  "slotSetting": false
+                },
+                {
+                  "name": "ApiResourceUrl",
+                  "value": "https://kalibr8qawebapiresource.redhill-97f608cf.northeurope.azurecontainerapps.io/",
+                  "slotSetting": false
+                },
+                {
+                  "name": "apiURI",
+                  "value": "$(fe-backendURI)",
+                  "slotSetting": false
+                },
+                {
+                  "name": "b2cClientId",
+                  "value": "e899e672-55fb-4baf-b1a2-eb6a5e9bf2ff",
+                  "slotSetting": false
+                },
+                {
+                  "name": "b2cClientSecret",
+                  "value": "JQe8Q~OxMhPI7MOEg8jN3lzPKku3LSOEFgfEUbQ-",
+                  "slotSetting": false
+                },
+                {
+                  "name": "b2cPolicy",
+                  "value": "B2C_1_SignIn",
+                  "slotSetting": false
+                },
+                {
+                  "name": "b2cRedirectUri",
+                  "value": "https://appkalibr8qa.redhill-97f608cf.northeurope.azurecontainerapps.io/",
+                  "slotSetting": false
+                },
+                {
+                  "name": "b2cTenantDomain",
+                  "value": "Kalibr8QA.onmicrosoft.com",
+                  "slotSetting": false
+                },
+                {
+                  "name": "WEBSITE_ENABLE_SYNC_UPDATE_SITE",
+                  "value": "true",
+                  "slotSetting": false
+                }
+              ],
+              "resources": {
+                "cpu": 0.5,
+                "memory": "1Gi"
+              },
+              "probes": [
+                
+              ],
+              "volumeMounts": [
+                
+              ]
+            }
+          ],
+          "scale": {
+            "minReplicas": 1,
+            "maxReplicas": 3,
+            "rules": [
+              {
+                "name": "http-rule",
+                "http": {
+                  "metadata": {
+                    "concurrentRequests": "100"
+                  }
+                }
+              }
+            ]
+          },
+          "volumes": [
+           
+          ]
+        }
+      }
+    }
+  ]
+}

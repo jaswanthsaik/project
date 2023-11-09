@@ -1,0 +1,50 @@
+[
+    {
+        "label": 1,
+        "label_name": "Label1",
+        "label_description": "Label1 description",
+        "schedule": 1,
+        "schedule_name": "Schedule1",
+        "accounts": 7,
+        "resource": 1,
+        "resource_name": "Resource1",
+        "schedules": true,
+        "selected": false
+    },
+    {
+        "label": 2,
+        "label_name": "Label2",
+        "label_description": "Label2 description",
+        "schedule": 2,
+        "schedule_name": "Schedule2",
+        "accounts": 3,
+        "resource": 1,
+        "resource_name": "Resource2",
+        "schedules": true,
+        "selected": false
+    },
+    {
+        "label": 3,
+        "label_name": "Label3",
+        "label_description": "Label3 description",
+        "schedule": 3,
+        "schedule_name": "Schedule3",
+        "accounts": 12,
+        "resource": 3,
+        "resource_name": "Resource3",
+        "schedules": false,
+        "selected": false
+    },
+    {
+        "label": 4,
+        "label_name": "Label4",
+        "label_description": "Label4 description",
+        "schedule": 4,
+        "schedule_name": "Schedule4",
+        "accounts": 7,
+        "resource": 4,
+        "resource_name": "Resource4",
+        "schedules": true,
+        "selected": false
+    }
+]

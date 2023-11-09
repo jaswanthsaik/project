@@ -1,0 +1,10 @@
+
+<div class="dropdown-border">
+    <img *ngIf="showIcon" src="/assets/icons/filter.png" alt="filter">
+    <select class="dropdown-container" [(ngModel)]="selectedValue" (ngModelChange)="selectionChanged()">
+        <option [value]="0" disabled selected>{{ lookup[0].description }}</option>
+        <ng-container *ngFor="let item of lookup; let i = index">
+            <option *ngIf="i > 0" [value]="item.id">{{ item.description }}</option>
+          </ng-container>
+    </select>
+</div>

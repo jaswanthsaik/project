@@ -1,0 +1,39 @@
+<div class="scaling-schedule-container">
+
+    <div class="warning">Are you sure you want to setup the scaling reoccurrence?<br />After creating the schedule the selected size cannot be changed.</div>
+
+    <div class="form">
+        <div class="field">
+            <div class="label">FROM:</div>
+            <div>{{ scalingScheduleSize }}</div>
+        </div>
+        <div class="field">
+            <div class="label">TO:</div>
+            <div>{{ scalingScheduleNewSize }}</div>
+        </div>
+        <div class="field">
+            <div class="text">The operation success (or failure) is returned by Azure after processing the request (the
+                response time may vary based on Azure Portal capacity and company pricing tier). </div>
+        </div>
+
+        <div class="field">
+            <li>If the response is successful the user is notified via email of the successful outcome and the new size
+                is updated in the Instance list and details.</li>
+            <li>If the response is not successful (failure) the user is notified via email with the actual response from
+                Azure (this is owned and controlled by Azure).</li>
+        </div>
+
+        <div></div>
+
+        <div class="field">
+            Important: This operation is dependent on the current pricing tier, which may affect the success of the
+            resize operation. Please ensure that the selected size is available in your current pricing tier.
+            <br />
+            Due to contract limitations Reserved Instances are not contemplated in this resize operation as it may
+            affect your current agreement and pricing with Azure.
+            <br />
+            Prices and final charges will appear in your local currency in cost analysis and biling views on Azure Portal.
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,36 @@
+<div class="confirmation-modal-align">
+  <div>
+    <div class="confirmation-dialog-container">
+      <div class="dialog-main-content">
+        <ng-template [cdkPortalOutlet]="data.portal"></ng-template>
+      </div>
+
+      <div class="footer">
+        <div
+          *ngIf="data.secondaryButtonText"
+          class="secondary-button"
+          [ngClass]="secondaryButtonColumn === 1 ? 'left' : 'center'"
+          (click)="secondary()"
+        >
+          {{ data.secondaryButtonText }}
+        </div>
+        <div
+          *ngIf="data.primaryButtonText"
+          class="primary-button"
+          [ngClass]="primaryButtonColumn === 3 ? 'right' : 'center'"
+          (click)="primary()"
+        >
+          {{ data.primaryButtonText }}
+        </div>
+        <div
+          *ngIf="data.cancelButtonText"
+          class="cancel-button"
+          [ngClass]="cancelButtonColumn === 1 ? 'left' : 'center'"
+          (click)="close()"
+        >
+          {{ data.cancelButtonText }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

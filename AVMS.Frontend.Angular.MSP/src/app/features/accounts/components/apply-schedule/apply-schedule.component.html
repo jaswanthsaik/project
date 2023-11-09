@@ -1,0 +1,39 @@
+<div class="apply-schedule-container">
+
+    <div *ngIf="numberOfScheduledInstances>0" class="warning">
+        This subscription has {{ numberOfScheduledInstances }} scheduled instances.
+    </div>
+
+    <div class="text-icon">
+        <button mat-raised-button (click)="navigateSchedule()">
+            <mat-icon>add</mat-icon>Create New Schedule</button>
+    </div>
+    <div *ngIf="scheduleOptions.length>2" class="text-align">Please choose the schedule to be applied on the selected <b>{{ selectedItem }}</b></div>
+
+    <div *ngIf="scheduleOptions.length>2" class="schedule-dropdown">
+        <app-avms-dropdown-large [lookup]="scheduleOptions" [selectedValue]="selectedSchedule" (selectedValueChange)="scheduleChanged($event)"></app-avms-dropdown-large>
+    </div>
+    <div *ngIf="scheduleOptions.length==2" class="text-icon-center">
+        <div>
+            <span (click)="navigateSchedule()">Click Here</span>
+            to start saving money.
+        </div>
+    </div>
+
+    <div *ngIf="showPostponeShutdown">
+        <div>Postpone Shutdown</div>
+        <app-avms-toggle [toggleStatus]="postponeShutdown" (toggleStatusChange)="postponeShutdownChanged($event)">
+        </app-avms-toggle>
+
+    </div>
+
+    <div></div>
+
+    <div *ngIf="numberOfScheduledInstances>0">
+        <div>Overwrite existing schedules?</div>
+        <app-avms-toggle [(toggleStatus)]="overwrite" (toggleStatusChange)="overwriteChanged($event)"></app-avms-toggle>
+    </div>
+
+    <div></div>
+
+</div>

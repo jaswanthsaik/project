@@ -1,0 +1,29 @@
+<div class="postpone-shutdown-container">
+    <div class="message">
+        <div class="section">
+            Below is the current schedule applied to the selected instance {{instanceName}}:
+        </div>
+        <div class="section">
+            <input type="text" placeholder="input the schedule name" [(ngModel)]="scheduleName" disabled>
+        </div>
+        <h2>
+            Postpone Shutdown
+        </h2>
+        <div class="caption">
+            This option will postpone the instance's next scheduled shutdown
+        </div>
+        <div class="section">
+            <app-avms-toggle [toggleStatus]="isPostponeActive" offLabel="NO" onLabel="YES"
+                (toggleStatusChange)="statusChanged($event)">
+            </app-avms-toggle>
+
+        </div>
+        <h2 *ngIf="isPostponeActive">
+            Snooze until:
+        </h2>
+        <h2 *ngIf="isPostponeActive">
+            You must select a date and time <span class="purple">(*)</span>
+        </h2>
+        <app-avms-date-picker *ngIf="isPostponeActive" [selectedDate]="postponeTimestamp" (dateChangedEvent)="onDateChanged($event)"></app-avms-date-picker>
+    </div>
+</div>

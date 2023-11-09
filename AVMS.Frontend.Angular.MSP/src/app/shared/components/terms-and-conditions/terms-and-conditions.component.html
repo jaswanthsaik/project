@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="mt-2">
+  <mat-card-title class="title">Terms and Conditions </mat-card-title>
+  <button mat-icon-button class="close-button" mat-dialog-close>
+    <mat-icon class="close">close</mat-icon>
+  </button>
+</div>
+  <div *ngIf="showWarning" class="warning">You must accept the Terms and Conditions before you can use this website.
+  </div>
+
+  <div class="print">You should print a copy of these Terms of Use for future reference.</div>
+
+  <div class="institution-user-stats__main branch-modal">
+    <div class="tcDescription" [innerHTML]="tcText" #printSection></div>
+  </div>
+
+  <div class="agree">
+    <mat-checkbox class="checkbox" [(ngModel)]="tcAccepted" (ngModelChange)="changeAcceptedStatus()">
+      I agree to the Terms & Conditions
+    </mat-checkbox>
+  </div>
+
+  <mat-card-actions class="card-actions">
+    <button mat-button (click)="cancelDialog()">Decline</button>
+    <button mat-button color="accent" class="print-button" (click)="printElement('print-section')">Print</button>
+    <button mat-raised-button class="accept-button" color="primary" (click)="primary()">Accept</button>
+  </mat-card-actions>
+</div>

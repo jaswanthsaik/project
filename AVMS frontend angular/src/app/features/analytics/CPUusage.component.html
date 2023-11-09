@@ -1,0 +1,421 @@
+<div class="schedules-breadcrumbs">
+  <app-avms-breadcrumbs [breadcrumbs]="breadcrumbs"></app-avms-breadcrumbs>
+</div>
+
+<div class="summary-cards">
+
+  <div class="summary-card1" (click)="showUserData(1)" [class.selected]="selectedSummary === 1">Summary</div>
+  <div class="summary-card2" (click)="showUserData(2)" [class.selected]="selectedSummary === 2">Manage By Exceptions
+  </div>
+  <div class="summary-card3" (click)="showUserData(3)" [class.selected]="selectedSummary === 3">CPU uasge</div>
+  <div class="summary-card4" (click)="showUserData(4)" [class.selected]="selectedSummary === 4">Recommendations</div>
+  <div class="summary-card5" (click)="showUserData(5)" [class.selected]="selectedSummary === 5">Financial</div>
+</div>
+<div class="normal-line"></div>
+
+<div>
+  <h3 class="text">
+    Graphical representation for Approved - Dashboard V2
+  </h3>
+</div>
+
+<div class="background">
+  <div class="card">
+    <div class="upper-fields">
+      <div class="grid">
+        <div class="date-picker-container">
+          <div class="date-picker-header">Select Your Date range</div>
+          <mat-form-field class="date-picker-field">
+            <mat-label>Add Date Field</mat-label>
+            <input matInput [matDatepicker]="picker" class="date-input">
+            <mat-datepicker-toggle matSuffix [for]="picker" class="date-toggle"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="fields-container1">
+          <div class="fields-header1">SUMMARY</div>
+        </div>
+        <div class="fields-container2">
+          <div class="fields-header2">MANAGE BY EXCEPTIONS</div>
+        </div>
+        <div class="fields-container3">
+          <div class="fields-header3">CPU USAGE</div>
+        </div>
+        <div class="fields-container4">
+          <div class="fields-header4">RECOMMENDATIONS</div>
+        </div>
+        <div class="fields-container5">
+          <div class="fields-header5">FINANCIAL</div>
+        </div>
+        <div class="fields-container6" (click)="toggleFilterForm6()">
+          <div class="fields-header6">filter by Account</div>
+          <div class="filter-dropdown6" *ngIf="showFilterForm6">
+            <div class="filter-form6">
+              <div class="filter-title6">
+                <h1 (click)="$event.stopPropagation()">filter by acco...</h1>
+                <span class="dots6" (click)="toggleSelectAllAccounts(); $event.stopPropagation()">⋯</span>
+                <span class="close6" (click)="deselectAllAccountsAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon6" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery6"
+                placeholder="Search in Listbox">
+              <ul class="account-list6">
+                <li class="account-list-item6" *ngFor="let account of filteredAccounts">
+                  <button class="account-button6" [ngClass]="{'selected': account.isSelected}"
+                    (click)="toggleAccountSelection(account); $event.stopPropagation();">
+                    {{ account.AccountName }} {{ account.isSelected ? '✓ ' : '' }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="fields-container7" (click)="toggleFilterForm7()">
+          <div class="fields-header7">filter by Tenant</div>
+          <div class="filter-dropdown7" *ngIf="showFilterForm7">
+            <div class="filter-form7">
+              <div class="filter-title7">
+                <h1 (click)="$event.stopPropagation()">filter by tent...</h1>
+                <span class="dots7" (click)="toggleSelectAllTenants(); $event.stopPropagation()">⋯</span>
+                <span class="close7" (click)="deselectAllTenantsAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon7" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery7"
+                placeholder="Search in Listbox">
+              <ul class="tenant-list7">
+                <li class="tenant-list-item7" *ngFor="let tenant of filteredTenants">
+                  <button class="tenant-button7" [ngClass]="{'selected': tenant.isSelected}"
+                    (click)="toggleTenantSelection(tenant); $event.stopPropagation();">
+                    {{ tenant.TenantName }} {{ tenant.isSelected ? '✓ ' : '' }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="fields-container8" (click)="toggleFilterForm8()">
+          <div class="fields-header8">filter by Subscription</div>
+          <div class="filter-dropdown8" *ngIf="showFilterForm8">
+            <div class="filter-form8">
+              <div class="filter-title8">
+                <h1 (click)="$event.stopPropagation()">filter by Subs...</h1>
+                <span class="dots8" (click)="toggleSelectAllSubscriptions(); $event.stopPropagation()">⋯</span>
+                <span class="close8" (click)="deselectAllSubscriptionsAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon8" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery8"
+                placeholder="Search in Listbox">
+              <ul class="subscription-list8">
+                <li class="subscription-list-item8" *ngFor="let subscription of filteredSubscriptions">
+                  <button class="subscription-button8" [ngClass]="{'selected': subscription.isSelected}"
+                    (click)="toggleSubscriptionSelection(subscription); $event.stopPropagation();">
+                    {{ subscription.SubscriptionName }} {{ subscription.isSelected ? '✓ ' : '' }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="fields-container9" (click)="toggleFilterForm9()">
+          <div class="fields-header9">filter by Resource Group</div>
+          <div class="filter-dropdown9" *ngIf="showFilterForm9">
+            <div class="filter-form9">
+              <div class="filter-title9">
+                <h1 (click)="$event.stopPropagation()">filter by insta...</h1>
+                <span class="dots9" (click)="toggleSelectAllResources(); $event.stopPropagation()">⋯</span>
+                <span class="close9" (click)="deselectAllResourcesAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon9" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery"
+                (ngModelChange)="filterResources()" placeholder="Search in Listbox">
+              <ul class="resource-list9">
+                <li class="resource-list-item9" *ngFor="let resource of filteredResources">
+                  <button class="resource-button9" [ngClass]="{'selected': resource.isSelected}"
+                    (click)="toggleResourceSelection(resource); $event.stopPropagation();">
+                    {{ resource.ResourceName }} {{ resource.isSelected ? '✓ ' : '' }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="fields-container10" (click)="toggleFilterForm()">
+          <div class="fields-header10">filter by Instances</div>
+          <div class="filter-dropdown" *ngIf="showFilterForm">
+            <div class="filter-form">
+              <div class="filter-title">
+                <h1 (click)="$event.stopPropagation()">filter by insta...</h1>
+                <span class="dots" (click)="toggleSelectAllInstances(); $event.stopPropagation()">⋯</span>
+                <span class="close" (click)="deselectAllInstancesAndCloseForm(); $event.stopPropagation()">X</span>
+                <div class="tick-icon" (click)="saveAndCloseForm(); $event.stopPropagation()">✓</div>
+              </div>
+              <input type="text" (click)="$event.stopPropagation()" [(ngModel)]="searchQuery"
+                (ngModelChange)="filterInstances()" placeholder="Search in Listbox">
+              <ul class="instance-list">
+                <li class="instance-list-item" *ngFor="let instance of filteredInstances">
+                  <button class="instance-button" [ngClass]="{'selected': instance.isSelected}"
+                    (click)="toggleInstanceSelection(instance); $event.stopPropagation();">
+                    {{ instance.InstanceName }} {{ instance.isSelected ? '✓ ' : '' }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-container">
+        <div class="card1">
+          <div class="chart-container1">
+            <div class="chart-left">
+              <h2>Overall Savings</h2>
+              <div style="text-align: center;">
+   
+      
+                <ngx-gauge class="custom-gauge"
+                  [type]="'arch'"
+                  [cap]="'round'"
+                  [size]="116"
+                  [thick]="10"
+                  [min]="minValue"
+                  [max]="maxValue"
+                  [value]="avgOverallSavings"
+                  [label]="'Savings USD'"
+                  [thresholds]="[]"
+                >
+                </ngx-gauge>
+            </div>
+            </div>
+          </div>
+          <div class="card1-1">
+            <h6>AVG,based on filter section</h6>
+          </div>
+        </div>
+        <div class="main-container">
+          <div class="card2">
+            <div class="chart-container2">
+              <div class="chart-middle">
+                <h2>Overall Costs</h2>
+                <div style="text-align: center;">
+   
+      
+                  <ngx-gauge class="custom-gauge"
+                    [type]="'arch'"
+                    [cap]="'round'"
+                    [size]="116"
+                    [thick]="10"
+                    [min]="minValue"
+                    [max]="maxValue"
+                    [value]="avgOverallCost"
+                    [label]="'Cost USD'"
+                    [thresholds]="[]"
+                  >
+                  </ngx-gauge>
+              </div>
+              </div>
+            </div>
+            <div class="card1-1">
+              <h6>AVG,based on filter section</h6>
+            </div>
+          </div>
+          <div class="card3">
+            <div class="chart-right">
+              <h2>Top offenders</h2>
+              <p>{{ average_CPU_Usage }}</p>
+              <h3>by instance</h3>
+            </div>
+            <figure id="bar"></figure>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card3-1">
+          <h1>CPU Usage overtime </h1>
+          {{ avgUsageAnalysis }}
+          <div class="chart-container2">
+            <div class="line-chart-container">
+              <ngx-charts-line-chart [results]="mainChartData3" [timeline]="true" [xAxis]="true" [yAxis]="true"
+                [showXAxisLabel]="true" [showYAxisLabel]="true" xAxisLabel="[TB_BILLING_REPORT.DT_REFERENCE]"
+                [yAxisTickFormatting]="yAxisTickFormatting" [yAxisTicks]="[0, 0.2,0.4,0.6]"
+                [xAxisTickFormatting]="xAxisTickFormatting" [xAxisTicks]="[5]"></ngx-charts-line-chart>
+              <div class="mini-chart-container">
+                <ngx-charts-line-chart [results]="miniChartData3" [xAxis]="false" [yAxis]="false" [legend]="false"
+                  [timeline]="true" [autoScale]="true" [gradient]="false"></ngx-charts-line-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card4">
+          <div class="chart-container4">
+            <div class="chart-below">
+              <h2>CPU Usage - Average</h2>
+              <h3>per location</h3>
+              <div class="card4-1">
+                <h1>EAST US</h1>
+                <h4>{{ usageAverage }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card5">
+          <h1>*The cpu uasgeis an avegare of all instanced,as you refine the filter criteria the graph is refreshed to
+            the
+            current section.</h1>
+        </div>
+        <div class="card6">
+          <h1>SEARCH BY INSTANCES</h1>
+        </div>
+        <div class="main-container2">
+          <div class="card7-1">
+            <div class="table1">
+              <!-- <h2>Instance List - Peak > 75%</h2> -->
+              <h2>Instance List - Peak > {{ peakUsage }}%</h2>
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>
+                        <span class="header-text">Search by Instance</span>
+                        <span class="search-icon">🔍</span>
+                      </th>
+                      <th>
+                        <span class="header-text">Search by Date</span>
+                        <span class="search-icon">🔍</span>
+                      </th>
+                    </tr>
+                    <tr>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of tableData2">
+                      <td>{{ item.resourceName }}</td>
+                      <td>{{ item.resourceType }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card7-2">
+            <div class="table2">
+              <h2>Instance List - Idle < {{ idleUsage }}%</h2>
+                  <div class="table-container">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>
+                            <span class="header-text">Search by Instance</span>
+                            <span class="search-icon">🔍</span>
+                          </th>
+                          <th>
+                            <span class="header-text">Search by Date</span>
+                            <span class="search-icon">🔍</span>
+                          </th>
+                          <th>
+                            <span class="header-text"></span>
+                          </th>
+                          <th>
+                            <span class="header-text"></span>
+                          </th>
+                          <th>
+                            <span class="header-text"></span>
+                          </th>
+                          <th>
+                            <span class="header-text"></span>
+                          </th>
+                          <th>
+                            <span class="header-text"></span>
+                          </th>
+                          <th>
+                            <span class="header-text"></span>
+                          </th>
+                          <th>
+                            <span class="header-text"></span>
+                          </th>
+                          <th>
+                            <span class="header-text"></span>
+                          </th>
+                        </tr>
+                        <tr>
+                          <th>
+                            <span class="header-text"></span>
+                          </th>
+                          <th>
+                            <span class="header-text">5/1/2...<br>12:00...<br>AM
+                            </span>
+                          </th>
+                          <th> <span class="header-text">5/3/2...<br>12:00...<br>AM</span></th>
+                          <th> <span class="header-text">5/8/2...<br>12:00...<br>AM</span></th>
+                          <th> <span class="header-text">5/9/2...<br>12:00...<br>AM</span></th>
+                          <th> <span class="header-text">5/10/2...<br>12:00...<br>AM</span></th>
+                          <th> <span class="header-text">5/11/2...<br>12:00...<br>AM</span></th>
+                          <th> <span class="header-text">5/12/2...<br>12:00...<br>AM</span></th>
+                          <th> <span class="header-text">5/13/2...<br>12:00...<br>AM</span></th>
+                          <th> <span class="header-text">5/14/2...<br>12:00...<br>AM</span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of tableData1">
+                          <td>{{ item.resourceName }}</td>
+                          <td>{{ item.resourceType }}</td>
+                          <td>{{ item.resourceType1}}</td>
+                          <td>{{ item.resourceType2}}</td>
+                          <td>{{ item.resourceType3}}</td>
+                          <td>{{ item.resourceType4}}</td>
+                          <td>{{ item.resourceType5}}</td>
+                          <td>{{ item.resourceType6}}</td>
+                          <td>{{ item.resourceType7}}</td>
+                          <td>{{ item.resourceType8}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+          </div>
+        </div>
+        <div class="card8">
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <span class="header-text1">ID_RESOURCE</span>
+                    <span class="search-icon">🔍</span>
+                  </th>
+                  <th>
+                    <span class="header-text">ID_INSTANCE</span>
+                    <span class="search-icon">🔍</span>
+                  </th>
+                  <th>
+                    <span class="header-text">NM-INSTANCE</span>
+                    <span class="search-icon">🔍</span>
+                  </th>
+                  <th>
+                    <span class="header-text">VL_COST</span>
+                    <span class="search-icon">🔍</span>
+                  </th>
+                  <th>
+                    <span class="header-text">VL_SAVINGS</span>
+                    <span class="search-icon">🔍</span>
+                  </th>
+                  <th>
+                    <span class="header-text">NM_RESOURCE</span>
+                    <span class="search-icon">🔍</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of tableData">
+                  <td>{{ item.resourceName }}</td>
+                  <td>{{ item.resourceType }}</td>
+                  <td>{{ item.resourceTypeName }}</td>
+                  <td>{{ item.impact }}</td>
+                  <td>{{ item.subscription }}</td>
+                  <td>{{ item.category }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
