@@ -1,5 +1,0 @@
-<app-avms-toaster-item *ngFor="let toast of toasts; let i=index" [toast]="toast" [index]="i" (remove)="remove($event)">
-</app-avms-toaster-item>
-
-<pre>toast$: {{ this.toaster.toast$ | async | json }}</pre>
-<pre>toasts: {{ toasts | json }}</pre>

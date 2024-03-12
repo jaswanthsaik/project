@@ -1,8 +1,0 @@
-<mat-form-field appearance="fill">
-  <mat-select class="dropdown-container" [disableOptionCentering]="true" [(ngModel)]="selectedValue" (ngModelChange)="selectionChanged()">
-    <!-- <mat-select-filter [displayMember]="'description'" [array]="lookup" (filteredReturn)="filteredList =$event"></mat-select-filter> -->
-    <ng-container *ngFor="let item of filteredList">
-      <mat-option [value]="item.id" [disabled]="item.id === '0'">{{ item.description }}</mat-option>
-    </ng-container>
-  </mat-select>
-</mat-form-field>
